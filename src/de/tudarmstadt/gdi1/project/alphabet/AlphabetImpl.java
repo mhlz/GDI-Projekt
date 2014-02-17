@@ -9,10 +9,10 @@ import java.util.*;
  */
 public class AlphabetImpl implements Alphabet {
 
-	protected TreeSet<Character> characters;
+	protected ArrayList<Character> characters;
 
 	public AlphabetImpl() {
-		characters = new TreeSet<Character>();
+		characters = new ArrayList<Character>();
 	}
 
     public AlphabetImpl(Collection<Character> characters) {
@@ -21,7 +21,7 @@ public class AlphabetImpl implements Alphabet {
 
     public AlphabetImpl(Character[] characters) {
         this();
-        for(char c: characters){
+        for(char c : characters){
             if (this.characters.contains(c)) {
                 throw new InvalidCharacterException("The character '" + c + "' exists twice!");
             }
@@ -48,15 +48,7 @@ public class AlphabetImpl implements Alphabet {
 	 */
 	@Override
 	public int getIndex(char chr) {
-		int i = 0;
-		for(Character c : characters) {
-			if(c.equals(chr)) {
-				return i;
-			}
-			i++;
-		}
-
-		return -1;
+		return characters.indexOf(chr);
 	}
 
 	/**
@@ -67,15 +59,7 @@ public class AlphabetImpl implements Alphabet {
 	 */
 	@Override
 	public char getChar(int index) {
-		int i = 0;
-		for(Character c : characters) {
-			if(i == index) {
-				return c;
-			}
-			i++;
-		}
-
-		return (char)0;
+		return characters.get(index);
 	}
 
 	/**
