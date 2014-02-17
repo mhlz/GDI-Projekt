@@ -21,6 +21,7 @@ import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.Monoalphab
 import de.tudarmstadt.gdi1.project.cipher.substitution.polyalphabetic.PolyalphabeticCipher;
 import de.tudarmstadt.gdi1.project.cipher.substitution.polyalphabetic.Vigenere;
 import de.tudarmstadt.gdi1.project.utils.Utils;
+import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 
 import java.util.Collection;
 import java.util.List;
@@ -41,7 +42,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public Distribution getDistributionInstance(Alphabet source, String text, int ngramsize) {
-        return null;
+        return new DistributionImpl(source, text, ngramsize);
     }
 
     /**
@@ -193,7 +194,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public Utils getUtilsInstance() {
-        return null;
+        return new UtilsImpl();
     }
 
     /**
