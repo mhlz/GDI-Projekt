@@ -103,10 +103,10 @@ public class UtilsImpl implements Utils {
 	@Override
 	public Alphabet shiftAlphabet(Alphabet alphabet, int shift) {
 
+        shift = shift % alphabet.size();
         if(shift < 0) {
             shift += alphabet.size();
         }
-        shift = shift % alphabet.size();
 
         char[] tempArray = alphabet.asCharArray();
         Character[] destArray = new Character[tempArray.length];
