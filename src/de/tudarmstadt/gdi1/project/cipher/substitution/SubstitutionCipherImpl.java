@@ -1,6 +1,5 @@
 package de.tudarmstadt.gdi1.project.cipher.substitution;
 
-import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipher;
 
 /**
  * Created by reckter on 2/17/14.
@@ -15,10 +14,11 @@ public abstract class SubstitutionCipherImpl implements SubstitutionCipher {
      * @return the encrypted plaintext (=ciphertext)
      */
     @Override
-    public String encrypt(String text) {StringBuilder out = new StringBuilder();
+    public String encrypt(String text) {
+        StringBuilder out = new StringBuilder();
         char[] textArray = text.toCharArray();
-        for(int i = 0; i  < textArray.length; i++) {
-            out.append(reverseTranslate(textArray[i], i));
+        for(int i = 0; i < textArray.length; i++) {
+            out.append(translate(textArray[i], i));
         }
 
         return out.toString();
@@ -35,9 +35,8 @@ public abstract class SubstitutionCipherImpl implements SubstitutionCipher {
         StringBuilder out = new StringBuilder();
         char[] textArray = text.toCharArray();
         for(int i = 0; i  < textArray.length; i++) {
-            out.append(translate(textArray[i], i));
+            out.append(reverseTranslate(textArray[i], i));
         }
-
         return out.toString();
     }
 }
