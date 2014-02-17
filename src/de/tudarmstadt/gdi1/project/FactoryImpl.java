@@ -17,12 +17,12 @@ import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipherImpl;
 import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.Caesar;
 import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.KeywordMonoalphabeticCipher;
 import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.MonoalphabeticCipher;
+import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.MonoalphabeticCipherImpl;
 import de.tudarmstadt.gdi1.project.cipher.substitution.polyalphabetic.PolyalphabeticCipher;
 import de.tudarmstadt.gdi1.project.cipher.substitution.polyalphabetic.Vigenere;
 import de.tudarmstadt.gdi1.project.utils.Utils;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -72,7 +72,7 @@ public class FactoryImpl implements Factory {
     }
 
     /**
-     * Constructs a {@link de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.MonoalphabeticCipher} mapping from a source alphabet
+     * Constructs a {@link de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.MonoalphabeticCipherImpl} mapping from a source alphabet
      * to a target alphabet.
      *
      * @param source the source alphabet
@@ -81,7 +81,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public MonoalphabeticCipher getMonoalphabeticCipherInstance(Alphabet source, Alphabet dest) {
-        return null;
+        return new MonoalphabeticCipherImpl(source, dest);
     }
 
     /**
