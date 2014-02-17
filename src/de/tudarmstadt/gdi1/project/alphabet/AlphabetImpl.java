@@ -1,20 +1,45 @@
 package de.tudarmstadt.gdi1.project.alphabet;
 
-import java.util.HashSet;
-import java.util.Iterator;
+import de.tudarmstadt.gdi1.project.exception.InvalidCharacterException;
+
+import java.util.*;
 
 /**
  * @author Mischa Holz
  */
 public class AlphabetImpl implements Alphabet {
 
-	protected HashSet<Character> characters;
+	protected TreeSet<Character> characters;
 
 	public AlphabetImpl() {
-		characters = new HashSet<Character>();
+		characters = new TreeSet<Character>();
 	}
 
-	/**
+    public AlphabetImpl(Collection<Character> characters) {
+        this(characters.toArray(new Character[characters.size()]));
+    }
+
+    public AlphabetImpl(Character[] characters) {
+        this();
+        for(char c: characters){
+            if (this.characters.contains(c)) {
+                throw new InvalidCharacterException("The character '" + c + "' exists twice!");
+            }
+            this.characters.add(c);
+        }
+    }
+
+    public AlphabetImpl(String characters) { //TODO this code is reduntant; remove it somehow
+        this();
+        for(char c: characters.toCharArray()){
+            if (this.characters.contains(c)) {
+                throw new InvalidCharacterException("The character '" + c + "' exists twice!");
+            }
+            this.characters.add(c);
+        }
+    }
+
+    /**
 	 * Searches for a character in the alphabet
 	 *
 	 * @param chr the character to find

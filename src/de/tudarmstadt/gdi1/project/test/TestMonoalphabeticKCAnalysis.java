@@ -15,7 +15,7 @@ public class TestMonoalphabeticKCAnalysis {
 
 	@BeforeClass
 	public static void initTestCore() {
-		TemplateTestCore.FACTORYPATH = "de.tudarmstadt.gdi1.project.FactoryIM";
+		TemplateTestCore.FACTORYPATH = "de.tudarmstadt.gdi1.project.FactoryImpl";
 	}
 
 }
