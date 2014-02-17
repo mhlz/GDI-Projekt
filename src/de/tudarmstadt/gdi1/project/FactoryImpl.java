@@ -1,9 +1,6 @@
 package de.tudarmstadt.gdi1.project;
 
-import de.tudarmstadt.gdi1.project.alphabet.Alphabet;
-import de.tudarmstadt.gdi1.project.alphabet.AlphabetImpl;
-import de.tudarmstadt.gdi1.project.alphabet.Dictionary;
-import de.tudarmstadt.gdi1.project.alphabet.Distribution;
+import de.tudarmstadt.gdi1.project.alphabet.*;
 import de.tudarmstadt.gdi1.project.analysis.ValidateDecryptionOracle;
 import de.tudarmstadt.gdi1.project.analysis.caeser.CaesarCryptanalysis;
 import de.tudarmstadt.gdi1.project.analysis.monoalphabetic.Individual;
@@ -71,7 +68,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public Dictionary getDictionaryInstance(Alphabet alphabet, String text) {
-        return null;
+        return new DictionaryImpl(text, alphabet);
     }
 
     /**
