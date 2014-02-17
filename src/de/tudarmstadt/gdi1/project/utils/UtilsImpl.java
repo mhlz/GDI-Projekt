@@ -1,11 +1,11 @@
 package de.tudarmstadt.gdi1.project.utils;
 
+import com.sun.deploy.util.StringUtils;
 import de.tudarmstadt.gdi1.project.alphabet.Alphabet;
+import de.tudarmstadt.gdi1.project.alphabet.AlphabetImpl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.security.SecureRandom;
+import java.util.*;
 
 /**
  * @author Mischa Holz
@@ -41,7 +41,29 @@ public class UtilsImpl implements Utils {
 	 */
 	@Override
 	public String toDisplay(String ciphertext) {
-		return null;
+        ArrayList<String> retList = new ArrayList<String>();
+
+        //splitting up the text every 10th caracter
+        while (ciphertext.length() > 10 ) {
+            retList.add(ciphertext.substring(0, 10));
+            ciphertext = ciphertext.substring(10,ciphertext.length());
+        }
+        retList.add(ciphertext);
+
+
+        //joining all those 10 character long Strings bacl together with " " and a  System.lineSeparator() every 6th one
+        StringBuilder ret = new StringBuilder();
+        for(int i = 0; i < retList.size(); i++) {
+            ret.append(retList.get(i));
+            ret.append(" ");
+            if((i + 1)% 6 == 0 && i < retList.size() - 1) {
+                ret.append(System.lineSeparator());
+            }
+        }
+        //deleting the last " "
+        ret.deleteCharAt(ret.length() - 1);
+
+        return ret.toString();
 	}
 
 	/**
@@ -80,7 +102,22 @@ public class UtilsImpl implements Utils {
 	 */
 	@Override
 	public Alphabet shiftAlphabet(Alphabet alphabet, int shift) {
-		return null;
+
+        if(shift < 0) {
+            shift += alphabet.size();
+        }
+        shift = shift % alphabet.size();
+
+        char[] tempArray = alphabet.asCharArray();
+        Character[] destArray = new Character[tempArray.length];
+
+        for(int i = shift; i < tempArray.length; i++){
+            destArray[i - shift] = tempArray[i];
+        }
+        for(int i = 0; i < shift; i++){
+            destArray[tempArray.length - shift + i] = tempArray[i];
+        }
+        return new AlphabetImpl(destArray);
 	}
 
 	/**
@@ -92,7 +129,12 @@ public class UtilsImpl implements Utils {
 	 */
 	@Override
 	public Alphabet reverseAlphabet(Alphabet alphabet) {
-		return null;
+        char[] temp = alphabet.asCharArray();
+        Character[] ret = new Character[temp.length];
+        for(int i = 0; i < temp.length; i++) {
+            ret[ret.length - i - 1] = temp[i];
+        }
+        return new AlphabetImpl(ret);
 	}
 
 	/**
@@ -118,6 +160,22 @@ public class UtilsImpl implements Utils {
 	 */
 	@Override
 	public Alphabet randomizeAlphabet(Alphabet alphabet) {
-		return null;
+        SecureRandom rand = new SecureRandom();
+
+        //converting the chars in the Alphabet to a ArrayList
+        ArrayList<Character> chars = new ArrayList<Character>();
+        for(Character c: alphabet.asCharArray()) {
+            chars.add(c);
+        }
+
+        Character[] ret = new Character[alphabet.size()];
+
+        //randomizing the alphabet using SecureRandom
+        for(int i = 0; i < ret.length; i++) {
+            ret[i] = chars.get((int) (chars.size() * rand.nextDouble()));
+            chars.remove(ret[i]);
+        }
+
+        return new AlphabetImpl(ret);
 	}
 }
