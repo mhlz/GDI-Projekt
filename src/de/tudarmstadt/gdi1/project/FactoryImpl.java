@@ -14,10 +14,7 @@ import de.tudarmstadt.gdi1.project.cipher.enigma.ReverseRotor;
 import de.tudarmstadt.gdi1.project.cipher.enigma.Rotor;
 import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipher;
 import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipherImpl;
-import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.Caesar;
-import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.KeywordMonoalphabeticCipher;
-import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.MonoalphabeticCipher;
-import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.MonoalphabeticCipherImpl;
+import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.*;
 import de.tudarmstadt.gdi1.project.cipher.substitution.polyalphabetic.PolyalphabeticCipher;
 import de.tudarmstadt.gdi1.project.cipher.substitution.polyalphabetic.Vigenere;
 import de.tudarmstadt.gdi1.project.utils.Utils;
@@ -85,7 +82,7 @@ public class FactoryImpl implements Factory {
     }
 
     /**
-     * Constructs a Caesar cipher over the given alphabet and with a shift
+     * Constructs a CaesarImpl cipher over the given alphabet and with a shift
      * specified by key.
      *
      * @param key      the shift
@@ -94,7 +91,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public Caesar getCaesarInstance(int key, Alphabet alphabet) {
-        return null;
+        return new CaesarImpl(key, alphabet);
     }
 
     /**
