@@ -2,14 +2,13 @@ package de.tudarmstadt.gdi1.project.alphabet;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 /**
  * @author Mischa Holz
  */
 public class AlphabetImpl implements Alphabet {
 
-	protected Set<Character> characters;
+	protected HashSet<Character> characters;
 
 	public AlphabetImpl() {
 		characters = new HashSet<Character>();
@@ -24,7 +23,15 @@ public class AlphabetImpl implements Alphabet {
 	 */
 	@Override
 	public int getIndex(char chr) {
-		return 0;
+		int i = 0;
+		for(Character c : characters) {
+			if(c.equals(chr)) {
+				return i;
+			}
+			i++;
+		}
+
+		return -1;
 	}
 
 	/**
@@ -35,7 +42,15 @@ public class AlphabetImpl implements Alphabet {
 	 */
 	@Override
 	public char getChar(int index) {
-		return 0;
+		int i = 0;
+		for(Character c : characters) {
+			if(i == index) {
+				return c;
+			}
+			i++;
+		}
+
+		return (char)0;
 	}
 
 	/**
@@ -43,7 +58,7 @@ public class AlphabetImpl implements Alphabet {
 	 */
 	@Override
 	public int size() {
-		return 0;
+		return characters.size();
 	}
 
 	/**
@@ -54,7 +69,7 @@ public class AlphabetImpl implements Alphabet {
 	 */
 	@Override
 	public boolean contains(char chr) {
-		return false;
+		return characters.contains(chr);
 	}
 
 	/**
@@ -66,7 +81,12 @@ public class AlphabetImpl implements Alphabet {
 	 */
 	@Override
 	public boolean allows(String word) {
-		return false;
+		for(int i = 0; i < word.length(); i++) {
+			if(!contains(word.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -78,7 +98,14 @@ public class AlphabetImpl implements Alphabet {
 	 */
 	@Override
 	public String normalize(String input) {
-		return null;
+		String ret = "";
+		for(int i = 0; i < input.length(); i++) {
+			if(!contains(input.charAt(i))) {
+				continue;
+			}
+			ret += input.charAt(i);
+		}
+		return ret;
 	}
 
 	/**
@@ -89,7 +116,13 @@ public class AlphabetImpl implements Alphabet {
 	 */
 	@Override
 	public char[] asCharArray() {
-		return new char[0];
+		char[] ret = new char[characters.size()];
+		int i = 0;
+		for(Character c : characters) {
+			ret[i] = c;
+			i++;
+		}
+		return ret;
 	}
 
 	/**
@@ -99,6 +132,6 @@ public class AlphabetImpl implements Alphabet {
 	 */
 	@Override
 	public Iterator<Character> iterator() {
-		return null;
+		return characters.iterator();
 	}
 }
