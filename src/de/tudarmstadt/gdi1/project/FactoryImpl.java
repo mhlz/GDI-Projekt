@@ -16,6 +16,7 @@ import de.tudarmstadt.gdi1.project.cipher.enigma.PinBoard;
 import de.tudarmstadt.gdi1.project.cipher.enigma.ReverseRotor;
 import de.tudarmstadt.gdi1.project.cipher.enigma.Rotor;
 import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipher;
+import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipherImpl;
 import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.Caesar;
 import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.KeywordMonoalphabeticCipher;
 import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.MonoalphabeticCipher;
@@ -256,7 +257,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public Class<? extends SubstitutionCipher> getAbstractSubstitutionCipherClass() {
-        return null;
+        return SubstitutionCipherImpl.class;
     }
 
     /**

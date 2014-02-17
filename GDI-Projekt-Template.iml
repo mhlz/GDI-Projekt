@@ -21,7 +21,9 @@
           <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.ideaLibSources/junit-4.10-sources.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
@@ -41,9 +43,12 @@
           <root url="jar://$MODULE_DIR$/lib/mockito-all-1.9.5.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/lib/mockito-all-1.9.5.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="javadoc" level="project" />
   </component>
 </module>
 
