@@ -96,7 +96,7 @@ public class FactoryImpl implements Factory {
     }
 
     /**
-     * Constructs a {@link de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.KeywordMonoalphabeticCipher} over the given alphabet
+     * Constructs a {@link de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.KeywordMonoalphabeticCipherImpl} over the given alphabet
      * and with the given keyword
      *
      * @param key      the keyword
@@ -105,7 +105,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public KeywordMonoalphabeticCipher getKeywordMonoalphabeticCipherInstance(String key, Alphabet alphabet) {
-        return null;
+        return new KeywordMonoalphabeticCipherImpl(key, alphabet);
     }
 
     /**
