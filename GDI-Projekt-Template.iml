@@ -49,28 +49,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="javadoc" level="project" />
-    <orderEntry type="module-library" scope="TEST">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/framework.jar!/de/tudarmstadt/gdi1/project/test" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/lib/framework.jar!/de/tudarmstadt/gdi1/project/test" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/framework.jar!/de/tudarmstadt/gdi1/project/test" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/lib/framework.jar!/de/tudarmstadt/gdi1/project/test" />
-        </SOURCES>
-      </library>
-    </orderEntry>
   </component>
 </module>
 
