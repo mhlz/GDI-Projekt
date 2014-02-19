@@ -14,7 +14,7 @@ public abstract class SubstitutionCipherImpl implements SubstitutionCipher {
      * @return the encrypted plaintext (=ciphertext)
      */
     @Override
-    public String encrypt(String text) {
+    public final String encrypt(String text) {
 		// translate every character individually and put them together to a string
         StringBuilder out = new StringBuilder();
         char[] textArray = text.toCharArray();
@@ -32,7 +32,7 @@ public abstract class SubstitutionCipherImpl implements SubstitutionCipher {
      * @return the decrypted ciphertext (=plaintext)
      */
     @Override
-    public String decrypt(String text) {
+    public final String decrypt(String text) {
 		// reverseTranslate every character individually and put them together to a string
         StringBuilder out = new StringBuilder();
         char[] textArray = text.toCharArray();
