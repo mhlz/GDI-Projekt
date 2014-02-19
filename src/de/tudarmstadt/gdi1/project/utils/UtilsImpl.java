@@ -152,7 +152,19 @@ public class UtilsImpl implements Utils {
 	 */
 	@Override
 	public boolean containsSameCharacters(Alphabet alphabet1, Alphabet alphabet2) {
-		return false;
+        if(alphabet1.size() != alphabet2.size()) {
+            return false; // because the two alphabets aren't the same size
+        }
+        for(Character c:alphabet1.asCharArray()){
+            if(!alphabet2.contains(c)) {
+                return false; // one of the characters is missing in alphabet 2
+            }
+        }
+        // we only have to check if all characters of alphabet 1 are in alphabet 2, because we allready now that they
+        // are the same size, so if any character is in alphabet 2, that is not in alphabet 1 another character of
+        // alphabet 1 must be missing in alphabet 2
+
+        return true;
 	}
 
 	/**
