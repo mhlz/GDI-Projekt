@@ -17,7 +17,9 @@ import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipher;
 import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipherImpl;
 import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.*;
 import de.tudarmstadt.gdi1.project.cipher.substitution.polyalphabetic.PolyalphabeticCipher;
+import de.tudarmstadt.gdi1.project.cipher.substitution.polyalphabetic.PolyalphabeticCipherImpl;
 import de.tudarmstadt.gdi1.project.cipher.substitution.polyalphabetic.Vigenere;
+import de.tudarmstadt.gdi1.project.cipher.substitution.polyalphabetic.VigenereImpl;
 import de.tudarmstadt.gdi1.project.utils.Utils;
 import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 
@@ -119,7 +121,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public PolyalphabeticCipher getPolyalphabeticCipherInstance(Alphabet source, Alphabet... dest) {
-        return null;
+        return new PolyalphabeticCipherImpl(source, dest);
     }
 
     /**
@@ -131,7 +133,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public Vigenere getVigenereCipherInstance(String key, Alphabet alphabet) {
-        return null;
+        return new VigenereImpl(key, alphabet);
     }
 
     /**

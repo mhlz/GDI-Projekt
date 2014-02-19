@@ -49,6 +49,15 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="javadoc" level="project" />
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/framework.jar!/de/tudarmstadt/gdi1/project/test" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 
