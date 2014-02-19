@@ -1,24 +1,39 @@
 package de.tudarmstadt.gdi1.project.alphabet;
 
+import com.sun.deploy.util.ArrayUtil;
 import de.tudarmstadt.gdi1.project.exception.InvalidCharacterException;
+import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 
 import java.util.*;
 
 /**
+ * Represents a cryptographic alphabet
+ *
  * @author Mischa Holz
  */
 public class AlphabetImpl implements Alphabet {
 
 	protected ArrayList<Character> characters;
 
+	/**
+	 * Default constructor of an empty alphabet
+	 */
 	public AlphabetImpl() {
 		characters = new ArrayList<Character>();
 	}
 
+	/**
+	 * Create an alphabet by using a collection of characters
+	 * @param characters Alphabet collection
+	 */
     public AlphabetImpl(Collection<Character> characters) {
         this(characters.toArray(new Character[characters.size()]));
     }
 
+	/**
+	 * Create an alphabet by using a character array
+	 * @param characters Array of characters that make up the alphabet
+	 */
     public AlphabetImpl(Character[] characters) {
         this();
         for(char c : characters){
@@ -29,14 +44,12 @@ public class AlphabetImpl implements Alphabet {
         }
     }
 
-    public AlphabetImpl(String characters) { //TODO this code is reduntant; remove it somehow
-        this();
-        for(char c: characters.toCharArray()){
-            if (this.characters.contains(c)) {
-                throw new InvalidCharacterException("The character '" + c + "' exists twice!");
-            }
-            this.characters.add(c);
-        }
+	/**
+	 * Create an alphabet with characters from a string
+	 * @param characters String containing the characters for the alphabet
+	 */
+    public AlphabetImpl(String characters) {
+		this((new UtilsImpl()).toCharacterArray(characters.toCharArray()));
     }
 
     /**

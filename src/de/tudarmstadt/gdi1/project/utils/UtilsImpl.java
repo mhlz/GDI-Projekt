@@ -195,4 +195,32 @@ public class UtilsImpl implements Utils {
 
         return new AlphabetImpl(ret);
 	}
+
+	/**
+	 * Convert an array of chars to an array of Characters (since autoboxing isn't a thing for arrays)
+	 * @param charArray char array to convert
+	 * @return An array of Characters with the same content as the char array
+	 */
+	public Character[] toCharacterArray(char[] charArray) {
+		Character[] ret = new Character[charArray.length];
+		for(int i = 0; i < charArray.length; i++) {
+			ret[i] = charArray[i];
+		}
+
+		return ret;
+	}
+
+	/**
+	 * Convert an array of Characters to an array of chars (since autoboxing isn't a thing for arrays)
+	 * @param characterArray Character array to convert
+	 * @return An array of chars with the same content as the Character array
+	 */
+	public char[] toCharArray(Character[] characterArray) {
+		char[] ret = new char[characterArray.length];
+		for(int i = 0; i < characterArray.length; i++) {
+			ret[i] = characterArray[i];
+		}
+
+		return ret;
+	}
 }
