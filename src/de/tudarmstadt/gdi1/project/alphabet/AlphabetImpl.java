@@ -1,6 +1,5 @@
 package de.tudarmstadt.gdi1.project.alphabet;
 
-import com.sun.deploy.util.ArrayUtil;
 import de.tudarmstadt.gdi1.project.exception.InvalidCharacterException;
 import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 
@@ -103,6 +102,7 @@ public class AlphabetImpl implements Alphabet {
 	 */
 	@Override
 	public boolean allows(String word) {
+		// check every single character for being a part of this alphabet
 		for(int i = 0; i < word.length(); i++) {
 			if(!contains(word.charAt(i))) {
 				return false;
@@ -122,6 +122,7 @@ public class AlphabetImpl implements Alphabet {
 	public String normalize(String input) {
 		String ret = "";
 		for(int i = 0; i < input.length(); i++) {
+			// only add the character to the return string if it's part of the alphabet
 			if(!contains(input.charAt(i))) {
 				continue;
 			}
@@ -138,13 +139,8 @@ public class AlphabetImpl implements Alphabet {
 	 */
 	@Override
 	public char[] asCharArray() {
-		char[] ret = new char[characters.size()];
-		int i = 0;
-		for(Character c : characters) {
-			ret[i] = c;
-			i++;
-		}
-		return ret;
+		// convert the characters array list to a Character array and convert that to a char array
+		return ((new UtilsImpl()).toCharArray(characters.toArray(new Character[characters.size()])));
 	}
 
 	/**
