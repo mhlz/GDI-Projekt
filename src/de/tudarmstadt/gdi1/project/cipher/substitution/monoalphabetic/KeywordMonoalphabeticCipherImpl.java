@@ -12,6 +12,12 @@ import java.util.ArrayList;
  * @author Hannes Güdelhöfer
  */
 public class KeywordMonoalphabeticCipherImpl extends MonoalphabeticCipherImpl implements KeywordMonoalphabeticCipher {
+
+	/**
+	 *
+	 * @param password
+	 * @param alphabet
+	 */
     public KeywordMonoalphabeticCipherImpl(String password, Alphabet alphabet) {
         super(alphabet, alphabet);
 

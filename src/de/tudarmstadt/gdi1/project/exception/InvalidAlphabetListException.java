@@ -1,6 +1,8 @@
 package de.tudarmstadt.gdi1.project.exception;
 
 /**
+ * Gets thrown if case an invalid alphabet list (for example an empty one) is provided to PolyalphabeticCipher
+ *
  * @author Mischa Holz
  */
 public class InvalidAlphabetListException extends RuntimeException {

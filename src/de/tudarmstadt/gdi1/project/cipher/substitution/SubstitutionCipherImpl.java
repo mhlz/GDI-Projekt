@@ -2,7 +2,7 @@ package de.tudarmstadt.gdi1.project.cipher.substitution;
 
 
 /**
- * Created by reckter on 2/17/14.
+ * @author Hannes
  */
 public abstract class SubstitutionCipherImpl implements SubstitutionCipher {
 
@@ -15,6 +15,7 @@ public abstract class SubstitutionCipherImpl implements SubstitutionCipher {
      */
     @Override
     public String encrypt(String text) {
+		// translate every character individually and put them together to a string
         StringBuilder out = new StringBuilder();
         char[] textArray = text.toCharArray();
         for(int i = 0; i < textArray.length; i++) {
@@ -32,6 +33,7 @@ public abstract class SubstitutionCipherImpl implements SubstitutionCipher {
      */
     @Override
     public String decrypt(String text) {
+		// reverseTranslate every character individually and put them together to a string
         StringBuilder out = new StringBuilder();
         char[] textArray = text.toCharArray();
         for(int i = 0; i  < textArray.length; i++) {

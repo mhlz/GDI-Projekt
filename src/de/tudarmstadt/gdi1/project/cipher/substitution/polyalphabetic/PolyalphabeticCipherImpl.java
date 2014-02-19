@@ -13,10 +13,18 @@ public class PolyalphabeticCipherImpl extends SubstitutionCipherImpl implements 
 	protected Alphabet plaintTextAlphabet;
 	protected Alphabet[] cipherTextAlphabets;
 
+	/**
+	 * Default constructor to be used in case an implementation needs to calculate its own alphabets
+	 */
 	protected PolyalphabeticCipherImpl() {
-
+		// this function is used in case an implementation needs to calculate its own alphabets
 	}
 
+	/**
+	 * Create a new Polyalhpabetic cipher
+	 * @param plaintTextAlphabet Alphabet of the plain text
+	 * @param cipherTextAlphabets Alphabets of the cipher text
+	 */
 	public PolyalphabeticCipherImpl(Alphabet plaintTextAlphabet, Alphabet[] cipherTextAlphabets) {
 		if(cipherTextAlphabets.length == 0) {
 			throw new InvalidAlphabetListException("The list of alphabets must include at least one alphabet!");
@@ -28,6 +36,7 @@ public class PolyalphabeticCipherImpl extends SubstitutionCipherImpl implements 
 	/**
 	 * Translates the given character that is on the given position in the text
 	 * into its encrypted equivalent.
+	 * Every character gets translated using the target alphabet at the position of the character.
 	 *
 	 * @param chr the character that needs to be translated
 	 * @param i   the position the character stands in the text
@@ -35,17 +44,21 @@ public class PolyalphabeticCipherImpl extends SubstitutionCipherImpl implements 
 	 */
 	@Override
 	public char translate(char chr, int i) {
+		// calculate the correct ciphertext alphabet
 		i %= cipherTextAlphabets.length;
+		// get the position of the plain text character that is about to be translated
 		int plainPos = plaintTextAlphabet.getIndex(chr);
 		if(i == -1) {
 			throw new InvalidCharacterException("The character '" + chr + "' is not part of the plain text alphabet!");
 		}
+		// translate the character into the appropriate cipher text alphabet
 		return cipherTextAlphabets[i].getChar(plainPos);
 	}
 
 	/**
 	 * translates the given character that is on the given position in the text
-	 * back into its decrypted equivalent
+	 * back into its decrypted equivalent.
+	 * Every character gets translated using the target alphabet at the position of the character.
 	 *
 	 * @param chr the character that needs to be reversetranslated
 	 * @param i   the position of the character in the text
@@ -53,11 +66,14 @@ public class PolyalphabeticCipherImpl extends SubstitutionCipherImpl implements 
 	 */
 	@Override
 	public char reverseTranslate(char chr, int i) {
+		// calculate the correct ciphertext alphabet
 		i %= cipherTextAlphabets.length;
-		int plainPos = cipherTextAlphabets[i].getIndex(chr);
+		// get the position of the cipher text character that is about to be translated
+		int cipherPos = cipherTextAlphabets[i].getIndex(chr);
 		if(i == -1) {
 			throw new InvalidCharacterException("The character '" + chr + "' is not part of the cipher text alphabet!");
 		}
-		return plaintTextAlphabet.getChar(plainPos);
+		// translate the character into the appropriate plain text alphabet
+		return plaintTextAlphabet.getChar(cipherPos);
 	}
 }

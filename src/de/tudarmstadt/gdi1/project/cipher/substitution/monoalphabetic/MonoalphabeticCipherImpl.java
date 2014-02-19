@@ -7,12 +7,18 @@ import java.util.HashMap;
 import java.util.Hashtable;
 
 /**
- * Created by reckter on 2/17/14.
+ * @author Hannes
  */
 public class MonoalphabeticCipherImpl extends SubstitutionCipherImpl implements MonoalphabeticCipher {
+
     protected Alphabet source;
     protected Alphabet destination;
 
+	/**
+	 * Default constructor to create a new monoalphabetic cipher
+	 * @param source Source alphabet
+	 * @param destination Target alphabet
+	 */
     public MonoalphabeticCipherImpl(Alphabet source, Alphabet destination) {
         this.source = source;
         this.destination = destination;
