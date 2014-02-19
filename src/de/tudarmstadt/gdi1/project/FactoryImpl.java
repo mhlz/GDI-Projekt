@@ -3,6 +3,7 @@ package de.tudarmstadt.gdi1.project;
 import de.tudarmstadt.gdi1.project.alphabet.*;
 import de.tudarmstadt.gdi1.project.analysis.ValidateDecryptionOracle;
 import de.tudarmstadt.gdi1.project.analysis.caeser.CaesarCryptanalysis;
+import de.tudarmstadt.gdi1.project.analysis.caeser.CaesarCryptanalysisImpl;
 import de.tudarmstadt.gdi1.project.analysis.monoalphabetic.Individual;
 import de.tudarmstadt.gdi1.project.analysis.monoalphabetic.MonoalphabeticCpaNpaCryptanalysis;
 import de.tudarmstadt.gdi1.project.analysis.monoalphabetic.MonoalphabeticCribCryptanalysis;
@@ -140,7 +141,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public CaesarCryptanalysis getCaesarCryptanalysisInstance() {
-        return null;
+        return new CaesarCryptanalysisImpl();
     }
 
     /**
