@@ -103,11 +103,14 @@ public class UtilsImpl implements Utils {
 	@Override
 	public Alphabet shiftAlphabet(Alphabet alphabet, int shift) {
 
+		// don't shift more than the alphabet is long
         shift = shift % alphabet.size();
+		// in case the result was negative, bring it back to positives again by adding the size
         if(shift < 0) {
             shift += alphabet.size();
         }
 
+		// get the alphabet as char array and shift it
         char[] tempArray = alphabet.asCharArray();
         Character[] destArray = new Character[tempArray.length];
 
@@ -129,8 +132,10 @@ public class UtilsImpl implements Utils {
 	 */
 	@Override
 	public Alphabet reverseAlphabet(Alphabet alphabet) {
+		// reserve memory for the alphabet
         char[] temp = alphabet.asCharArray();
         Character[] ret = new Character[temp.length];
+		// reverse it
         for(int i = 0; i < temp.length; i++) {
             ret[ret.length - i - 1] = temp[i];
         }
@@ -162,7 +167,7 @@ public class UtilsImpl implements Utils {
 	public Alphabet randomizeAlphabet(Alphabet alphabet) {
         SecureRandom rand = new SecureRandom();
 
-        //converting the chars in the Alphabet to a ArrayList
+        //converting the chars in the Alphabet to an ArrayList
         ArrayList<Character> chars = new ArrayList<Character>();
         for(Character c: alphabet.asCharArray()) {
             chars.add(c);

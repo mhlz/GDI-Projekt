@@ -55,7 +55,9 @@
           <root url="jar://$MODULE_DIR$/lib/framework.jar!/de/tudarmstadt/gdi1/project/test" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/lib/framework.jar!/de/tudarmstadt/gdi1/project/test" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
@@ -64,7 +66,9 @@
           <root url="jar://$MODULE_DIR$/lib/framework.jar!/de/tudarmstadt/gdi1/project/test" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/lib/framework.jar!/de/tudarmstadt/gdi1/project/test" />
+        </SOURCES>
       </library>
     </orderEntry>
   </component>
