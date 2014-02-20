@@ -43,7 +43,7 @@ public class UtilsImpl implements Utils {
 	public String toDisplay(String ciphertext) {
         ArrayList<String> retList = new ArrayList<String>();
 
-        //splitting up the text every 10th caracter
+        //splitting up the text every 10th character
         while (ciphertext.length() > 10 ) {
             retList.add(ciphertext.substring(0, 10));
             ciphertext = ciphertext.substring(10,ciphertext.length());
@@ -51,13 +51,14 @@ public class UtilsImpl implements Utils {
         retList.add(ciphertext);
 
 
-        //joining all those 10 character long Strings bacl together with " " and a  System.lineSeparator() every 6th one
+        //joining all those 10 character long Strings back together with " " and a System.lineSeparator() every 6th one
         StringBuilder ret = new StringBuilder();
         for(int i = 0; i < retList.size(); i++) {
             ret.append(retList.get(i));
-            ret.append(" ");
             if((i + 1)% 6 == 0 && i < retList.size() - 1) {
                 ret.append(System.lineSeparator());
+            } else {
+                ret.append(" ");
             }
         }
         //deleting the last " "
