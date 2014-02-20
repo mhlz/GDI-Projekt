@@ -1,6 +1,5 @@
 package de.tudarmstadt.gdi1.project.analysis.caeser;
 
-import com.sun.deploy.util.StringUtils;
 import de.tudarmstadt.gdi1.project.alphabet.*;
 import de.tudarmstadt.gdi1.project.analysis.KnownCiphertextAnalysis;
 import de.tudarmstadt.gdi1.project.analysis.KnownPlaintextAnalysis;
@@ -23,7 +22,7 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
      * @return the key, a part of the key, or null
      */
     @Override
-    public Object knownPlaintextAttack(String ciphertext, String plaintext, Alphabet alphabet) {
+    public Integer knownPlaintextAttack(String ciphertext, String plaintext, Alphabet alphabet) {
         return null;
     }
 
@@ -37,7 +36,7 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
      * @return the key, a part of the key, or null
      */
     @Override
-    public Object knownPlaintextAttack(String ciphertext, String plaintext, Distribution distribution) {
+    public Integer knownPlaintextAttack(String ciphertext, String plaintext, Distribution distribution) {
         return null;
     }
 
@@ -51,7 +50,7 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
      * @param dictionary   @return the key, a part of the key, or null
      */
     @Override
-    public Object knownPlaintextAttack(String ciphertext, String plaintext, Distribution distribution, Dictionary dictionary) {
+    public Integer knownPlaintextAttack(String ciphertext, String plaintext, Distribution distribution, Dictionary dictionary) {
         return null;
     }
 
