@@ -73,26 +73,14 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
 
         //cycling to as many letters as specified
         for(int i = 0; i < testCommonLetters; i++) {
-            String mostUsedCipher = cipherDist.getByRank(1, i + 1); //this is the most used letter
-            String mostUsedPlain = distribution.getByRank(1, i + 1); //this is the most used letter
+            char mostUsedCipher = cipherDist.getByRank(1, i + 1).toCharArray()[0]; //this is the most used letter
+            char mostUsedPlain = distribution.getByRank(1, i + 1).toCharArray()[0]; //this is the most used letter
 
             // mostUsedPlain is the base letter in the alphabet
-            int base = 0;
-            for(Character c: distribution.getAlphabet().asCharArray()) {
-                if(c.toString().equals(mostUsedPlain)) {
-                    break;
-                }
-                base++;
-            }
+            int base = distribution.getAlphabet().getIndex(mostUsedPlain);
 
             // mostUsedCipher is the shift letter in the alphabet
-            int shift = 0;
-            for(Character c: cipherDist.getAlphabet().asCharArray()) {
-                if(c.toString().equals(mostUsedCipher)) {
-                    break;
-                }
-                shift++;
-            }
+            int shift = cipherDist.getAlphabet().getIndex(mostUsedCipher);
 
             // factoring each iteration, the first letter has a factor of 1, the second 9, third 27, ...
             // this is to make sure, that the first one is the importants one, maybee we should go to x^2 here
