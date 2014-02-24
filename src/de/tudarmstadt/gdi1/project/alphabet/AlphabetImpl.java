@@ -152,4 +152,13 @@ public class AlphabetImpl implements Alphabet {
 	public Iterator<Character> iterator() {
 		return characters.iterator();
 	}
+
+    @Override
+    public String toString() {
+        StringBuilder out = new StringBuilder();
+        for(Character character: characters) {
+            out.append(character);
+        }
+        return out.toString();
+    }
 }
