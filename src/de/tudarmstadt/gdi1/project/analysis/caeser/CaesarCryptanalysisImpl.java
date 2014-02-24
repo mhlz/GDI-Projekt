@@ -3,6 +3,10 @@ package de.tudarmstadt.gdi1.project.analysis.caeser;
 import de.tudarmstadt.gdi1.project.alphabet.*;
 import de.tudarmstadt.gdi1.project.analysis.KnownCiphertextAnalysis;
 import de.tudarmstadt.gdi1.project.analysis.KnownPlaintextAnalysis;
+import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipher;
+import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipherImpl;
+import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.CaesarImpl;
+import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 
 /**
  * Created by Hannes on 2/19/14.
@@ -23,6 +27,19 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
      */
     @Override
     public Integer knownPlaintextAttack(String ciphertext, String plaintext, Alphabet alphabet) {
+        Integer key;
+
+        UtilsImpl utils = new UtilsImpl();
+        CaesarImpl caesar;
+        for (int i = 0; i < ciphertext.length(); i++) {
+            //calculate new key out of cipher and plaintext
+            key = alphabet.getIndex(ciphertext.charAt(i)) - alphabet.getIndex(plaintext.charAt(0));
+            caesar = new CaesarImpl(key, alphabet);
+            //decrypt ciphertext with key
+            String temp = caesar.decrypt(ciphertext);
+            //check if the ciphertext decrypted with key contains the plaintext
+            if (temp.contains(plaintext) == true) return key;
+        }
         return null;
     }
 
@@ -59,7 +76,6 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
      * Attack to determine the used key based on a given ciphertext and a given
      * distribution on the alphabet.
      *
-     *
      * @param ciphertext   the ciphertext
      * @param distribution the distribution
      * @return the key, a part of the key, or null
@@ -72,7 +88,7 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
         double ret = 0;
 
         //cycling to as many letters as specified
-        for(int i = 0; i < testCommonLetters; i++) {
+        for (int i = 0; i < testCommonLetters; i++) {
             char mostUsedCipher = cipherDist.getByRank(1, i + 1).toCharArray()[0]; //this is the most used letter
             char mostUsedPlain = distribution.getByRank(1, i + 1).toCharArray()[0]; //this is the most used letter
 
@@ -85,8 +101,8 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
             // factoring each iteration, the first letter has a factor of 1, the second 9, third 27, ...
             // this is to make sure, that the first one is the importants one, maybee we should go to x^2 here
             // shift - base is the amount which the alphabet got shifted
-            double fakt = (testCommonLetters * testCommonLetters * testCommonLetters) / ( (testCommonLetters - i) * (testCommonLetters - i) * (testCommonLetters - i) );
-            ret += (double)(shift - base) / fakt;
+            double fakt = (testCommonLetters * testCommonLetters * testCommonLetters) / ((testCommonLetters - i) * (testCommonLetters - i) * (testCommonLetters - i));
+            ret += (double) (shift - base) / fakt;
         }
         return (int) (ret + 0.5);
     }
@@ -94,7 +110,6 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
     /**
      * Attack to determine the used key based on a ciphertext and a given
      * dictionary.
-     *
      *
      * @param ciphertext the ciphertext
      * @param dictionary the dictionary

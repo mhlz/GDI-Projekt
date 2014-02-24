@@ -57,8 +57,10 @@ import de.tudarmstadt.gdi1.project.test.utils.TemplateUtilsTests;
 	TemplateRotorTest.class,
 	
 	/* utils */
-	TemplateUtilsTests.class
+	TemplateUtilsTests.class,
 
+    /*our tests*/
+    CaesarCryptanalysisImplTest.class
 	})
 public class Main {
 
