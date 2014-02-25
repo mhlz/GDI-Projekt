@@ -17,6 +17,7 @@ import de.tudarmstadt.gdi1.project.cipher.substitution.polyalphabetic.Polyalphab
 import de.tudarmstadt.gdi1.project.cipher.substitution.polyalphabetic.PolyalphabeticCipherImpl;
 import de.tudarmstadt.gdi1.project.cipher.substitution.polyalphabetic.Vigenere;
 import de.tudarmstadt.gdi1.project.cipher.substitution.polyalphabetic.VigenereImpl;
+import de.tudarmstadt.gdi1.project.analysis.monoalphabetic.MonoalphabeticCribCryptanalysisImpl;
 import de.tudarmstadt.gdi1.project.utils.Utils;
 import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 

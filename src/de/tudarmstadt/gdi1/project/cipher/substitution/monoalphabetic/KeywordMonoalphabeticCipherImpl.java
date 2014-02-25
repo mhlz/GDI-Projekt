@@ -2,7 +2,6 @@ package de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic;
 
 import de.tudarmstadt.gdi1.project.alphabet.Alphabet;
 import de.tudarmstadt.gdi1.project.alphabet.AlphabetImpl;
-import sun.print.resources.serviceui;
 
 import java.util.ArrayList;
 
@@ -48,7 +47,7 @@ public class KeywordMonoalphabeticCipherImpl extends MonoalphabeticCipherImpl im
         }
 
         //putting the reveres Alphabet into the destination array
-        for(int i = sourceArray.length - 1; i >= password.length(); i--) {
+        for(int i = sourceArray.length - 1; i >= passList.size(); i--) {
             destArray[i] = restAlphabet.get(sourceArray.length - i - 1);
         }
 

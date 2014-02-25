@@ -1,15 +1,5 @@
 package de.tudarmstadt.gdi1.project.test;
 
-import de.tudarmstadt.gdi1.project.analysis.monoalphabetic.MonoalphabeticCpaNpaCryptanalysisImpl;
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
-//import de.tudarmstadt.gdi1.project.test.alphabet.TemplateObjectWithFrequencyTests;
-//import de.tudarmstadt.gdi1.project.test.analysis.TemplateEncryptionOracleTests;
-
-
-
 import de.tudarmstadt.gdi1.project.test.alphabet.TemplateAlphabetTests;
 import de.tudarmstadt.gdi1.project.test.alphabet.TemplateDictionaryTests;
 import de.tudarmstadt.gdi1.project.test.alphabet.TemplateDistributionTests;
@@ -21,13 +11,15 @@ import de.tudarmstadt.gdi1.project.test.cipher.enigma.TemplateEnigmaTest;
 import de.tudarmstadt.gdi1.project.test.cipher.enigma.TemplatePinBoardTest;
 import de.tudarmstadt.gdi1.project.test.cipher.enigma.TemplateReverseRotorTest;
 import de.tudarmstadt.gdi1.project.test.cipher.enigma.TemplateRotorTest;
-import de.tudarmstadt.gdi1.project.test.cipher.substitution.TemplateCaesarTests;
-import de.tudarmstadt.gdi1.project.test.cipher.substitution.TemplateKeywordMonoalphabeticCipherTests;
-import de.tudarmstadt.gdi1.project.test.cipher.substitution.TemplateMonoalphabeticCipherTests;
-import de.tudarmstadt.gdi1.project.test.cipher.substitution.TemplatePolyalphabeticCipherTests;
-import de.tudarmstadt.gdi1.project.test.cipher.substitution.TemplateSubstitutionCipherTests;
-import de.tudarmstadt.gdi1.project.test.cipher.substitution.TemplateVigenereCipherTests;
+import de.tudarmstadt.gdi1.project.test.cipher.substitution.*;
 import de.tudarmstadt.gdi1.project.test.utils.TemplateUtilsTests;
+import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
+
+//import de.tudarmstadt.gdi1.project.test.alphabet.TemplateObjectWithFrequencyTests;
+//import de.tudarmstadt.gdi1.project.test.analysis.TemplateEncryptionOracleTests;
 
 @RunWith(Suite.class)
 @SuiteClasses({
@@ -62,7 +54,8 @@ import de.tudarmstadt.gdi1.project.test.utils.TemplateUtilsTests;
 
     /*our tests*/
     CaesarCryptanalysisImplTest.class,
-    MonoalphabeticCpaNpaCryptanalysisImplTest.class
+    MonoalphabeticCpaNpaCryptanalysisImplTest.class,
+    MonoalphabeticCribCryptanalysisImplTest.class
 	})
 public class Main {
 

@@ -58,6 +58,11 @@ public class DistributionImpl implements Distribution {
 		Map<Integer, List<String>> grams = utils.ngramize(text, sizes);
 		for(int length : sizes) {
 			HashMap<String, Integer> frequencies = new HashMap<String, Integer>();
+            if(length == 1) {
+                for(Character c: source) {
+                    frequencies.put(c.toString(), 0);
+                }
+            }
 			for(String gram : grams.get(length)) {
 				if(frequencies.get(gram) == null) {
 					frequencies.put(gram, 1);

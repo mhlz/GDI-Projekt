@@ -22,6 +22,7 @@ public class AlphabetImpl implements Alphabet {
 	}
 
 
+
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Alphabet) {
@@ -63,6 +64,10 @@ public class AlphabetImpl implements Alphabet {
             this.characters.add(c);
         }
     }
+
+	public AlphabetImpl(char[] characters) {
+		this(new UtilsImpl().toCharacterArray(characters));
+	}
 
 	/**
 	 * Create an alphabet with characters from a string
