@@ -63,6 +63,7 @@ public class DistributionImpl implements Distribution {
                     frequencies.put(c.toString(), 0);
                 }
             }
+			// go through all grams of the current length
 			for(String gram : grams.get(length)) {
 				if(frequencies.get(gram) == null) {
 					frequencies.put(gram, 1);

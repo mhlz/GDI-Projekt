@@ -22,7 +22,11 @@ public class AlphabetImpl implements Alphabet {
 	}
 
 
-
+	/**
+	 * Checks to see if this Alphabet is equal to another
+	 * @param obj other alphabet
+	 * @return boolean if both contain the same characters in the same order
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Alphabet) {
@@ -64,10 +68,6 @@ public class AlphabetImpl implements Alphabet {
             this.characters.add(c);
         }
     }
-
-	public AlphabetImpl(char[] characters) {
-		this(new UtilsImpl().toCharacterArray(characters));
-	}
 
 	/**
 	 * Create an alphabet with characters from a string
