@@ -22,6 +22,11 @@ public class AlphabetImpl implements Alphabet {
 	}
 
 
+	/**
+	 * Checks to see if this Alphabet is equal to another
+	 * @param obj other alphabet
+	 * @return boolean if both contain the same characters in the same order
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Alphabet) {
@@ -164,10 +169,18 @@ public class AlphabetImpl implements Alphabet {
 		return ((new UtilsImpl()).toCharArray(characters.toArray(new Character[characters.size()])));
 	}
 
+	/**
+	 * Get the alphabet as Character array
+	 * @return Character array of this alphabet
+	 */
 	public Character[] asCharacterArray() {
 		return characters.toArray(new Character[characters.size()]);
 	}
 
+	/**
+	 * Get the alphabet as Character list
+	 * @return Character list of this alphabet
+	 */
 	public List<Character> asCharacterList() {
 		return characters;
 	}
@@ -182,6 +195,10 @@ public class AlphabetImpl implements Alphabet {
 		return characters.iterator();
 	}
 
+	/**
+	 * Formats the characters nicely
+	 * @return
+	 */
     @Override
     public String toString() {
         StringBuilder out = new StringBuilder();

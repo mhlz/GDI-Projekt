@@ -12,6 +12,11 @@ public class DictionaryImpl implements Dictionary {
 	protected Alphabet alphabet;
 	protected TreeSet<String> words;
 
+	/**
+	 * Default constructor which extracts words from the text
+	 * @param text Text
+	 * @param alphabet Alphabet of the words and the text
+	 */
 	public DictionaryImpl(String text, Alphabet alphabet) {
 		this.alphabet = alphabet;
 		words = new TreeSet<String>();
