@@ -21,6 +21,27 @@ public class AlphabetImpl implements Alphabet {
 		characters = new ArrayList<Character>();
 	}
 
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Alphabet) {
+			Alphabet other = (Alphabet) obj;
+			if(other.size() != this.size()) {
+				return false;
+			}
+
+			for(int i = 0; i < this.size(); i++) {
+				if(other.getChar(i) != this.getChar(i)) {
+					return false;
+				}
+			}
+
+			return true;
+		} else {
+			return super.equals(obj);
+		}
+	}
+
 	/**
 	 * Create an alphabet by using a collection of characters
 	 * @param characters Alphabet collection
@@ -143,6 +164,14 @@ public class AlphabetImpl implements Alphabet {
 		return ((new UtilsImpl()).toCharArray(characters.toArray(new Character[characters.size()])));
 	}
 
+	public Character[] asCharacterArray() {
+		return characters.toArray(new Character[characters.size()]);
+	}
+
+	public List<Character> asCharacterList() {
+		return characters;
+	}
+
 	/**
 	 * Returns an iterator over a set of elements of type T.
 	 *
@@ -156,9 +185,11 @@ public class AlphabetImpl implements Alphabet {
     @Override
     public String toString() {
         StringBuilder out = new StringBuilder();
+		out.append("[");
         for(Character character: characters) {
             out.append(character);
         }
+		out.append("]");
         return out.toString();
     }
 }

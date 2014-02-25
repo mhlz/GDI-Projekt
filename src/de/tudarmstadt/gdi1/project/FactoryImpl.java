@@ -171,7 +171,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public MonoalphabeticKnownCiphertextCryptanalysis getMonoalphabeticKnownCiphertextCryptanalysisInstance() {
-        return null;
+        return new MonoalphabeticKnownCiphertextCryptanalysisImpl();
     }
 
     /**
@@ -277,6 +277,6 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public Individual getIndividualInstance(Alphabet alphabet, double fitness) {
-        return null;
+        return new IndividualImpl(alphabet, fitness);
     }
 }

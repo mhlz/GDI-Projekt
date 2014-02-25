@@ -88,6 +88,9 @@ public class DistributionImpl implements Distribution {
 	@Override
 	public List<String> getSorted(int length) {
 		ArrayList<String> ret = new ArrayList<String>();
+		if(weightedGrams.get(length) == null) {
+			return null;
+		}
 		for(GramFrequencyPair pair : weightedGrams.get(length)) {
 			ret.add(pair.gram);
 		}
@@ -108,6 +111,17 @@ public class DistributionImpl implements Distribution {
 			if(pair.gram.equals(key)) {
 				return pair.freq;
 			}
+		}
+		return 0;
+	}
+
+	public int getRank(String key) {
+		int i = 1;
+		for(GramFrequencyPair pair : weightedGrams.get(key.length())) {
+			if(pair.gram.equals(key)) {
+				return i;
+			}
+			i++;
 		}
 		return 0;
 	}

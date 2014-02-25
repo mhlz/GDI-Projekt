@@ -19,7 +19,7 @@ public class DictionaryImpl implements Dictionary {
 		Scanner scanner = new Scanner(text).useDelimiter("[ ,!?.]");
 		while(scanner.hasNext()) {
 			String word = scanner.next();
-			if(alphabet.allows(word)) {
+			if(alphabet.allows(word) && !word.equals("")) {
 				words.add(word);
 			}
 		}
