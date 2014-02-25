@@ -1,5 +1,6 @@
 package de.tudarmstadt.gdi1.project.test;
 
+import de.tudarmstadt.gdi1.project.analysis.monoalphabetic.MonoalphabeticCpaNpaCryptanalysisImpl;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -60,7 +61,8 @@ import de.tudarmstadt.gdi1.project.test.utils.TemplateUtilsTests;
 	TemplateUtilsTests.class,
 
     /*our tests*/
-    CaesarCryptanalysisImplTest.class
+    CaesarCryptanalysisImplTest.class,
+    MonoalphabeticCpaNpaCryptanalysisImplTest.class
 	})
 public class Main {
 
