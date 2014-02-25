@@ -20,7 +20,7 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis{
      */
     @Override
     public List<Integer> knownCiphertextAttack(String ciphertext) {
-        return null;
+        return getKeyLength(ciphertext);
     }
 
     @Override
