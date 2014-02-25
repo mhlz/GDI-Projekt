@@ -5,7 +5,7 @@ import de.tudarmstadt.gdi1.project.analysis.ValidateDecryptionOracle;
 import de.tudarmstadt.gdi1.project.analysis.caeser.CaesarCryptanalysis;
 import de.tudarmstadt.gdi1.project.analysis.caeser.CaesarCryptanalysisImpl;
 import de.tudarmstadt.gdi1.project.analysis.monoalphabetic.*;
-import de.tudarmstadt.gdi1.project.analysis.vigenere.VigenereCryptanalysis;
+import de.tudarmstadt.gdi1.project.analysis.vigenere.VigenereCryptanalysisImpl;
 import de.tudarmstadt.gdi1.project.cipher.enigma.Enigma;
 import de.tudarmstadt.gdi1.project.cipher.enigma.PinBoard;
 import de.tudarmstadt.gdi1.project.cipher.enigma.ReverseRotor;
@@ -175,12 +175,12 @@ public class FactoryImpl implements Factory {
     }
 
     /**
-     * returns an instance of {@link de.tudarmstadt.gdi1.project.analysis.vigenere.VigenereCryptanalysis}
+     * returns an instance of {@link de.tudarmstadt.gdi1.project.analysis.vigenere.VigenereCryptanalysisImpl}
      *
      * @return
      */
     @Override
-    public VigenereCryptanalysis getVigenereCryptanalysisInstance() {
+    public VigenereCryptanalysisImpl getVigenereCryptanalysisInstance() {
         return null;
     }
 
