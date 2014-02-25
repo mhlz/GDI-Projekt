@@ -181,7 +181,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public VigenereCryptanalysisImpl getVigenereCryptanalysisInstance() {
-        return null;
+        return new VigenereCryptanalysisImpl();
     }
 
     /**
