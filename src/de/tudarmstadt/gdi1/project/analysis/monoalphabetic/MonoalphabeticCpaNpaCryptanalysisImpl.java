@@ -14,9 +14,16 @@ import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.Monoalphab
 public class MonoalphabeticCpaNpaCryptanalysisImpl implements MonoalphabeticCpaNpaCryptanalysis {
     @Override
     public char[] knownPlaintextAttack(String ciphertext, String plaintext, Alphabet alphabet) {
-        return new char[0];
-    }
+        char[] key = new char[alphabet.size()];
+        for (int i = 0; i < alphabet.size(); i++) {
+            key[i] = ' ';
+        }
+        for (int n = 0; n < ciphertext.length(); n++) {
+            key[alphabet.getIndex(plaintext.charAt(n))] = ciphertext.charAt(n);
+        }
 
+        return key;
+    }
     /**
      * Attack to determine the used key based on a given cipher- and
      * (corresponding) plaintext and a given distribution on the alphabet.
@@ -47,6 +54,10 @@ public class MonoalphabeticCpaNpaCryptanalysisImpl implements MonoalphabeticCpaN
 
     @Override
     public char[] chosenPlaintextAttack(EncryptionOracle<MonoalphabeticCipher> oracle, Alphabet alphabet) {
-        return new char[0];
+
+        String encryptedAlphabet;
+        String plaintext = new String(alphabet.asCharArray());
+        encryptedAlphabet = oracle.encrypt(plaintext);
+        return knownPlaintextAttack(encryptedAlphabet, plaintext, alphabet);
     }
 }
