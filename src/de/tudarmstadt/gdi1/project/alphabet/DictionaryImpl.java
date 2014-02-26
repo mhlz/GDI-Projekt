@@ -32,6 +32,7 @@ public class DictionaryImpl implements Dictionary {
 		scanner.close();
 	}
 
+
 	/**
 	 * Checks if a word is contained in the dictionary
 	 *

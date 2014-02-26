@@ -54,7 +54,6 @@ public class MonoalphabeticCpaNpaCryptanalysisImpl implements MonoalphabeticCpaN
 
     @Override
     public char[] chosenPlaintextAttack(EncryptionOracle<MonoalphabeticCipher> oracle, Alphabet alphabet) {
-
         String encryptedAlphabet;
         String plaintext = new String(alphabet.asCharArray());
         encryptedAlphabet = oracle.encrypt(plaintext);
