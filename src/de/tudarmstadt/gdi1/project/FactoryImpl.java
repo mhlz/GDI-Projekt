@@ -6,10 +6,7 @@ import de.tudarmstadt.gdi1.project.analysis.caeser.CaesarCryptanalysis;
 import de.tudarmstadt.gdi1.project.analysis.caeser.CaesarCryptanalysisImpl;
 import de.tudarmstadt.gdi1.project.analysis.monoalphabetic.*;
 import de.tudarmstadt.gdi1.project.analysis.vigenere.VigenereCryptanalysisImpl;
-import de.tudarmstadt.gdi1.project.cipher.enigma.Enigma;
-import de.tudarmstadt.gdi1.project.cipher.enigma.PinBoard;
-import de.tudarmstadt.gdi1.project.cipher.enigma.ReverseRotor;
-import de.tudarmstadt.gdi1.project.cipher.enigma.Rotor;
+import de.tudarmstadt.gdi1.project.cipher.enigma.*;
 import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipher;
 import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipherImpl;
 import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.*;
@@ -232,7 +229,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public Rotor getRotorInstance(Alphabet entryAlph, Alphabet exitAlph, int startPosition) {
-        return null;
+        return new RotorImpl(entryAlph, exitAlph);
     }
 
     /**
