@@ -54,8 +54,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
     /*our tests*/
     CaesarCryptanalysisImplTest.class,
-    MonoalphabeticCpaNpaCryptanalysisImplTest.class,
-    MonoalphabeticCribCryptanalysisImplTest.class
+    MonoalphabeticCpaNpaCryptanalysisImplTest.class
 	})
 public class Main {
 
