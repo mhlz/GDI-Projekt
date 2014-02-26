@@ -79,7 +79,7 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 	    long t = System.currentTimeMillis();
 	    while (!future.isDone()) {
 		    Thread.sleep(5000);
-		    System.out.println(mono.getState(alph, new AlphabetImpl(realKey)));
+		    System.out.println(mono.getState(alph, new AlphabetImpl(new String(realKey))));
 	    }
 	    Assert.assertArrayEquals("couldn't get the key 'dbca'", realKey, future.get());
 
