@@ -158,7 +158,7 @@ public class UtilsImpl implements Utils {
         if(alphabet1.size() != alphabet2.size()) {
             return false; // because the two alphabets aren't the same size
         }
-        for(Character c:alphabet1.asCharArray()){
+        for(Character c : alphabet1.asCharArray()){
             if(!alphabet2.contains(c)) {
                 return false; // one of the characters is missing in alphabet 2
             }

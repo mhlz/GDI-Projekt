@@ -203,7 +203,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public Enigma getEnigmaInstance(List<Rotor> rotors, PinBoard pinboard, ReverseRotor reverseRotor) {
-        return null;
+        return new EnigmaImpl(rotors, pinboard, reverseRotor);
     }
 
     /**
@@ -216,7 +216,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public PinBoard getPinBoardInstance(Alphabet source, Alphabet destination) {
-        return null;
+        return new PinBoardImpl(source, destination);
     }
 
     /**
@@ -230,7 +230,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public Rotor getRotorInstance(Alphabet entryAlph, Alphabet exitAlph, int startPosition) {
-        return new RotorImpl(entryAlph, exitAlph);
+        return new RotorImpl(entryAlph, exitAlph, startPosition);
     }
 
     /**
@@ -242,7 +242,7 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public ReverseRotor getReverseRotatorInstance(Alphabet entryAlph, Alphabet exitAlph) {
-        return null;
+        return new ReverseRotorImpl(entryAlph, exitAlph);
     }
 
     /**
