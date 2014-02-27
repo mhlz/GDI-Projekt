@@ -201,37 +201,9 @@ public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCr
 			return true;
 		}
 
-		//creating a complete alphabet out of the key
-		ArrayList<Character> targetTmp = new ArrayList<Character>();
-		for(Character c: alphabet) {
-			if(key.containsKey(c)) {
-				targetTmp.add(key.get(c));
-			} else {
-				targetTmp.add((char) -1);
-			}
-		}
-
-		char[] restTarget = alphabet.asCharArray();
-
-		LinkedList<Character> restToAdd = new LinkedList<Character>();
-		for(Character c: restTarget) {
-			if(!targetTmp.contains(c)){
-				restToAdd.add(c);
-			}
-		}
-
-		ArrayList<Character> target = new ArrayList<Character>();
-
-		for(Character c: targetTmp) {
-			if(c == (char) -1) {
-				target.add(restToAdd.poll());
-			} else {
-				target.add(c);
-			}
-		}
 
 		Alphabet tempAlph = new AlphabetImpl(key.keySet());
-		MonoalphabeticCipherImpl cipher = new MonoalphabeticCipherImpl(alphabet, new AlphabetImpl(target));
+		MonoalphabeticCipherImpl cipher = new MonoalphabeticCipherImpl(alphabet, createCompleteAlphabetFromKey(alphabet, key));
 		String plaintext = cipher.decrypt(ciphertext);
 		for(String word: cribs) {
 			for(int i = 1; i <= word.length(); i++){
@@ -263,6 +235,44 @@ public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCr
 	@Override
 	public char[] knownCiphertextAttack(String ciphertext, Distribution distribution, Dictionary dictionary, List<String> cribs) {
 		return new char[0];
+	}
+
+	/**
+	 * creates a complete alphabet filled uo, so it can be used for a cipher
+	 *
+	 * @param alphabet the alphabet that should complete the key
+	 * @param key the key that will be used to build the alphabet
+	 * @return a complete alphabet that represents the cipher from the key
+	 */
+	private Alphabet createCompleteAlphabetFromKey(Alphabet alphabet, Map<Character, Character> key) {
+		ArrayList<Character> targetTmp = new ArrayList<Character>();
+		for(Character c: alphabet) {
+			if(key.containsKey(c)) {
+				targetTmp.add(key.get(c));
+			} else {
+				targetTmp.add((char) -1);
+			}
+		}
+
+		char[] restTarget = alphabet.asCharArray();
+
+		LinkedList<Character> restToAdd = new LinkedList<Character>();
+		for(Character c: restTarget) {
+			if(!targetTmp.contains(c)){
+				restToAdd.add(c);
+			}
+		}
+
+		ArrayList<Character> target = new ArrayList<Character>();
+
+		for(Character c: targetTmp) {
+			if(c == (char) -1) {
+				target.add(restToAdd.poll());
+			} else {
+				target.add(c);
+			}
+		}
+		return new AlphabetImpl(target);
 	}
 
 	/**

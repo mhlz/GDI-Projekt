@@ -135,7 +135,7 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 
 		System.out.println("-- reconstruction finished in " + (System.currentTimeMillis() - t) + "ms");
 		System.out.println(reconstructedKey);
-		Thread.sleep(1);
+		Thread.sleep(10);
 
 		cipher = TemplateTestCore.getFactory().getMonoalphabeticCipherInstance(source, TemplateTestUtils.getAlphabetFrom(reconstructedKey));
 		String plaintextPrime = cipher.decrypt(ciphertext);
@@ -146,7 +146,7 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 
 	@Test
 	public void testFullAttack() throws InterruptedException, ExecutionException {
-	/* this can run for a while */
+		/* this can run for a while */
 		Alphabet source = TemplateTestUtils.getDefaultAlphabet();
 		//final Alphabet key = new UtilsImpl().randomizeAlphabet(TemplateTestUtils.getDefaultAlphabet());
 		final Alphabet key = TemplateTestUtils.getMixedDefaultAlphabet();
@@ -200,6 +200,7 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 
 		System.out.println("-- reconstruction finished in " + (System.currentTimeMillis() - t) + "ms");
 		System.out.println(reconstructedKey);
+		Thread.sleep(10);
 
 		cipher = TemplateTestCore.getFactory().getMonoalphabeticCipherInstance(source, TemplateTestUtils.getAlphabetFrom(reconstructedKey));
 		String plaintextPrime = cipher.decrypt(ciphertext);
@@ -224,6 +225,7 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 
 		Alphabet sourcetmp = TemplateTestUtils.getDefaultAlphabet();
 		ArrayList<Character> tmp = new ArrayList<Character>();
+
 		int i = 0;
 		for(char c: sourcetmp.asCharArray()){
 			if(i >= length){
@@ -241,6 +243,7 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 
 		final Dictionary dictionary = TemplateTestCore.getFactory().getDictionaryInstance(source, TemplateTestUtils.ALICE);
 		final Distribution distribution = TemplateTestCore.getFactory().getDistributionInstance(source, TemplateTestUtils.ALICE, 3);
+
 
 		final MonoalphabeticCribCryptanalysis ca = TemplateTestCore.getFactory().getMonoalphabeticCribCryptanalysisInstance();
 
@@ -288,6 +291,7 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 
 		System.out.println("-- reconstruction finished in " + (System.currentTimeMillis() - t) + "ms");
 		System.out.println(reconstructedKey);
+		Thread.sleep(10);
 
 		cipher = TemplateTestCore.getFactory().getMonoalphabeticCipherInstance(source, TemplateTestUtils.getAlphabetFrom(reconstructedKey));
 		String plaintextPrime = cipher.decrypt(ciphertext);
