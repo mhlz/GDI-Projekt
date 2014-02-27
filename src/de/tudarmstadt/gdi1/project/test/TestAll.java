@@ -9,10 +9,10 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	Main.class,
-	TestMonoalphabeticCribAnalysis.class,
-	TestMonoalphabeticKCAnalysis.class
-	})
+		Main.class,
+		TestMonoalphabeticCribAnalysis.class,
+		TestMonoalphabeticKCAnalysis.class
+})
 public class TestAll {
 
 	@BeforeClass

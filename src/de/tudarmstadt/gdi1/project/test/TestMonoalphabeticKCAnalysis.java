@@ -9,8 +9,8 @@ import de.tudarmstadt.gdi1.project.test.analysis.monoalphabetic.TemplateMonoalph
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	TemplateMonoalphabeticKnownCiphertextCryptanalysisTests.class,
-	})
+		TemplateMonoalphabeticKnownCiphertextCryptanalysisTests.class,
+})
 public class TestMonoalphabeticKCAnalysis {
 
 	@BeforeClass

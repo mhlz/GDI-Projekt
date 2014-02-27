@@ -7,40 +7,40 @@ package de.tudarmstadt.gdi1.project.cipher.substitution;
 public abstract class SubstitutionCipherImpl implements SubstitutionCipher {
 
 
-    /**
-     * Encrypt a text according to the encryption method of the cipher
-     *
-     * @param text the plaintext to encrypt
-     * @return the encrypted plaintext (=ciphertext)
-     */
-    @Override
-    public final String encrypt(String text) {
+	/**
+	 * Encrypt a text according to the encryption method of the cipher
+	 *
+	 * @param text the plaintext to encrypt
+	 * @return the encrypted plaintext (=ciphertext)
+	 */
+	@Override
+	public final String encrypt(String text) {
 		// translate every character individually and put them together to a string
-        StringBuilder out = new StringBuilder();
-        char[] textArray = text.toCharArray();
-        for(int i = 0; i < textArray.length; i++) {
-            out.append(translate(textArray[i], i));
-        }
+		StringBuilder out = new StringBuilder();
+		char[] textArray = text.toCharArray();
+		for (int i = 0; i < textArray.length; i++) {
+			out.append(translate(textArray[i], i));
+		}
 
-        return out.toString();
-    }
+		return out.toString();
+	}
 
-    /**
-     * Decrypt a text according to the decryption method of the cipher
-     *
-     * @param text the ciphertext to decrypt
-     * @return the decrypted ciphertext (=plaintext)
-     */
-    @Override
-    public final String decrypt(String text) {
+	/**
+	 * Decrypt a text according to the decryption method of the cipher
+	 *
+	 * @param text the ciphertext to decrypt
+	 * @return the decrypted ciphertext (=plaintext)
+	 */
+	@Override
+	public final String decrypt(String text) {
 		// reverseTranslate every character individually and put them together to a string
-        StringBuilder out = new StringBuilder();
-        char[] textArray = text.toCharArray();
-        for(int i = 0; i  < textArray.length; i++) {
-            out.append(reverseTranslate(textArray[i], i));
-        }
-        return out.toString();
-    }
+		StringBuilder out = new StringBuilder();
+		char[] textArray = text.toCharArray();
+		for (int i = 0; i < textArray.length; i++) {
+			out.append(reverseTranslate(textArray[i], i));
+		}
+		return out.toString();
+	}
 
 	/**
 	 * Translates the given character that is on the given position in the text

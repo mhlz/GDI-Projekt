@@ -11,47 +11,47 @@ import org.junit.Test;
  * Created by Noxicon on 24.02.14.
  */
 public class CaesarCryptanalysisImplTest extends TestCase {
-    Alphabet alph;
-    String cipher;
-    String plain;
-    CaesarCryptanalysisImpl caesar= new CaesarCryptanalysisImpl();
+	Alphabet alph;
+	String cipher;
+	String plain;
+	CaesarCryptanalysisImpl caesar = new CaesarCryptanalysisImpl();
 
-    @Before
-    public void setUp() {
+	@Before
+	public void setUp() {
 
-     alph = TemplateTestUtils.getDefaultAlphabet();
-     cipher = "doobrxuedvhduhehorqjwrxv"; //"All you base are belong to us" shifted by 3
-     plain = "base";
-    }
+		alph = TemplateTestUtils.getDefaultAlphabet();
+		cipher = "doobrxuedvhduhehorqjwrxv"; //"All you base are belong to us" shifted by 3
+		plain = "base";
+	}
 
-    @Test
-    public void testKnownPlaintextAttack() throws Exception {
+	@Test
+	public void testKnownPlaintextAttack() throws Exception {
 
-        Assert.assertEquals("Caesar known ciphertext attack failed", new Integer(3), caesar.knownPlaintextAttack(cipher, plain, alph));
-    }
+		Assert.assertEquals("Caesar known ciphertext attack failed", new Integer(3), caesar.knownPlaintextAttack(cipher, plain, alph));
+	}
 
-    @Test
-    public void testKnownPlaintextAttack1() throws Exception {
+	@Test
+	public void testKnownPlaintextAttack1() throws Exception {
 
-    }
+	}
 
-    @Test
-    public void testKnownPlaintextAttack2() throws Exception {
+	@Test
+	public void testKnownPlaintextAttack2() throws Exception {
 
-    }
+	}
 
-    @Test
-    public void testKnownCiphertextAttack() throws Exception {
+	@Test
+	public void testKnownCiphertextAttack() throws Exception {
 
-    }
+	}
 
-    @Test
-    public void testKnownCiphertextAttack1() throws Exception {
+	@Test
+	public void testKnownCiphertextAttack1() throws Exception {
 
-    }
+	}
 
-    @Test
-    public void testKnownCiphertextAttack2() throws Exception {
+	@Test
+	public void testKnownCiphertextAttack2() throws Exception {
 
-    }
+	}
 }

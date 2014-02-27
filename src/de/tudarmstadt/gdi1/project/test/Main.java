@@ -24,38 +24,38 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
 	/* alphabet and co */
-	TemplateAlphabetTests.class,
-	TemplateDictionaryTests.class,
-	TemplateDistributionTests.class,
+		TemplateAlphabetTests.class,
+		TemplateDictionaryTests.class,
+		TemplateDistributionTests.class,
 	
 	/* ciphers */
-	TemplateCaesarTests.class,
-	TemplateKeywordMonoalphabeticCipherTests.class,
-	TemplateMonoalphabeticCipherTests.class,
-	TemplatePolyalphabeticCipherTests.class,
-	TemplateSubstitutionCipherTests.class,
-	TemplateVigenereCipherTests.class,
+		TemplateCaesarTests.class,
+		TemplateKeywordMonoalphabeticCipherTests.class,
+		TemplateMonoalphabeticCipherTests.class,
+		TemplatePolyalphabeticCipherTests.class,
+		TemplateSubstitutionCipherTests.class,
+		TemplateVigenereCipherTests.class,
 	
 	/* analysis */
-	TemplateCaesarCryptanalysisTests.class,
-	TemplateValidationDecryptionOracle.class,
-	TemplateVigenereCryptanalysisTests.class,
-	TemplateIndividualTests.class,
+		TemplateCaesarCryptanalysisTests.class,
+		TemplateValidationDecryptionOracle.class,
+		TemplateVigenereCryptanalysisTests.class,
+		TemplateIndividualTests.class,
 
 	
 	/* enigma */
-	TemplateEnigmaTest.class,
-	TemplatePinBoardTest.class,
-	TemplateReverseRotorTest.class,
-	TemplateRotorTest.class,
+		TemplateEnigmaTest.class,
+		TemplatePinBoardTest.class,
+		TemplateReverseRotorTest.class,
+		TemplateRotorTest.class,
 	
 	/* utils */
-	TemplateUtilsTests.class,
+		TemplateUtilsTests.class,
 
     /*our tests*/
-    CaesarCryptanalysisImplTest.class,
-    MonoalphabeticCpaNpaCryptanalysisImplTest.class
-	})
+		CaesarCryptanalysisImplTest.class,
+		MonoalphabeticCpaNpaCryptanalysisImplTest.class
+})
 public class Main {
 
 	@BeforeClass

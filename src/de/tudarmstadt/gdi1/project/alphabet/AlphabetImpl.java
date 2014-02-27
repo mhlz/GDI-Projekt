@@ -24,19 +24,20 @@ public class AlphabetImpl implements Alphabet {
 
 	/**
 	 * Checks to see if this Alphabet is equal to another
+	 *
 	 * @param obj other alphabet
 	 * @return boolean if both contain the same characters in the same order
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof Alphabet) {
+		if (obj instanceof Alphabet) {
 			Alphabet other = (Alphabet) obj;
-			if(other.size() != this.size()) {
+			if (other.size() != this.size()) {
 				return false;
 			}
 
-			for(int i = 0; i < this.size(); i++) {
-				if(other.getChar(i) != this.getChar(i)) {
+			for (int i = 0; i < this.size(); i++) {
+				if (other.getChar(i) != this.getChar(i)) {
 					return false;
 				}
 			}
@@ -49,35 +50,38 @@ public class AlphabetImpl implements Alphabet {
 
 	/**
 	 * Create an alphabet by using a collection of characters
+	 *
 	 * @param characters Alphabet collection
 	 */
-    public AlphabetImpl(Collection<Character> characters) {
-        this(characters.toArray(new Character[characters.size()]));
-    }
+	public AlphabetImpl(Collection<Character> characters) {
+		this(characters.toArray(new Character[characters.size()]));
+	}
 
 	/**
 	 * Create an alphabet by using a character array
+	 *
 	 * @param characters Array of characters that make up the alphabet
 	 */
-    public AlphabetImpl(Character[] characters) {
-        this();
-        for(char c : characters){
-            if (this.characters.contains(c)) {
-                throw new InvalidCharacterException("The character '" + c + "' exists twice!");
-            }
-            this.characters.add(c);
-        }
-    }
+	public AlphabetImpl(Character[] characters) {
+		this();
+		for (char c : characters) {
+			if (this.characters.contains(c)) {
+				throw new InvalidCharacterException("The character '" + c + "' exists twice!");
+			}
+			this.characters.add(c);
+		}
+	}
 
 	/**
 	 * Create an alphabet with characters from a string
+	 *
 	 * @param characters String containing the characters for the alphabet
 	 */
-    public AlphabetImpl(String characters) {
+	public AlphabetImpl(String characters) {
 		this((new UtilsImpl()).toCharacterArray(characters.toCharArray()));
-    }
+	}
 
-    /**
+	/**
 	 * Searches for a character in the alphabet
 	 *
 	 * @param chr the character to find
@@ -129,8 +133,8 @@ public class AlphabetImpl implements Alphabet {
 	@Override
 	public boolean allows(String word) {
 		// check every single character for being a part of this alphabet
-		for(int i = 0; i < word.length(); i++) {
-			if(!contains(word.charAt(i))) {
+		for (int i = 0; i < word.length(); i++) {
+			if (!contains(word.charAt(i))) {
 				return false;
 			}
 		}
@@ -147,9 +151,9 @@ public class AlphabetImpl implements Alphabet {
 	@Override
 	public String normalize(String input) {
 		String ret = "";
-		for(int i = 0; i < input.length(); i++) {
+		for (int i = 0; i < input.length(); i++) {
 			// only add the character to the return string if it's part of the alphabet
-			if(!contains(input.charAt(i))) {
+			if (!contains(input.charAt(i))) {
 				continue;
 			}
 			ret += input.charAt(i);
@@ -187,14 +191,14 @@ public class AlphabetImpl implements Alphabet {
 		return characters.iterator();
 	}
 
-    @Override
-    public String toString() {
-        StringBuilder out = new StringBuilder();
+	@Override
+	public String toString() {
+		StringBuilder out = new StringBuilder();
 		out.append("[");
-        for(Character character: characters) {
-            out.append(character);
-        }
+		for (Character character : characters) {
+			out.append(character);
+		}
 		out.append("]");
-        return out.toString();
-    }
+		return out.toString();
+	}
 }

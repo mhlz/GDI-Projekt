@@ -21,6 +21,7 @@ public class IndividualImpl implements Individual {
 
 	/**
 	 * Constructor using only an alphabet. Set fitness later
+	 *
 	 * @param alphabet key of this individual
 	 */
 	public IndividualImpl(Alphabet alphabet) {
@@ -30,8 +31,9 @@ public class IndividualImpl implements Individual {
 
 	/**
 	 * Constructor using alphabet and fitness
+	 *
 	 * @param alphabet key of this individual
-	 * @param fitness fitness of this individual
+	 * @param fitness  fitness of this individual
 	 */
 	public IndividualImpl(Alphabet alphabet, double fitness) {
 		this.alphabet = alphabet;
@@ -40,6 +42,7 @@ public class IndividualImpl implements Individual {
 
 	/**
 	 * Setter for the key
+	 *
 	 * @param alphabet key of this individual
 	 */
 	public void setAlphabet(Alphabet alphabet) {
@@ -48,6 +51,7 @@ public class IndividualImpl implements Individual {
 
 	/**
 	 * Setter for the fitness
+	 *
 	 * @param fitness fitness of this individual
 	 */
 	public void setFitness(double fitness) {

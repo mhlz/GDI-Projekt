@@ -9,8 +9,8 @@ import de.tudarmstadt.gdi1.project.test.analysis.monoalphabetic.TemplateCribCryp
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	TemplateCribCryptanalysisTests.class,
-	})
+		TemplateCribCryptanalysisTests.class,
+})
 public class TestMonoalphabeticCribAnalysis {
 
 	@BeforeClass

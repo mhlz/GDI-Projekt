@@ -84,10 +84,10 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 	@Test
 	public void testBasicBacktrackingAttack() throws InterruptedException, ExecutionException {
 	/* this can run for a while */
-		Alphabet source = TemplateTestUtils.getAlphabetFrom(new char[] { 'a', 'e', 'f', 'h', 'm', 'p', 's', 't', 'v', 'z' });
+		Alphabet source = TemplateTestUtils.getAlphabetFrom(new char[]{'a', 'e', 'f', 'h', 'm', 'p', 's', 't', 'v', 'z'});
 		final Alphabet key = TemplateTestCore.getFactory().getUtilsInstance().randomizeAlphabet(source);
 
-		Alphabet sourceWithBlank = TemplateTestUtils.getAlphabetFrom(new char[] { 'a', 'e', 'f', 'h', 'm', 'p', 's', 't', 'v', 'z', ' ' });
+		Alphabet sourceWithBlank = TemplateTestUtils.getAlphabetFrom(new char[]{'a', 'e', 'f', 'h', 'm', 'p', 's', 't', 'v', 'z', ' '});
 
 		final Dictionary dictionary = TemplateTestCore.getFactory().getDictionaryInstance(source,
 				sourceWithBlank.normalize(TemplateTestUtils.ALICE));
@@ -124,7 +124,7 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 		long time2 = System.currentTimeMillis();
 		while (!future.isDone()) {
 			//Thread.sleep(1);
-			if(System.currentTimeMillis() - time2 >= 5000){
+			if (System.currentTimeMillis() - time2 >= 5000) {
 				time2 = System.currentTimeMillis();
 				System.out.println(ca.getState(distribution.getAlphabet(), key));
 			}
@@ -189,7 +189,7 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 
 		while (!future.isDone()) {
 			Thread.sleep(10);
-			if(System.currentTimeMillis() - time2 >= 5000){
+			if (System.currentTimeMillis() - time2 >= 5000) {
 				time2 = System.currentTimeMillis();
 				System.out.println(ca.getState(distribution.getAlphabet(), key));
 			}
@@ -211,24 +211,26 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 	}
 
 	@Test
-	public void testEveryLength() throws InterruptedException, ExecutionException{
-		for(int i = 10; i <= 26; i++) {
+	public void testEveryLength() throws InterruptedException, ExecutionException {
+		for (int i = 10; i <= 26; i++) {
 			Thread.sleep(1000);
+			System.out.println();
 			System.out.println(" ****************** TESTING LENGTH ********************");
 			System.out.println(" ******************       " + i + "       ********************");
+			System.out.println();
 			testLength(i);
 		}
 	}
 
 
-	public void testLength(int length) throws InterruptedException, ExecutionException{/* this can run for a while */
+	public void testLength(int length) throws InterruptedException, ExecutionException {/* this can run for a while */
 
-		Alphabet sourcetmp = TemplateTestUtils.getDefaultAlphabet();
+		Alphabet sourcetmp = new UtilsImpl().randomizeAlphabet(TemplateTestUtils.getDefaultAlphabet());
 		ArrayList<Character> tmp = new ArrayList<Character>();
 
 		int i = 0;
-		for(char c: sourcetmp.asCharArray()){
-			if(i >= length){
+		for (char c : sourcetmp.asCharArray()) {
+			if (i >= length) {
 				break;
 			}
 			tmp.add(c);
@@ -280,7 +282,7 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 
 		while (!future.isDone()) {
 			//Thread.sleep(10);
-			if(System.currentTimeMillis() - time2 >= 5000){
+			if (System.currentTimeMillis() - time2 >= 5000) {
 				time2 = System.currentTimeMillis();
 				System.out.println(ca.getState(distribution.getAlphabet(), key));
 			}
@@ -302,7 +304,7 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 	}
 
 	private Map<Character, Character> constructPartialKey(Alphabet source) {
-		Map<Character, Character> partialKey = new HashMap<Character,Character>();
+		Map<Character, Character> partialKey = new HashMap<Character, Character>();
 		partialKey.put('a', 'c');
 		partialKey.put('b', 'h');
 		partialKey.put('c', 'f');

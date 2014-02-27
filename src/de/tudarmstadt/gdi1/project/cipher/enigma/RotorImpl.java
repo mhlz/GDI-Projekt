@@ -41,13 +41,13 @@ public class RotorImpl implements Rotor {
 	/**
 	 * Constructs a rotor. Every letter in the input alphabet has to be translated to the output alphabet.
 	 *
-	 * @param in Input alphabet
-	 * @param out Output alphabet
+	 * @param in            Input alphabet
+	 * @param out           Output alphabet
 	 * @param startPosition Starting position of the rotor
 	 */
 	public RotorImpl(Alphabet in, Alphabet out, int startPosition) {
 		// check for same length
-		if(in.size() != out.size()) {
+		if (in.size() != out.size()) {
 			throw new InvalidAlphabetException("Both alphabets must have the same length!");
 		}
 
@@ -59,11 +59,11 @@ public class RotorImpl implements Rotor {
 
 		// calculate the difference between every letter in the input and output alphabet and save that in the shift array
 		this.shift = new ArrayList<Integer>();
-		for(int i = 0; i < in.size(); i++) {
+		for (int i = 0; i < in.size(); i++) {
 			this.shift.add(in.getIndex(out.getChar(i)) - i);
 		}
 		// rotate the rotor the requested amount of times
-		for(int i = 0; i < startPosition; i++) {
+		for (int i = 0; i < startPosition; i++) {
 			this.rotate();
 		}
 	}
@@ -81,7 +81,7 @@ public class RotorImpl implements Rotor {
 	public char translate(char c, boolean forward) {
 		// return the matching character from the input and output alphabets
 		// pretty straightforward since we calculate the output alphabet in every rotation
-		if(forward) {
+		if (forward) {
 			return out.getChar(in.getIndex(c));
 		} else {
 			return in.getChar(out.getIndex(c));
@@ -102,7 +102,7 @@ public class RotorImpl implements Rotor {
 		// rotate the array
 		// new position 0 is loaded from old position 1 and so on...
 		int position = 1;
-		for(Integer i : shift) {
+		for (Integer i : shift) {
 			newShift.add(shift.get(position % shift.size()));
 			position++;
 		}
@@ -116,13 +116,13 @@ public class RotorImpl implements Rotor {
 
 		// calculate the new output alphabet
 		String newAlphabet = "";
-		for(int i = 0; i < in.size(); i++) {
+		for (int i = 0; i < in.size(); i++) {
 			// shift the index according to the shift array
 			int index = i;
 			index += shift.get(index);
 			// put the index back inbounds if necessary
 			index %= shift.size();
-			if(index < 0) {
+			if (index < 0) {
 				index += shift.size();
 			}
 			// add the new character to the alphabet
@@ -141,6 +141,7 @@ public class RotorImpl implements Rotor {
 	@Override
 	public void reset() {
 		// rotate until this reaches the starting position
-		while(!rotate()) {}
+		while (!rotate()) {
+		}
 	}
 }

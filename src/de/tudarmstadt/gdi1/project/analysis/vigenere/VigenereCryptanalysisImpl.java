@@ -12,211 +12,291 @@ import java.util.List;
 /**
  * Created by Noxicon on 25.02.14.
  */
-public class VigenereCryptanalysisImpl implements VigenereCryptanalysis{
-    /**
-     * Attack to determine all possible length of the used key based on a given
-     * ciphertext.
-     *
-     * @param ciphertext the ciphertext
-     * @return the possible key lengths (in ascending order)
-     */
-    @Override
-    public List<Integer> knownCiphertextAttack(String ciphertext) {
-        return getKeyLength(ciphertext);
-    }
+public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
+	/**
+	 * Attack to determine all possible length of the used key based on a given
+	 * ciphertext.
+	 *
+	 * @param ciphertext the ciphertext
+	 * @return the possible key lengths (in ascending order)
+	 */
+	@Override
+	public List<Integer> knownCiphertextAttack(String ciphertext) {
+		return getKeyLength(ciphertext);
+	}
 
-    @Override
-    public String knownPlaintextAttack(String ciphertext, String plaintext, Alphabet alphabet) {
-        return null;
-    }
+	@Override
+	public String knownPlaintextAttack(String ciphertext, String plaintext, Alphabet alphabet) {
+		List<Integer> keyLenghts = new ArrayList<Integer>();
+		char[] keyPart = new char[plaintext.length()];
+		String stringKeyPart = "";
+		char[] keyPartCalc = new char[plaintext.length()];
+		String stringKeyPartCalc = "";
+		char[] compare = new char[plaintext.length()];
+		String stringCompare = "";
+		String lastCheckedKey = "";
+		int counter;
+		int lastTryTrue = 0;
+		String key;
 
-    /**
-     * Attack to determine the used key based on a given cipher- and
-     * (corresponding) plaintext and a given distribution on the alphabet.
-     *
-     * @param ciphertext   the ciphertext
-     * @param plaintext    the corresponding plaintext
-     * @param distribution the distribution
-     * @return the key, a part of the key, or null
-     */
-    @Override
-    public Object knownPlaintextAttack(String ciphertext, String plaintext, Distribution distribution) {
-        return null;
-    }
+		for (int i = 0; i < ciphertext.length(); i++) {
+			int tmp = alphabet.getIndex(ciphertext.charAt(i)) - alphabet.getIndex(plaintext.charAt(i));
+			if (tmp < 0) {
+				tmp += alphabet.size();
+			}
+			keyPart[i] = alphabet.getChar(tmp);
+		}
+		for (char c : keyPart) {
+			stringKeyPart += c;
+		}
+		keyLenghts = getKeyLength(stringKeyPart);
+		if (keyLenghts.size() == 0) {
+			key = stringKeyPart;
+			return key;
+		}
+		for (int i = 0; i < keyLenghts.size(); i++) {
+			for (int n = 0; n < keyLenghts.get(i); n++) {
+				stringCompare = "";
+				stringKeyPartCalc = "";
+				counter = -1;
+				for (int m = 0; m < keyLenghts.get(i); m++) {
+					compare[m] = keyPart[m];
+					counter++;
+				}
+				for (int m = 0; m < keyLenghts.get(i); m++) {
+					stringCompare += compare[m];
+				}
+				for (int m = 0; m < keyPart.length - counter; m++) {
+					keyPartCalc[m] = keyPart[m + counter];
+				}
+				for (char c : keyPartCalc) {
+					stringKeyPartCalc += c;
+				}
 
-    /**
-     * Attack to determine the used key based on a given cipher- and
-     * (corresponding) plaintexts and a given distribution on the alphabet.
-     *
-     * @param ciphertext
-     * @param plaintext
-     * @param distribution The distribution
-     * @param dictionary   @return the key, a part of the key, or null
-     */
-    @Override
-    public Object knownPlaintextAttack(String ciphertext, String plaintext, Distribution distribution, Dictionary dictionary) {
-        return null;
-    }
+				if (stringKeyPartCalc.contains(stringCompare)) {
+					lastTryTrue = 1;
+					lastCheckedKey = stringCompare;
+					if (keyLenghts.size() == keyLenghts.get(i)) {
+						key = stringCompare;
+						return key;
+					}
 
-    /**
-     * Attack to determine the used key based on a given ciphertext, a given
-     * distribution on the alphabet and a list of known plaintext cribs.
-     *
-     * @param ciphertext   the ciphertext
-     * @param distribution the distribution
-     * @param cribs        the list of substrings known to appear in the plaintext
-     * @return the key, a part of the key, or null
-     */
-    @Override
-    public String knownCiphertextAttack(String ciphertext, Distribution distribution, List<String> cribs) {
-        List<Integer> keys = getKeyLength(ciphertext);
-        String temp = "";
-        String ret = "";
+				} else if (lastTryTrue == 1) {
+					if (stringKeyPartCalc.contains(lastCheckedKey)) {
+						key = stringCompare;
+						return key;
+					}
+					return lastCheckedKey;
+				} else {
+					key = stringKeyPartCalc;
+					return key;
+				}
 
+			}
+		}
+		if (lastTryTrue == 1) {
+			if (stringKeyPartCalc.contains(lastCheckedKey)) {
+				key = stringCompare;
+				return key;
+			}
+		}
+		return null;
+	}
 
-        for ( int i= 0; i < keys.size(); i++){   // run through all found keys
-            ret = "";
-            for ( int j = 1; j <= keys.get(i); j++){  // run through the size of the current key
-                temp = extract(ciphertext,keys.get(i), j); // extracted chars dependent on the current size of key
+	/**
+	 * Attack to determine the used key based on a given cipher- and
+	 * (corresponding) plaintext and a given distribution on the alphabet.
+	 *
+	 * @param ciphertext   the ciphertext
+	 * @param plaintext    the corresponding plaintext
+	 * @param distribution the distribution
+	 * @return the key, a part of the key, or null
+	 */
+	@Override
+	public Object knownPlaintextAttack(String ciphertext, String plaintext, Distribution distribution) {
+		return null;
+	}
 
-                DistributionImpl keyDist = new DistributionImpl(distribution.getAlphabet(),temp);  // make distribution for extracted string
-                char mostUsedPlain = distribution.getByRank(1, 1).charAt(0);                       // most used in given alphabet
-                char mostUsedKey = keyDist.getByRank(1, 1).charAt(0);                              // most used in current extracted string
+	/**
+	 * Attack to determine the used key based on a given cipher- and
+	 * (corresponding) plaintexts and a given distribution on the alphabet.
+	 *
+	 * @param ciphertext
+	 * @param plaintext
+	 * @param distribution The distribution
+	 * @param dictionary   @return the key, a part of the key, or null
+	 */
+	@Override
+	public Object knownPlaintextAttack(String ciphertext, String plaintext, Distribution distribution, Dictionary dictionary) {
+		return null;
+	}
 
-                int plain = distribution.getAlphabet().getIndex(mostUsedPlain);                 // get numbers to determine shift range
-                int key = distribution.getAlphabet().getIndex(mostUsedKey);
-
-                int shift = key - plain;
-                char keyChar = distribution.getAlphabet().getChar(shift);                       // get code char
-
-                ret = ret + keyChar;
-            }
-
-            VigenereImpl keyTest = new VigenereImpl(ret , distribution.getAlphabet());
-
-            temp = keyTest.decrypt(ciphertext);                                              // decrypt with found pass code
-            int x = 0;
-
-            for ( int j = 0; j < cribs.size(); j++){    // run through cribs array size
-                if ( temp.contains(cribs.get(j)) )      // check if string in current cribs is contained in decrypted string
-                    x = x + 1;
-            }
-
-            if (x ==cribs.size())                     // pass code worked - return the code
-                return ret;
-        }
-        return "";                                      // no valid pass code found
-    }
-
-    /**
-     * extracts every nth character in a sequence of m  , of a String
-     * @param m      sequence length
-     * @param n      nth character to be extracted
-     * @param input   String
-     * @return      String of all the nth characters
-     */
-    public String extract ( String input, int m, int n){
-        int x = 1;                                 // counter of sequence length
-        String ret = "";
-
-        for (int i = 0; i < input.length(); i++){  // run to length of string
-
-            if (x == n)                            // counter in a sequence on the character to be extracted
-                ret += input.charAt(i);
-
-            if (x == m)                           // reset sequence counter
-                x = 1;
-            else
-                x = x + 1;
-
-        }
-        return ret;
-    }
-
-
-    /**
-     * calculates all divisors of a number
-     * @param number
-     * @return a List of dividends
-     */
-    public List<Integer> getDividends(int number){
-        List<Integer> ret = new ArrayList<Integer>();
-        for (int i = 1; i <= number ; i++) {   // checks all numbers starting from one to the number itself
-            if ( number % i == 0)              // if mod 0 the current number is a divident
-                ret.add(i);
-        }
-        return ret;
-    }
+	/**
+	 * Attack to determine the used key based on a given ciphertext, a given
+	 * distribution on the alphabet and a list of known plaintext cribs.
+	 *
+	 * @param ciphertext   the ciphertext
+	 * @param distribution the distribution
+	 * @param cribs        the list of substrings known to appear in the plaintext
+	 * @return the key, a part of the key, or null
+	 */
+	@Override
+	public String knownCiphertextAttack(String ciphertext, Distribution distribution, List<String> cribs) {
+		List<Integer> keys = getKeyLength(ciphertext);
+		String temp = "";
+		String ret = "";
 
 
-    /**
-     * calculates the ggT of 2 numbers
-     * @param a
-     * @param b
-     * @return   ggT of a and b
-     */
-    public int ggT (int a, int b ){
+		for (int i = 0; i < keys.size(); i++) {   // run through all found keys
+			ret = "";
+			for (int j = 1; j <= keys.get(i); j++) {  // run through the size of the current key
+				temp = extract(ciphertext, keys.get(i), j); // extracted chars dependent on the current size of key
 
-        if (a == b)                           //euklid algorithm
-             return(a);
-        else
-            if (a > b) return ggT(a-b,b);
-            else       return ggT(b-a,a);
+				DistributionImpl keyDist = new DistributionImpl(distribution.getAlphabet(), temp);  // make distribution for extracted string
+				char mostUsedPlain = distribution.getByRank(1, 1).charAt(0);                       // most used in given alphabet
+				char mostUsedKey = keyDist.getByRank(1, 1).charAt(0);                              // most used in current extracted string
 
-        }
+				int plain = distribution.getAlphabet().getIndex(mostUsedPlain);                 // get numbers to determine shift range
+				int key = distribution.getAlphabet().getIndex(mostUsedKey);
 
-    /**
-     * returns the ggT of a List of numbers
-     * @param inputList   list of numbers
-     * @return  ggT of all the numbers
-     */
-    public int ggT ( List<Integer> inputList){
-        if (inputList.size() < 2)                       // check if list is smaller 2
-                return inputList.get(0);                // return item, only one in list
-        else {
-        int x = ggT(inputList.get(0),inputList.get(1)); // first pair
-        for (int i = 2; i < inputList.size(); i++){     // skip first pair, run to rest of the list
-             x = ggT(inputList.get(i), x);              // check ggT of previous pair with new item
-        }
+				int shift = key - plain;
+				char keyChar = distribution.getAlphabet().getChar(shift);                       // get code char
 
-        return x;
-        }
-    }
+				ret = ret + keyChar;
+			}
 
-    /**
-     * calculates the distance between a multiple word sequence in a string
-     * @param input   String
-     * @param sequence  length of a sequence
-     * @return a List of distances between same sequences
-     */
-    public List<Integer> getDistance ( String input, int sequence){
-        List<Integer> ret = new ArrayList<Integer>();
-        String temp;
-        String split;
+			VigenereImpl keyTest = new VigenereImpl(ret, distribution.getAlphabet());
 
-        for ( int i = 0; i < input.length() - sequence; i++){        // run through string length
-            temp = input.substring(i,i+sequence);                    // contains the word to be checked
-            split = input.substring(input.indexOf(temp)+ sequence ); // contains the rest of the string, cutting the search word
-            if ( split.indexOf(temp) != -1)                          // word is contained -> add into result
-                ret.add(split.indexOf(temp) + sequence);
-        }
-        return ret;
-    }
+			temp = keyTest.decrypt(ciphertext);                                              // decrypt with found pass code
+			int x = 0;
 
-    /**
-     * returns possible key lengthes for a coded word
-     * @param chiffre coded word
-     * @return  possible key lengthes
-     */
-    public List<Integer> getKeyLength(String chiffre){
-        List<Integer> ret = new ArrayList<Integer>();
+			for (int j = 0; j < cribs.size(); j++) {    // run through cribs array size
+				if (temp.contains(cribs.get(j)))      // check if string in current cribs is contained in decrypted string
+					x = x + 1;
+			}
 
-        for (int i = 3; i <= chiffre.length(); i++){   // run from smallest reasonable keylength to the max wordcount
-           ret.addAll(getDistance(chiffre,i));         // take all distances
-        }
-        ret=(getDividends(ggT(ret)));                  // calculate ggt of all distances and get all dividends of the ggt
-        return ret;
-    }
+			if (x == cribs.size())                     // pass code worked - return the code
+				return ret;
+		}
+		return "";                                      // no valid pass code found
+	}
+
+	/**
+	 * extracts every nth character in a sequence of m  , of a String
+	 *
+	 * @param m     sequence length
+	 * @param n     nth character to be extracted
+	 * @param input String
+	 * @return String of all the nth characters
+	 */
+	public String extract(String input, int m, int n) {
+		int x = 1;                                 // counter of sequence length
+		String ret = "";
+
+		for (int i = 0; i < input.length(); i++) {  // run to length of string
+
+			if (x == n)                            // counter in a sequence on the character to be extracted
+				ret += input.charAt(i);
+
+			if (x == m)                           // reset sequence counter
+				x = 1;
+			else
+				x = x + 1;
+
+		}
+		return ret;
+	}
+
+
+	/**
+	 * calculates all divisors of a number
+	 *
+	 * @param number
+	 * @return a List of dividends
+	 */
+	public List<Integer> getDividends(int number) {
+		List<Integer> ret = new ArrayList<Integer>();
+		for (int i = 1; i <= number; i++) {   // checks all numbers starting from one to the number itself
+			if (number % i == 0)              // if mod 0 the current number is a divident
+				ret.add(i);
+		}
+		return ret;
+	}
+
+
+	/**
+	 * calculates the ggT of 2 numbers
+	 *
+	 * @param a
+	 * @param b
+	 * @return ggT of a and b
+	 */
+	public int ggT(int a, int b) {
+
+		if (a == b)                           //euklid algorithm
+			return (a);
+		else if (a > b) return ggT(a - b, b);
+		else return ggT(b - a, a);
+
+	}
+
+	/**
+	 * returns the ggT of a List of numbers
+	 *
+	 * @param inputList list of numbers
+	 * @return ggT of all the numbers
+	 */
+	public int ggT(List<Integer> inputList) {
+		if (inputList.size() < 2)                       // check if list is smaller 2
+			return inputList.get(0);                // return item, only one in list
+		else {
+			int x = ggT(inputList.get(0), inputList.get(1)); // first pair
+			for (int i = 2; i < inputList.size(); i++) {     // skip first pair, run to rest of the list
+				x = ggT(inputList.get(i), x);              // check ggT of previous pair with new item
+			}
+
+			return x;
+		}
+	}
+
+	/**
+	 * calculates the distance between a multiple word sequence in a string
+	 *
+	 * @param input    String
+	 * @param sequence length of a sequence
+	 * @return a List of distances between same sequences
+	 */
+	public List<Integer> getDistance(String input, int sequence) {
+		List<Integer> ret = new ArrayList<Integer>();
+		String temp;
+		String split;
+
+		for (int i = 0; i < input.length() - sequence; i++) {        // run through string length
+			temp = input.substring(i, i + sequence);                    // contains the word to be checked
+			split = input.substring(input.indexOf(temp) + sequence); // contains the rest of the string, cutting the search word
+			if (split.indexOf(temp) != -1)                          // word is contained -> add into result
+				ret.add(split.indexOf(temp) + sequence);
+		}
+		return ret;
+	}
+
+	/**
+	 * returns possible key lengthes for a coded word
+	 *
+	 * @param chiffre coded word
+	 * @return possible key lengthes
+	 */
+	public List<Integer> getKeyLength(String chiffre) {
+		List<Integer> ret = new ArrayList<Integer>();
+
+		for (int i = 3; i <= chiffre.length(); i++) {   // run from smallest reasonable keylength to the max wordcount
+			ret.addAll(getDistance(chiffre, i));         // take all distances
+		}
+		if (!ret.isEmpty()) {
+			ret = (getDividends(ggT(ret)));                  // calculate ggt of all distances and get all dividends of the ggt
+		}
+		return ret;
+	}
 
 
 }

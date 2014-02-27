@@ -3,6 +3,7 @@ package de.tudarmstadt.gdi1.project.analysis.monoalphabetic;
 import de.tudarmstadt.gdi1.project.alphabet.*;
 import de.tudarmstadt.gdi1.project.analysis.ValidateDecryptionOracle;
 import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.MonoalphabeticCipherImpl;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -153,15 +154,15 @@ public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements Monoalpha
 		this.dictionary = null;
 
 		// start the loop
-		while(stableGenerations < STABLE_GENERATIONS) {
+		while (stableGenerations < STABLE_GENERATIONS) {
 			// ask the oracle to see if the current best individual has a right key
 			MonoalphabeticCipherImpl crypto = new MonoalphabeticCipherImpl(distribution.getAlphabet(), getBestIndividual().getAlphabet());
-			if(validateDecryptionOracle.isCorrect(crypto.decrypt(ciphertext))) {
+			if (validateDecryptionOracle.isCorrect(crypto.decrypt(ciphertext))) {
 				break;
 			}
 
 			// reset the counter for stable generations, in case the best individual has changed
-			if(!lastBest.getAlphabet().equals(getBestIndividual().getAlphabet())) {
+			if (!lastBest.getAlphabet().equals(getBestIndividual().getAlphabet())) {
 				stableGenerations = 0;
 			}
 
@@ -189,6 +190,7 @@ public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements Monoalpha
 
 	/**
 	 * Gets the best individual of the current generation
+	 *
 	 * @return Individual with the highest fitness
 	 */
 	public Individual getBestIndividual() {
@@ -205,13 +207,13 @@ public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements Monoalpha
 	 */
 	@Override
 	public String getState(Alphabet sourceAlphabet, Alphabet targetKey) {
-		if(currentGeneration.isEmpty()) {
+		if (currentGeneration.isEmpty()) {
 			return "Not started";
 		}
 		int correct = 0;
 		String correctString = "[";
-		for(int i = 0; i < targetKey.size(); i++) {
-			if(targetKey.getChar(i) == getBestIndividual().getAlphabet().getChar(i)) {
+		for (int i = 0; i < targetKey.size(); i++) {
+			if (targetKey.getChar(i) == getBestIndividual().getAlphabet().getChar(i)) {
 				correct++;
 				correctString += "x";
 			} else {
@@ -219,7 +221,7 @@ public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements Monoalpha
 			}
 		}
 		correctString += "]";
-		return  "target      : " + targetKey + "\n" +
+		return "target      : " + targetKey + "\n" +
 				"best guess  : " + getBestIndividual().getAlphabet() + "\n" +
 				"correct     : " + correctString + " (" + correct + ")\n" +
 				"best fitness: " + getBestIndividual().getFitness() + "\n" +
@@ -244,17 +246,17 @@ public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements Monoalpha
 		DistributionImpl clearDist = (DistributionImpl) distribution;
 		Random rnd = new Random();
 
-		for(int i = 0; i < populationSize; i++) {
+		for (int i = 0; i < populationSize; i++) {
 			// initialize the string that will hold the current alphabet
 			String guess = "";
-			for(Character c : alphabet) {
+			for (Character c : alphabet) {
 				// go through every character of the alphabet
 				String cs = "" + c; // convert to string
 				// get the rank of the character in the clear text distribution + or - a random value between 0 and 10
 				// this value is biased towards 0 and gets progressively larger for bigger population sizes to
 				// get good guesses in the beginning
-				int rank = (int)((float)clearDist.getRank(cs) + ((rnd.nextBoolean()) ? 1f : -1f) * ((float)i / (float)populationSize) * rnd.nextDouble() * 10);
-				if(rank == 0) {
+				int rank = (int) ((float) clearDist.getRank(cs) + ((rnd.nextBoolean()) ? 1f : -1f) * ((float) i / (float) populationSize) * rnd.nextDouble() * 10);
+				if (rank == 0) {
 					guess += " "; // save a space in case the letter doesn't appear in the distribution
 					continue;
 				}
@@ -262,7 +264,7 @@ public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements Monoalpha
 				// this should approximately be the corresponding letter since they should both occur equally often
 				String cypherGram = cipherDist.getByRank(1, rank);
 				// in case the letter is already part of the alphabet or there's no letter with that rank, save a space
-				if(cypherGram == null || guess.contains(cypherGram)) {
+				if (cypherGram == null || guess.contains(cypherGram)) {
 					guess += " ";
 					continue;
 				}
@@ -273,15 +275,15 @@ public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements Monoalpha
 			// at this point guess is mostly filled with letters, but some spaces are still in there
 			// make a list with every character that occurs in the alphabet but not in guess
 			ArrayList<Character> candidates = new ArrayList<Character>();
-			for(Character alphabetChar : alphabet) {
+			for (Character alphabetChar : alphabet) {
 				String alphabetCharString = "" + alphabetChar;
-				if(!guess.contains(alphabetCharString)) {
+				if (!guess.contains(alphabetCharString)) {
 					candidates.add(alphabetChar);
 				}
 			}
 			// as long as guess still has empty spaces to fill add a random letter from the candidates
 			// this will fill the string up until it has as many letters as alphabet
-			while(guess.contains(" ")) {
+			while (guess.contains(" ")) {
 				int index = rnd.nextInt(candidates.size());
 				String replaceString = "" + candidates.get(index);
 				candidates.remove(index);
@@ -319,15 +321,15 @@ public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements Monoalpha
 		// this is based on a linear scale in such a way that the best individual will have a chance of 10% of being
 		// chosen as source for the next alphabet
 		ArrayList<Individual> biasedSurvivor = new ArrayList<Individual>();
-		for(int i = 0; i < survivors.size(); i++) {
-			int amount = (int)(-(BEST_SURVIVOR_PERCENT / (float)survivors.size()) * (float)i + BEST_SURVIVOR_PERCENT);
-			for(int j = 0; j < amount; j++) {
+		for (int i = 0; i < survivors.size(); i++) {
+			int amount = (int) (-(BEST_SURVIVOR_PERCENT / (float) survivors.size()) * (float) i + BEST_SURVIVOR_PERCENT);
+			for (int j = 0; j < amount; j++) {
 				biasedSurvivor.add(survivors.get(i));
 			}
 		}
 
 		// create new individuals
-		for(int i = 0; i < populationSize; i++) {
+		for (int i = 0; i < populationSize; i++) {
 			// choose a random survivor from the biased list
 			int index = random.nextInt(biasedSurvivor.size());
 			Individual ind = biasedSurvivor.get(index);
@@ -336,7 +338,7 @@ public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements Monoalpha
 
 			// make a random amount of character swaps
 			int switchAmount = random.nextInt(SWITCH_AMOUNT);
-			for(int j = 0; j < switchAmount; j++) {
+			for (int j = 0; j < switchAmount; j++) {
 				// choose two letters that are being swapped
 				int index1 = random.nextInt(newAlphabet.length());
 				int index2 = random.nextInt(newAlphabet.length());
@@ -354,7 +356,7 @@ public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements Monoalpha
 
 			// create a new individual and calculate its fitness if possible
 			IndividualImpl newInd = new IndividualImpl(new AlphabetImpl(newAlphabet));
-			if(!cipherText.equals("")) {
+			if (!cipherText.equals("")) {
 				computeFitness(newInd, cipherText, alphabet, distribution, dictionary);
 			}
 			// add it to the list of the next generation
@@ -382,7 +384,7 @@ public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements Monoalpha
 		ArrayList<Individual> ret = new ArrayList<Individual>();
 
 		// calculate the fitness for every individual and add them to the return array
-		for(Individual ind : generation) {
+		for (Individual ind : generation) {
 			computeFitness(ind, ciphertext, alphabet, distribution, dictionary);
 			ret.add(ind);
 		}
@@ -412,28 +414,28 @@ public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements Monoalpha
 		double fitness = 0;
 
 		// calculate the average word length if this hasn't happened yet
-		if(this.averageWordLength == 0) {
-			for(String word : dictionary) {
+		if (this.averageWordLength == 0) {
+			for (String word : dictionary) {
 				this.averageWordLength += word.length();
 			}
 			this.averageWordLength /= dictionary.size();
 		}
 
 		// go through every word in the dictionary
-		for(String word : dictionary) {
+		for (String word : dictionary) {
 			// encrypt the word using the individual's key
 			String encryptedWord = crypto.encrypt(word);
 			// check if the encrypted word appears in the cipher text
-			if(ciphertext.contains(encryptedWord)) {
+			if (ciphertext.contains(encryptedWord)) {
 				// if it does add a weighted value to the fitness.
 				// longer words award more points than shorter ones based on the average length of the words in the
 				// dictionary
-				fitness = fitness + ((double)word.length() / averageWordLength);
+				fitness = fitness + ((double) word.length() / averageWordLength);
 			}
 		}
 
 		// if this individual uses our implementation set its fitness value too
-		if(individual instanceof IndividualImpl) {
+		if (individual instanceof IndividualImpl) {
 			((IndividualImpl) individual).setFitness(fitness);
 		}
 

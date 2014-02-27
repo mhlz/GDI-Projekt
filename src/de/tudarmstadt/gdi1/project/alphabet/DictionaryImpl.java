@@ -14,7 +14,8 @@ public class DictionaryImpl implements Dictionary {
 
 	/**
 	 * Default constructor which extracts words from the text
-	 * @param text Text
+	 *
+	 * @param text     Text
 	 * @param alphabet Alphabet of the words and the text
 	 */
 	public DictionaryImpl(String text, Alphabet alphabet) {
@@ -22,9 +23,9 @@ public class DictionaryImpl implements Dictionary {
 		words = new TreeSet<String>();
 
 		Scanner scanner = new Scanner(text).useDelimiter("[ ,!?.]");
-		while(scanner.hasNext()) {
+		while (scanner.hasNext()) {
 			String word = scanner.next();
-			if(alphabet.allows(word) && !word.equals("")) {
+			if (alphabet.allows(word) && !word.equals("")) {
 				words.add(word);
 			}
 		}
@@ -71,8 +72,8 @@ public class DictionaryImpl implements Dictionary {
 	@Override
 	public String get(int index) {
 		int i = 0;
-		for(String s : words) {
-			if(i == index) {
+		for (String s : words) {
+			if (i == index) {
 				return s;
 			}
 			i++;
