@@ -16,8 +16,12 @@ public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCr
 
 	Map<Character, Character> key;
 
+	Distribution cipherDistribution;
+	String path;
 	int iterarionCount;
 	int recursionCount;
+
+	Collection<String> cribs;
 
 
 	/**
@@ -39,20 +43,23 @@ public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCr
 	@Override
 	public Map<Character, Character> reconstructKey(Map<Character, Character> key, String ciphertext, Alphabet alphabet, Distribution distribution, Dictionary dictionary, List<String> cribs, ValidateDecryptionOracle validateDecryptionOracle) {
 		recursionCount++;
-		boolean isFull = true;
-		for (Character c : key.values()) {
-			if (c == (char) -1) {
-				isFull = false;
-				break;
-			}
+		if(!isPromisingPath(alphabet, ciphertext,key,distribution, dictionary,cribs)) {
+			recursionCount--;
+			return null;
 		}
-		if (isFull) {
-			if (validateDecryptionOracle.isCorrect(new MonoalphabeticCipherImpl(alphabet, new AlphabetImpl(key.values())).decrypt(ciphertext))) {
+
+
+		if (alphabet.size() == key.values().size()) {
+			ArrayList<Character> tmpList = new ArrayList<Character>();
+			for(Character c: alphabet){
+				tmpList.add(key.get(c));
+			}
+			if (validateDecryptionOracle.isCorrect(new MonoalphabeticCipherImpl(alphabet, new AlphabetImpl(tmpList)).decrypt(ciphertext))) {
 				recursionCount--;
 				return key;
 			} else {
 				recursionCount--;
-				return null; //this doesn't look save...
+				return null;
 			}
 		}
 
@@ -63,14 +70,16 @@ public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCr
 			iterarionCount++;
 			key.put(nextCharacter, potentialReplacement);
 			this.key = key;
+			path += nextCharacter;
 			Map<Character, Character> tmp = reconstructKey(new HashMap<Character, Character>(key), ciphertext, alphabet, distribution, dictionary, cribs, validateDecryptionOracle);
+			path = path.substring(0, path.length() - 1);
 			if (tmp != null) {
 				recursionCount--;
 				return tmp;
 			}
 		}
 		recursionCount--;
-		return null; //this doesn't either
+		return null;
 	}
 
 	/**
@@ -87,39 +96,51 @@ public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCr
 	 */
 	@Override
 	public Collection<Character> getPotentialAssignments(Character targetCharacter, Map<Character, Character> key, String ciphertext, Alphabet alphabet, Distribution distribution, Dictionary dictionary) {
+		ArrayList<Character> ret = new ArrayList<Character>();
 
-		TreeSet<Character> ret = new TreeSet<Character>();
+		int characterRank = 1;
+		int i = 1;
+		if(cipherDistribution != null) {
+			for(String str: distribution.getSorted(1)){
+				if(str.charAt(0) == targetCharacter) {
+					characterRank = i;
+					break;
+				}
+				i++;
+			}
 
-		if (ciphertext.contains(" ")) {
-			Dictionary cipherWords = new DictionaryImpl(ciphertext, alphabet);
-			for (String cipherWord : cipherWords) {                                   // for every word in the ciphertext
-				if (cipherWord.indexOf(targetCharacter) != -1) {                     // that contains our targetCharacter
-
-					for (String plainWord : dictionary) {                             // we find the words in the dictionary
-						if (plainWord.length() == cipherWord.length()) {             // that share the same length
-
-							for (int i = 0; i < cipherWord.length(); i++) {          // and the get the characters that share the same position as our targetCharacter
-								if (cipherWord.charAt(i) == targetCharacter) {       // because we use a treeSet no chacrater can be returned twice
-									ret.add(plainWord.charAt(i));
-								}
-							}
-
-						}
+			for(int error = 0; error < 3; error++){
+				if(characterRank - error > 0) {
+					char c = cipherDistribution.getByRank(1,characterRank - error).charAt(0);
+					if(!ret.contains(c)) {
+						ret.add(c);
 					}
-
+				}
+				if(characterRank + error <= alphabet.size()) {
+					char c = cipherDistribution.getByRank(1,characterRank + error).charAt(0);
+					if(!ret.contains(c)) {
+						ret.add(c);
+					}
 				}
 			}
-		} else {
+		}
 
-			for (Character c : alphabet) {
-				if (!key.values().contains(c)) {
+		for (Character c : alphabet) {
+			if (!key.values().contains(c)) {
+				if(!ret.contains(c)) {
 					ret.add(c);
 				}
 			}
-
+		}
+		ret.removeAll(key.values());
+		ArrayList<Character> ret2 = new ArrayList<Character>();
+		for(Character c: ret) {
+			if(!ret2.contains(c)) {
+				ret2.add(c);
+			}
 		}
 
-		return ret;
+		return ret2;
 	}
 
 	/**
@@ -136,8 +157,23 @@ public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCr
 	 */
 	@Override
 	public Character getNextSourceChar(Map<Character, Character> key, Alphabet alphabet, Distribution distribution, Dictionary dictionary, List<String> cribs) {
+
+		if(!key.containsKey(distribution.getByRank(1, 1).charAt(0))) {
+			String tmp = distribution.getByRank(1, 1);
+			return tmp.charAt(0);
+		}
+		if(cribs != null){
+			for(String word: cribs) {
+				for(Character c: word.toCharArray()) {
+					if(!key.containsKey(c)) {
+						return c;
+					}
+				}
+			}
+		}
+
 		for (int i = 0; i <= distribution.getAlphabet().size(); i++) {
-			if (key.get(distribution.getByRank(1, i + 1).charAt(0)) == (char) -1) {
+			if (!key.containsKey(distribution.getByRank(1, i + 1).charAt(0))) {
 				String tmp = distribution.getByRank(1, i + 1);
 				return tmp.charAt(0);
 			}
@@ -160,7 +196,57 @@ public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCr
 	 */
 	@Override
 	public boolean isPromisingPath(Alphabet alphabet, String ciphertext, Map<Character, Character> key, Distribution distribution, Dictionary dictionary, Collection<String> cribs) {
-		return false;
+
+		if(cribs.size() == 0){
+			return true;
+		}
+
+		//creating a complete alphabet out of the key
+		ArrayList<Character> targetTmp = new ArrayList<Character>();
+		for(Character c: alphabet) {
+			if(key.containsKey(c)) {
+				targetTmp.add(key.get(c));
+			} else {
+				targetTmp.add((char) -1);
+			}
+		}
+
+		char[] restTarget = alphabet.asCharArray();
+
+		LinkedList<Character> restToAdd = new LinkedList<Character>();
+		for(Character c: restTarget) {
+			if(!targetTmp.contains(c)){
+				restToAdd.add(c);
+			}
+		}
+
+		ArrayList<Character> target = new ArrayList<Character>();
+
+		for(Character c: targetTmp) {
+			if(c == (char) -1) {
+				target.add(restToAdd.poll());
+			} else {
+				target.add(c);
+			}
+		}
+
+		Alphabet tempAlph = new AlphabetImpl(key.keySet());
+		MonoalphabeticCipherImpl cipher = new MonoalphabeticCipherImpl(alphabet, new AlphabetImpl(target));
+		String plaintext = cipher.decrypt(ciphertext);
+		for(String word: cribs) {
+			for(int i = 1; i <= word.length(); i++){
+				String tmp = word.substring(0, i);
+				if(tempAlph.allows(tmp)) {
+					if(!plaintext.contains(tmp)) {
+						return false;
+					}
+				} else {
+					i = word.length() + 1;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -195,16 +281,17 @@ public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCr
 	@Override
 	public char[] knownCiphertextAttack(String ciphertext, Distribution distribution, Dictionary dictionary, List<String> cribs, ValidateDecryptionOracle validateDecryptionOracle) {
 		key = new HashMap<Character, Character>();
-		for (Character c : distribution.getAlphabet()) {
-			key.put(c, (char) -1);
-		}
 		iterarionCount = 0;
+		this.cribs = cribs;
+		cipherDistribution = new DistributionImpl(dictionary.getAlphabet(), ciphertext);
+		path = "";
+
 		key = reconstructKey(key, ciphertext, distribution.getAlphabet(), distribution, dictionary, cribs, validateDecryptionOracle);
 
 		char[] ret = new char[key.values().size()];
 		int i = 0;
-		for (Character c : key.values()) {
-			ret[i] = c;
+		for (Character c : distribution.getAlphabet()) {
+			ret[i] = key.get(c);
 			i++;
 		}
 
@@ -221,7 +308,20 @@ public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCr
 	 */
 	@Override
 	public String getState(Alphabet sourceAlphabet, Alphabet targetKey) {
+
+		if(key == null || key.size() == 0){
+			return "no partial key found (probably not started yet)";
+		}
+		Map<Character, Character> key = new TreeMap<Character, Character>(this.key);
+
 		StringBuilder out = new StringBuilder();
+
+		StringBuilder alph = new StringBuilder("[");
+		for(Character c: sourceAlphabet) {
+			alph.append("'").append(c).append("',");
+		}
+		alph.deleteCharAt(alph.length() - 1).append("]");
+
 		StringBuilder target = new StringBuilder("[");
 		for(Character c: targetKey) {
 			target.append("'").append(c).append("',");
@@ -229,45 +329,60 @@ public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCr
 		target.deleteCharAt(target.length() - 1).append("]");
 
 		StringBuilder real = new StringBuilder("[");
-		for(Character c: key.values()) {
+		for(Character c: sourceAlphabet) {
 			real.append("'");
-			if(c == (char) -1){
-				real.append(" ");
+			if(key.containsKey(c)){
+				real.append(key.get(c));
 			} else {
-				real.append(c);
+				real.append(" ");
+
 			}
 			real.append("',");
 		}
 		real.deleteCharAt(real.length() - 1).append("]");
 
 		StringBuilder rightString = new StringBuilder("[");
+		int count = 0;
 		int i = 0;
-		for(Character c: key.values()) {
+		for(Character c: sourceAlphabet) {
 			rightString.append(" ");
-			if(c.equals(targetKey.getChar(i))){
+			if(key.containsKey(c) && key.get(c) != null && key.get(c).equals(targetKey.getChar(i))){
 				rightString.append("1");
+				count++;
 			} else {
 				rightString.append("0");
 			}
 			rightString.append(" ,");
 			i++;
 		}
-		rightString.deleteCharAt(rightString.length() - 1).append("]");
+		rightString.deleteCharAt(rightString.length() - 1).append("] (").append(count).append(")");
 
-		out.append("target          : ").append(target).append(System.lineSeparator());
-		out.append("guess           : ").append(real).append(System.lineSeparator());
-		out.append("correct         : ").append(rightString).append(System.lineSeparator());
-		out.append("iterations      : ").append(iterarionCount).append(System.lineSeparator());
-		out.append("recursions      : ").append(recursionCount).append(System.lineSeparator());
+
 		int right = 0;
 		i = 0;
-		for(Character c: key.values()) {
-			if(c.equals(targetKey.getChar(i))){
+		for(Character c: path.toCharArray()) {
+			if(key.containsKey(c) && targetKey.getChar(sourceAlphabet.getIndex(c)) == key.get(c)) {
 				right++;
 			} else {
 				break;
 			}
+			i++;
 		}
+
+		StringBuilder pathDecrypted = new StringBuilder();
+		for(Character c: path.toCharArray()) {
+			pathDecrypted.append(key.get(c));
+		}
+
+		out.append("source alphabet : ").append(alph).append(System.lineSeparator());
+		out.append("target          : ").append(target).append(System.lineSeparator());
+		out.append("guess           : ").append(real).append(System.lineSeparator());
+		out.append("correct         : ").append(rightString).append(System.lineSeparator());
+		out.append("path            : ").append(path).append(System.lineSeparator());
+		out.append("path decrypted  : ").append(pathDecrypted).append(System.lineSeparator());
+
+		out.append("iterations      : ").append(iterarionCount).append(System.lineSeparator());
+		out.append("recursions      : ").append(recursionCount).append(System.lineSeparator());
 		out.append("characters right: ").append(right).append(System.lineSeparator());
 		return out.toString();
 

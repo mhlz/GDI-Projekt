@@ -28,7 +28,7 @@ public class VigenereImpl extends PolyalphabeticCipherImpl implements Vigenere {
 			vigenereAlphabets.add(utils.shiftAlphabet(alphabet, alphabet.getIndex(c)));
 		}
 
-		// assign the plain text alphabet and the cphertextalphabets
+		// assign the plain text alphabet and the ciphertextalphabets
 		this.plaintTextAlphabet = alphabet;
 		this.cipherTextAlphabets = vigenereAlphabets.toArray(new Alphabet[vigenereAlphabets.size()]);
 	}

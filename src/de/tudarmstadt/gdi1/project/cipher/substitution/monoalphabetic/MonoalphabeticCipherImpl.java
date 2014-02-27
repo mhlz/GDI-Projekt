@@ -3,9 +3,6 @@ package de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic;
 import de.tudarmstadt.gdi1.project.alphabet.Alphabet;
 import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipherImpl;
 
-import java.util.HashMap;
-import java.util.Hashtable;
-
 /**
  * @author Hannes
  */
@@ -47,6 +44,9 @@ public class MonoalphabeticCipherImpl extends SubstitutionCipherImpl implements 
      */
     @Override
     public char reverseTranslate(char chr, int i) {
+	    if(!destination.contains(chr)){
+		    return chr;
+	    }
         return  source.getChar(destination.getIndex(chr));
     }
 }
