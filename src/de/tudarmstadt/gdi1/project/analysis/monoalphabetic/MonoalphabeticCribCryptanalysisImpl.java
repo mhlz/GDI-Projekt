@@ -14,14 +14,26 @@ import java.util.*;
  */
 public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCryptanalysis, BacktrackingAnalysis {
 
+	/**
+	 * saving the key so getState can work with it
+	 */
 	Map<Character, Character> key;
 
+	/**
+	 * savin a distribution vom the cipher text so we don't need to aclulatet it every iteration
+	 * This saves a lot of time
+	 */
 	Distribution cipherDistribution;
-	String path;
-	int iterarionCount;
-	int recursionCount;
 
-	Collection<String> cribs;
+	/**
+	 * saving the path so getState can work with it
+	 */
+	String path;
+
+	/**
+	 * how many iterations are made
+	 */
+	int iterarionCount;
 
 
 	/**
@@ -42,43 +54,56 @@ public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCr
 	 */
 	@Override
 	public Map<Character, Character> reconstructKey(Map<Character, Character> key, String ciphertext, Alphabet alphabet, Distribution distribution, Dictionary dictionary, List<String> cribs, ValidateDecryptionOracle validateDecryptionOracle) {
-		recursionCount++;
+
+		// we check if this path is worth computing
 		if(!isPromisingPath(alphabet, ciphertext,key,distribution, dictionary,cribs)) {
-			recursionCount--;
 			return null;
 		}
 
-
+		//if we have a full key, we need to check if we creacked the cipher
 		if (alphabet.size() == key.values().size()) {
+
+			// so we need to create the targetAlphabet
 			ArrayList<Character> tmpList = new ArrayList<Character>();
 			for(Character c: alphabet){
 				tmpList.add(key.get(c));
 			}
+
+			// we check if the key we reconstructed id the right key
 			if (validateDecryptionOracle.isCorrect(new MonoalphabeticCipherImpl(alphabet, new AlphabetImpl(tmpList)).decrypt(ciphertext))) {
-				recursionCount--;
-				return key;
+				return key; // wuhu it was the right key!
 			} else {
-				recursionCount--;
-				return null;
+				return null; // we return null, because it wasn't the right key, so we can't return a valid key
 			}
 		}
 
+		// get the next character we need to exchange
 		Character nextCharacter = getNextSourceChar(key, alphabet, distribution, dictionary, cribs);
+
+		// we get all potential assignments foe the next character
 		Collection<Character> potentialAssignments = getPotentialAssignments(nextCharacter, key, ciphertext, alphabet, distribution, dictionary);
 
+		// and then we try each assignment
 		for (Character potentialReplacement : potentialAssignments) {
+
 			iterarionCount++;
+
+			// create the next key
 			key.put(nextCharacter, potentialReplacement);
+
+			// save some things so getState can display stuff
 			this.key = key;
 			path += nextCharacter;
+
+			// recursive call for the next character
 			Map<Character, Character> tmp = reconstructKey(new HashMap<Character, Character>(key), ciphertext, alphabet, distribution, dictionary, cribs, validateDecryptionOracle);
+
+			// update the path
 			path = path.substring(0, path.length() - 1);
 			if (tmp != null) {
-				recursionCount--;
 				return tmp;
 			}
 		}
-		recursionCount--;
 		return null;
 	}
 
@@ -292,7 +317,6 @@ public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCr
 	public char[] knownCiphertextAttack(String ciphertext, Distribution distribution, Dictionary dictionary, List<String> cribs, ValidateDecryptionOracle validateDecryptionOracle) {
 		key = new HashMap<Character, Character>();
 		iterarionCount = 0;
-		this.cribs = cribs;
 		cipherDistribution = new DistributionImpl(dictionary.getAlphabet(), ciphertext);
 		path = "";
 
@@ -392,7 +416,6 @@ public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCr
 		out.append("path decrypted  : ").append(pathDecrypted).append(System.lineSeparator());
 
 		out.append("iterations      : ").append(iterarionCount).append(System.lineSeparator());
-		out.append("recursions      : ").append(recursionCount).append(System.lineSeparator());
 		out.append("characters right: ").append(right).append(System.lineSeparator());
 		return out.toString();
 

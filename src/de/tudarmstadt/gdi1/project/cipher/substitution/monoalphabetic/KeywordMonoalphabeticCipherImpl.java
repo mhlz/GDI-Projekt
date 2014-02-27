@@ -2,6 +2,7 @@ package de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic;
 
 import de.tudarmstadt.gdi1.project.alphabet.Alphabet;
 import de.tudarmstadt.gdi1.project.alphabet.AlphabetImpl;
+import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 
 import java.util.ArrayList;
 
@@ -46,9 +47,12 @@ public class KeywordMonoalphabeticCipherImpl extends MonoalphabeticCipherImpl im
             destArray[i] = passList.get(i);
         }
 
-        //putting the reveres Alphabet into the destination array
-        for(int i = sourceArray.length - 1; i >= passList.size(); i--) {
-            destArray[i] = restAlphabet.get(sourceArray.length - i - 1);
+	    // reversing the alphabet
+	    Alphabet reversAlph = new UtilsImpl().reverseAlphabet(new AlphabetImpl(restAlphabet));
+
+	    //putting the reveres Alphabet into the destination array
+        for(int i = passList.size(); i < destArray.length; i++) {
+            destArray[i] = reversAlph.getChar(i - passList.size());
         }
 
         //finaly setting the destination to the right alphabet
