@@ -3,7 +3,10 @@ package de.tudarmstadt.gdi1.project.alphabet;
 import de.tudarmstadt.gdi1.project.exception.InvalidCharacterException;
 import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Represents a cryptographic alphabet

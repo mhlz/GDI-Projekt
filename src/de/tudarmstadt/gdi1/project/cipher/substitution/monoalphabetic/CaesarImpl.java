@@ -1,7 +1,6 @@
 package de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic;
 
 import de.tudarmstadt.gdi1.project.alphabet.Alphabet;
-import de.tudarmstadt.gdi1.project.alphabet.AlphabetImpl;
 import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 
 /**

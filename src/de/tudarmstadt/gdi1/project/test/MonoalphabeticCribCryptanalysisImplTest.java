@@ -75,8 +75,9 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 		Collection<Character> assignments = ba.getPotentialAssignments('w', partialKey, source.normalize(TemplateTestUtils.ALICE_PLAIN),
 				source, distribution, dictionary);
 
-		for (char c : assignments)
+		for (char c : assignments) {
 			Assert.assertTrue(source.contains(c));
+		}
 
 		Assert.assertEquals(source.size() - partialKey.size(), assignments.size());
 	}
@@ -140,8 +141,9 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 		cipher = TemplateTestCore.getFactory().getMonoalphabeticCipherInstance(source, TemplateTestUtils.getAlphabetFrom(reconstructedKey));
 		String plaintextPrime = cipher.decrypt(ciphertext);
 
-		if (!plaintextPrime.equals(plaintext))
+		if (!plaintextPrime.equals(plaintext)) {
 			Assert.assertEquals(0, TemplateTestUtils.countDifferences(key.asCharArray(), reconstructedKey));
+		}
 	}
 
 	@Test
@@ -206,8 +208,9 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 		String plaintextPrime = cipher.decrypt(ciphertext);
 
 		Assert.assertEquals("plaintext doesn't match", plaintext, plaintextPrime);
-		if (!plaintextPrime.equals(plaintext))
+		if (!plaintextPrime.equals(plaintext)) {
 			Assert.assertEquals(0, TemplateTestUtils.countDifferences(key.asCharArray(), reconstructedKey));
+		}
 	}
 
 	@Test
@@ -299,8 +302,9 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 		String plaintextPrime = cipher.decrypt(ciphertext);
 
 		Assert.assertEquals("plaintext doesn't match", plaintext, plaintextPrime);
-		if (!plaintextPrime.equals(plaintext))
+		if (!plaintextPrime.equals(plaintext)) {
 			Assert.assertEquals(0, TemplateTestUtils.countDifferences(key.asCharArray(), reconstructedKey));
+		}
 	}
 
 	private Map<Character, Character> constructPartialKey(Alphabet source) {
