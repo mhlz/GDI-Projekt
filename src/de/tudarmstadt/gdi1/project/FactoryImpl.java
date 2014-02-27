@@ -2,6 +2,7 @@ package de.tudarmstadt.gdi1.project;
 
 import de.tudarmstadt.gdi1.project.alphabet.*;
 import de.tudarmstadt.gdi1.project.analysis.ValidateDecryptionOracle;
+import de.tudarmstadt.gdi1.project.analysis.ValidateDecryptionOracleImpl;
 import de.tudarmstadt.gdi1.project.analysis.caeser.CaesarCryptanalysis;
 import de.tudarmstadt.gdi1.project.analysis.caeser.CaesarCryptanalysisImpl;
 import de.tudarmstadt.gdi1.project.analysis.monoalphabetic.*;
@@ -263,7 +264,8 @@ public class FactoryImpl implements Factory {
      */
     @Override
     public ValidateDecryptionOracle getValidateDecryptionOracle(Distribution distribution, Dictionary dictionary) {
-        return null;
+        return new ValidateDecryptionOracleImpl(distribution,dictionary);
+
     }
 
     /**
