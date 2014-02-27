@@ -31,9 +31,9 @@ public class DistributionImpl implements Distribution {
 	protected class FrequencyComparator implements Comparator<GramFrequencyPair> {
 		@Override
 		public int compare(GramFrequencyPair o1, GramFrequencyPair o2) {
-			if (o1.freq > o2.freq) {
+			if(o1.freq > o2.freq) {
 				return -1;
-			} else if (o1.freq == o2.freq) {
+			} else if(o1.freq == o2.freq) {
 				return o1.gram.compareTo(o2.gram);
 			} else {
 				return 1;
@@ -51,28 +51,28 @@ public class DistributionImpl implements Distribution {
 		src = source;
 
 		int[] sizes = new int[ngramsize];
-		for (int i = 1; i <= ngramsize; i++) {
+		for(int i = 1; i <= ngramsize; i++) {
 			sizes[i - 1] = i;
 		}
 		Utils utils = new UtilsImpl();
 		Map<Integer, List<String>> grams = utils.ngramize(text, sizes);
-		for (int length : sizes) {
+		for(int length : sizes) {
 			HashMap<String, Integer> frequencies = new HashMap<String, Integer>();
-			if (length == 1) {
-				for (Character c : source) {
+			if(length == 1) {
+				for(Character c : source) {
 					frequencies.put(c.toString(), 0);
 				}
 			}
 			// go through all grams of the current length
-			for (String gram : grams.get(length)) {
-				if (frequencies.get(gram) == null) {
+			for(String gram : grams.get(length)) {
+				if(frequencies.get(gram) == null) {
 					frequencies.put(gram, 1);
 				} else {
 					frequencies.put(gram, frequencies.get(gram) + 1);
 				}
 			}
 			ArrayList<GramFrequencyPair> sortedMap = new ArrayList<GramFrequencyPair>();
-			for (String gram : frequencies.keySet()) {
+			for(String gram : frequencies.keySet()) {
 				double freq = (double) frequencies.get(gram) / (double) grams.get(length).size();
 				GramFrequencyPair pair = new GramFrequencyPair(gram, freq);
 				sortedMap.add(pair);
@@ -94,10 +94,10 @@ public class DistributionImpl implements Distribution {
 	@Override
 	public List<String> getSorted(int length) {
 		ArrayList<String> ret = new ArrayList<String>();
-		if (weightedGrams.get(length) == null) {
+		if(weightedGrams.get(length) == null) {
 			return null;
 		}
-		for (GramFrequencyPair pair : weightedGrams.get(length)) {
+		for(GramFrequencyPair pair : weightedGrams.get(length)) {
 			ret.add(pair.gram);
 		}
 		return ret;
@@ -113,8 +113,8 @@ public class DistributionImpl implements Distribution {
 	 */
 	@Override
 	public double getFrequency(String key) {
-		for (GramFrequencyPair pair : weightedGrams.get(key.length())) {
-			if (pair.gram.equals(key)) {
+		for(GramFrequencyPair pair : weightedGrams.get(key.length())) {
+			if(pair.gram.equals(key)) {
 				return pair.freq;
 			}
 		}
@@ -123,8 +123,8 @@ public class DistributionImpl implements Distribution {
 
 	public int getRank(String key) {
 		int i = 1;
-		for (GramFrequencyPair pair : weightedGrams.get(key.length())) {
-			if (pair.gram.equals(key)) {
+		for(GramFrequencyPair pair : weightedGrams.get(key.length())) {
+			if(pair.gram.equals(key)) {
 				return i;
 			}
 			i++;
@@ -154,8 +154,8 @@ public class DistributionImpl implements Distribution {
 	@Override
 	public String getByRank(int length, int rank) {
 		int i = 1;
-		for (GramFrequencyPair pair : weightedGrams.get(length)) {
-			if (i == rank) {
+		for(GramFrequencyPair pair : weightedGrams.get(length)) {
+			if(i == rank) {
 				return pair.gram;
 			}
 			i++;

@@ -22,7 +22,7 @@ public class IndividualComparator implements Comparator<Individual> {
 	 */
 	@Override
 	public int compare(Individual o1, Individual o2) {
-		if (o1.getAlphabet().equals(o2.getAlphabet())) {
+		if(o1.getAlphabet().equals(o2.getAlphabet())) {
 			return 0;
 		} else {
 			return Double.compare(o2.getFitness(), o1.getFitness());

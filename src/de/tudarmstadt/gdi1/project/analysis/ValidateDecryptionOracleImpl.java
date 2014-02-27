@@ -49,7 +49,7 @@ public class ValidateDecryptionOracleImpl implements ValidateDecryptionOracle {
 
 
 		// depending on size of String, find appropiate number of correct words to be found
-		if (dummy.length() > longestWord(dictionary)) {
+		if(dummy.length() > longestWord(dictionary)) {
 			leastWord = (int) dummy.length() / longestWord(dictionary);
 		}
 		// find at least 1 word
@@ -74,9 +74,9 @@ public class ValidateDecryptionOracleImpl implements ValidateDecryptionOracle {
 		int x = 0;
 
 		// run through whole dictionary
-		for (int i = 0; i < dictionary.size(); i++) {
+		for(int i = 0; i < dictionary.size(); i++) {
 			// check if current item in dictionary is in text
-			if (text.indexOf(dictionary.get(i)) != -1) {
+			if(text.indexOf(dictionary.get(i)) != -1) {
 				x = x + 1;
 			}
 		}
@@ -115,7 +115,7 @@ public class ValidateDecryptionOracleImpl implements ValidateDecryptionOracle {
 		boolean result = true;
 
 		// run to how many ranks should be checked
-		for (int i = 1; i <= range; i++) {
+		for(int i = 1; i <= range; i++) {
 			// most used char in given distribution
 			char mostUsedDist = distribution.getByRank(1, i).charAt(0);
 			// most used char in String
@@ -136,8 +136,8 @@ public class ValidateDecryptionOracleImpl implements ValidateDecryptionOracle {
 		int result = 0;
 
 		// run through whole dictionary
-		for (int i = 0; i < dic.size(); i++) {
-			if (dic.get(i).length() > result)
+		for(int i = 0; i < dic.size(); i++) {
+			if(dic.get(i).length() > result)
 			// enter the longer word from previous found
 			{
 				result = dic.get(i).length();

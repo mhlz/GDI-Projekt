@@ -28,13 +28,13 @@ public class ReverseRotorImpl implements ReverseRotor {
 	 */
 	public ReverseRotorImpl(Alphabet entryAlph, Alphabet exitAlph) {
 		// check for same size
-		if (entryAlph.size() != exitAlph.size()) {
+		if(entryAlph.size() != exitAlph.size()) {
 			throw new InvalidAlphabetException("Both alphabets must be the same size!");
 		}
 
 		// make sure that no letter is translated to itself
-		for (int i = 0; i < entryAlph.size(); i++) {
-			if (entryAlph.getChar(i) == exitAlph.getChar(i)) {
+		for(int i = 0; i < entryAlph.size(); i++) {
+			if(entryAlph.getChar(i) == exitAlph.getChar(i)) {
 				throw new InvalidAlphabetException("The letter '" + entryAlph.getChar(i) + "' can't be translated to itself!");
 			}
 		}
@@ -44,8 +44,8 @@ public class ReverseRotorImpl implements ReverseRotor {
 		this.out = exitAlph;
 
 		// Check for symmetrical alphabets. Translating twice should result in the same character if the alphabets are symmetrical
-		for (Character c : in) {
-			if (c != this.translate(this.translate(c))) {
+		for(Character c : in) {
+			if(c != this.translate(this.translate(c))) {
 				throw new InvalidAlphabetException("The alphabets have to be symmetrical!");
 			}
 		}

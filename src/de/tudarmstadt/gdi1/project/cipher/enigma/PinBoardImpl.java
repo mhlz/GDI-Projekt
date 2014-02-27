@@ -28,7 +28,7 @@ public class PinBoardImpl implements PinBoard {
 	 */
 	public PinBoardImpl(Alphabet source, Alphabet destination) {
 		// check for length
-		if (source.size() != destination.size()) {
+		if(source.size() != destination.size()) {
 			throw new InvalidAlphabetException("Both alphabets must have the same length!");
 		}
 
@@ -37,8 +37,8 @@ public class PinBoardImpl implements PinBoard {
 		out = destination;
 
 		// Check for symmetrical alphabets. Translating twice should result in the same character if the alphabets are symmetrical
-		for (Character c : in) {
-			if (c != this.translate(this.translate(c))) {
+		for(Character c : in) {
+			if(c != this.translate(this.translate(c))) {
 				throw new InvalidAlphabetException("The alphabets have to be symmetrical!");
 			}
 		}

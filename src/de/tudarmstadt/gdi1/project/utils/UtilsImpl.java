@@ -46,7 +46,7 @@ public class UtilsImpl implements Utils {
 		ArrayList<String> retList = new ArrayList<String>();
 
 		//splitting up the text every 10th character
-		while (ciphertext.length() > 10) {
+		while(ciphertext.length() > 10) {
 			retList.add(ciphertext.substring(0, 10));
 			ciphertext = ciphertext.substring(10, ciphertext.length());
 		}
@@ -55,9 +55,9 @@ public class UtilsImpl implements Utils {
 
 		//joining all those 10 character long Strings back together with " " and a System.lineSeparator() every 6th one
 		StringBuilder ret = new StringBuilder();
-		for (int i = 0; i < retList.size(); i++) {
+		for(int i = 0; i < retList.size(); i++) {
 			ret.append(retList.get(i));
-			if ((i + 1) % 6 == 0 && i < retList.size() - 1) {
+			if((i + 1) % 6 == 0 && i < retList.size() - 1) {
 				ret.append(System.lineSeparator());
 			} else {
 				ret.append(" ");
@@ -80,14 +80,14 @@ public class UtilsImpl implements Utils {
 	@Override
 	public Map<Integer, List<String>> ngramize(String text, int... lengths) {
 		HashMap<Integer, List<String>> ret = new HashMap<Integer, List<String>>();
-		for (int length : lengths) {
+		for(int length : lengths) {
 			ArrayList<String> grams = new ArrayList<String>();
-			for (int i = 0; i < text.length(); i++) {
+			for(int i = 0; i < text.length(); i++) {
 				String gram = "";
-				for (int j = 0; j < length && j + i < text.length(); j++) {
+				for(int j = 0; j < length && j + i < text.length(); j++) {
 					gram += text.charAt(i + j);
 				}
-				if (gram.length() == length) {
+				if(gram.length() == length) {
 					grams.add(gram);
 				}
 			}
@@ -109,7 +109,7 @@ public class UtilsImpl implements Utils {
 		// don't shift more than the alphabet is long
 		shift = shift % alphabet.size();
 		// in case the result was negative, bring it back to positives again by adding the size
-		if (shift < 0) {
+		if(shift < 0) {
 			shift += alphabet.size();
 		}
 
@@ -117,10 +117,10 @@ public class UtilsImpl implements Utils {
 		char[] tempArray = alphabet.asCharArray();
 		Character[] destArray = new Character[tempArray.length];
 
-		for (int i = shift; i < tempArray.length; i++) {
+		for(int i = shift; i < tempArray.length; i++) {
 			destArray[i - shift] = tempArray[i];
 		}
-		for (int i = 0; i < shift; i++) {
+		for(int i = 0; i < shift; i++) {
 			destArray[tempArray.length - shift + i] = tempArray[i];
 		}
 		return new AlphabetImpl(destArray);
@@ -139,7 +139,7 @@ public class UtilsImpl implements Utils {
 		char[] temp = alphabet.asCharArray();
 		Character[] ret = new Character[temp.length];
 		// reverse it
-		for (int i = 0; i < temp.length; i++) {
+		for(int i = 0; i < temp.length; i++) {
 			ret[ret.length - i - 1] = temp[i];
 		}
 		return new AlphabetImpl(ret);
@@ -155,11 +155,11 @@ public class UtilsImpl implements Utils {
 	 */
 	@Override
 	public boolean containsSameCharacters(Alphabet alphabet1, Alphabet alphabet2) {
-		if (alphabet1.size() != alphabet2.size()) {
+		if(alphabet1.size() != alphabet2.size()) {
 			return false; // because the two alphabets aren't the same size
 		}
-		for (Character c : alphabet1.asCharArray()) {
-			if (!alphabet2.contains(c)) {
+		for(Character c : alphabet1.asCharArray()) {
+			if(!alphabet2.contains(c)) {
 				return false; // one of the characters is missing in alphabet 2
 			}
 		}
@@ -184,14 +184,14 @@ public class UtilsImpl implements Utils {
 
 		//converting the chars in the Alphabet to an ArrayList
 		ArrayList<Character> chars = new ArrayList<Character>();
-		for (Character c : alphabet.asCharArray()) {
+		for(Character c : alphabet.asCharArray()) {
 			chars.add(c);
 		}
 
 		Character[] ret = new Character[alphabet.size()];
 
 		//randomizing the alphabet using SecureRandom
-		for (int i = 0; i < ret.length; i++) {
+		for(int i = 0; i < ret.length; i++) {
 			ret[i] = chars.get((int) (chars.size() * rand.nextDouble()));
 			chars.remove(ret[i]);
 		}
@@ -207,7 +207,7 @@ public class UtilsImpl implements Utils {
 	 */
 	public Character[] toCharacterArray(char[] charArray) {
 		Character[] ret = new Character[charArray.length];
-		for (int i = 0; i < charArray.length; i++) {
+		for(int i = 0; i < charArray.length; i++) {
 			ret[i] = charArray[i];
 		}
 
@@ -222,7 +222,7 @@ public class UtilsImpl implements Utils {
 	 */
 	public char[] toCharArray(Character[] characterArray) {
 		char[] ret = new char[characterArray.length];
-		for (int i = 0; i < characterArray.length; i++) {
+		for(int i = 0; i < characterArray.length; i++) {
 			ret[i] = characterArray[i];
 		}
 

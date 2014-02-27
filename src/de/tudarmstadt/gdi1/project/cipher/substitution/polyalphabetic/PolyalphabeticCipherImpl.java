@@ -27,7 +27,7 @@ public class PolyalphabeticCipherImpl extends SubstitutionCipherImpl implements 
 	 * @param cipherTextAlphabets Alphabets of the cipher text
 	 */
 	public PolyalphabeticCipherImpl(Alphabet plaintTextAlphabet, Alphabet[] cipherTextAlphabets) {
-		if (cipherTextAlphabets.length == 0) {
+		if(cipherTextAlphabets.length == 0) {
 			throw new InvalidAlphabetListException("The list of alphabets must include at least one alphabet!");
 		}
 		this.plaintTextAlphabet = plaintTextAlphabet;
@@ -49,7 +49,7 @@ public class PolyalphabeticCipherImpl extends SubstitutionCipherImpl implements 
 		i %= cipherTextAlphabets.length;
 		// get the position of the plain text character that is about to be translated
 		int plainPos = plaintTextAlphabet.getIndex(chr);
-		if (i == -1) {
+		if(i == -1) {
 			throw new InvalidCharacterException("The character '" + chr + "' is not part of the plain text alphabet!");
 		}
 		// translate the character into the appropriate cipher text alphabet
@@ -71,7 +71,7 @@ public class PolyalphabeticCipherImpl extends SubstitutionCipherImpl implements 
 		i %= cipherTextAlphabets.length;
 		// get the position of the cipher text character that is about to be translated
 		int cipherPos = cipherTextAlphabets[i].getIndex(chr);
-		if (i == -1) {
+		if(i == -1) {
 			throw new InvalidCharacterException("The character '" + chr + "' is not part of the cipher text alphabet!");
 		}
 		// translate the character into the appropriate plain text alphabet

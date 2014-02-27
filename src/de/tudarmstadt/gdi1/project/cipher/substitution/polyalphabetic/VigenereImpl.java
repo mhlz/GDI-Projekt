@@ -25,7 +25,7 @@ public class VigenereImpl extends PolyalphabeticCipherImpl implements Vigenere {
 		// of the character in the key
 		ArrayList<Alphabet> vigenereAlphabets = new ArrayList<Alphabet>();
 		Utils utils = new UtilsImpl();
-		for (Character c : key.toCharArray()) {
+		for(Character c : key.toCharArray()) {
 			vigenereAlphabets.add(utils.shiftAlphabet(alphabet, alphabet.getIndex(c)));
 		}
 

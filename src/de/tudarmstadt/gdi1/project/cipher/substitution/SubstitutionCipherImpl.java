@@ -18,7 +18,7 @@ public abstract class SubstitutionCipherImpl implements SubstitutionCipher {
 		// translate every character individually and put them together to a string
 		StringBuilder out = new StringBuilder();
 		char[] textArray = text.toCharArray();
-		for (int i = 0; i < textArray.length; i++) {
+		for(int i = 0; i < textArray.length; i++) {
 			out.append(translate(textArray[i], i));
 		}
 
@@ -36,7 +36,7 @@ public abstract class SubstitutionCipherImpl implements SubstitutionCipher {
 		// reverseTranslate every character individually and put them together to a string
 		StringBuilder out = new StringBuilder();
 		char[] textArray = text.toCharArray();
-		for (int i = 0; i < textArray.length; i++) {
+		for(int i = 0; i < textArray.length; i++) {
 			out.append(reverseTranslate(textArray[i], i));
 		}
 		return out.toString();

@@ -28,15 +28,15 @@ public class KeywordMonoalphabeticCipherImpl extends MonoalphabeticCipherImpl im
 		ArrayList<Character> restAlphabet = new ArrayList<Character>();
 
 		// we delete all duplicates out of the word, so that passList only contains each letter once
-		for (Character c : password.toCharArray()) {
-			if (!passList.contains(c)) {
+		for(Character c : password.toCharArray()) {
+			if(!passList.contains(c)) {
 				passList.add(c);
 			}
 		}
 
 		// we compute the rest of the alphabet, so each letter that isn't in passList, is in here
-		for (Character c : sourceArray) {
-			if (!passList.contains(c)) {
+		for(Character c : sourceArray) {
+			if(!passList.contains(c)) {
 				restAlphabet.add(c);
 			}
 		}
@@ -44,7 +44,7 @@ public class KeywordMonoalphabeticCipherImpl extends MonoalphabeticCipherImpl im
 
 		Character[] destArray = new Character[sourceArray.length];
 		// putting the password into the destinationArray
-		for (int i = 0; i < passList.size(); i++) {
+		for(int i = 0; i < passList.size(); i++) {
 			destArray[i] = passList.get(i);
 		}
 
@@ -52,7 +52,7 @@ public class KeywordMonoalphabeticCipherImpl extends MonoalphabeticCipherImpl im
 		Alphabet reversAlph = new UtilsImpl().reverseAlphabet(new AlphabetImpl(restAlphabet));
 
 		//putting the reveres Alphabet into the destination array
-		for (int i = passList.size(); i < destArray.length; i++) {
+		for(int i = passList.size(); i < destArray.length; i++) {
 			destArray[i] = reversAlph.getChar(i - passList.size());
 		}
 
