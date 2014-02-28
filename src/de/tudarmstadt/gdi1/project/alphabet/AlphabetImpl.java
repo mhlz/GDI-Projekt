@@ -15,6 +15,9 @@ import java.util.List;
  */
 public class AlphabetImpl implements Alphabet {
 
+	/**
+	 * Saves the characters of the array
+	 */
 	protected ArrayList<Character> characters;
 
 	/**

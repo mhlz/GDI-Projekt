@@ -6,14 +6,26 @@ import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 import java.util.*;
 
 /**
+ * Calculates the distribution of letters and letter sequences
+ *
  * @author Mischa Holz
  */
 public class DistributionImpl implements Distribution {
 
+	/**
+	 * Alphabet that was used for this distribution
+	 */
 	protected Alphabet src;
 
+	/**
+	 * Saves the sequences sorted by their length
+	 */
 	protected TreeMap<Integer, ArrayList<GramFrequencyPair>> weightedGrams;
 
+	/**
+	 * This class is a pair of a frequency and the letter sequence.
+	 * Can't really use a hashmap here since we have to be able to look this up in both directions
+	 */
 	protected class GramFrequencyPair {
 		public double freq;
 		public String gram;
@@ -28,6 +40,10 @@ public class DistributionImpl implements Distribution {
 		}
 	}
 
+	/**
+	 * Compare two frequency/sequence pairs to find out which one is more frequent in the text
+	 * In case the frequency is the same, use the natural order
+	 */
 	protected class FrequencyComparator implements Comparator<GramFrequencyPair> {
 		@Override
 		public int compare(GramFrequencyPair o1, GramFrequencyPair o2) {
@@ -41,44 +57,65 @@ public class DistributionImpl implements Distribution {
 		}
 	}
 
+	/**
+	 * This constructor calculates frequencies for sequences with the length 1 (single letter).
+	 * This is equivalent of using the other constructor with ngramsize = 1
+	 * @param source Source alphabet
+	 * @param text Source text
+	 */
 	public DistributionImpl(Alphabet source, String text) {
 		this(source, text, 1);
 	}
 
+	/**
+	 * This constructor calculates frequencies for sequences with a length of up to (and including) ngramsize
+	 * @param source Source alphabet
+	 * @param text Source text
+	 * @param ngramsize The size of the sequences for which the frequencies should be calculated
+	 */
 	public DistributionImpl(Alphabet source, String text, int ngramsize) {
+		// normalize the text first
 		text = source.normalize(text);
+		// initialize the map and save the source alphabet
 		weightedGrams = new TreeMap<Integer, ArrayList<GramFrequencyPair>>();
 		src = source;
 
+		// create an array containing all the sizes that we need.
+		// this is used to call utils.ngramize in a bit
 		int[] sizes = new int[ngramsize];
 		for(int i = 1; i <= ngramsize; i++) {
 			sizes[i - 1] = i;
 		}
 		Utils utils = new UtilsImpl();
+		// split the text into sequences until the given length
 		Map<Integer, List<String>> grams = utils.ngramize(text, sizes);
+
+		// for every length in the array
 		for(int length : sizes) {
+			// create a hashamp to save absolute frequencies
 			HashMap<String, Integer> frequencies = new HashMap<String, Integer>();
-			if(length == 1) {
-				for(Character c : source) {
-					frequencies.put(c.toString(), 0);
-				}
-			}
 			// go through all grams of the current length
 			for(String gram : grams.get(length)) {
+				// in case the sequence isn't in the map yet, put it in with an absoulte frequency of 1
+				// otherwise increment the frequency
 				if(frequencies.get(gram) == null) {
 					frequencies.put(gram, 1);
 				} else {
 					frequencies.put(gram, frequencies.get(gram) + 1);
 				}
 			}
-			ArrayList<GramFrequencyPair> sortedMap = new ArrayList<GramFrequencyPair>();
+			// create an arraylist of pairs, to save the pairs of frequencies and sequences
+			ArrayList<GramFrequencyPair> sortedList = new ArrayList<GramFrequencyPair>();
+			// calculate the relative frequency and save it in a pair
+			// add the list to the pair
 			for(String gram : frequencies.keySet()) {
 				double freq = (double) frequencies.get(gram) / (double) grams.get(length).size();
 				GramFrequencyPair pair = new GramFrequencyPair(gram, freq);
-				sortedMap.add(pair);
+				sortedList.add(pair);
 			}
-			Collections.sort(sortedMap, new FrequencyComparator());
-			weightedGrams.put(length, sortedMap);
+			// sort the list using the comparator and save it in the map
+			Collections.sort(sortedList, new FrequencyComparator());
+			weightedGrams.put(length, sortedList);
 		}
 	}
 
@@ -93,6 +130,8 @@ public class DistributionImpl implements Distribution {
 	 */
 	@Override
 	public List<String> getSorted(int length) {
+		// get all grams of a certain length and add the strings of the pairs to a list
+		// return the list
 		ArrayList<String> ret = new ArrayList<String>();
 		if(weightedGrams.get(length) == null) {
 			return null;
@@ -113,6 +152,8 @@ public class DistributionImpl implements Distribution {
 	 */
 	@Override
 	public double getFrequency(String key) {
+		// go through all sequences with the length of the key
+		// if the string of the pair is equal to the key return its frequency
 		for(GramFrequencyPair pair : weightedGrams.get(key.length())) {
 			if(pair.gram.equals(key)) {
 				return pair.freq;
@@ -121,7 +162,15 @@ public class DistributionImpl implements Distribution {
 		return 0;
 	}
 
+	/**
+	 * Return the rank of a given key. 1 is the highest possible rank. If the key can't be found, returns 0
+	 * @param key Letter sequence that the rank is searched for
+	 * @return Rank of that letter sequence
+	 */
 	public int getRank(String key) {
+		// 1 is the highest possible rank
+		// go through the sorted list of sequences and return the rank of the one that matches the key
+		// return ß0 if
 		int i = 1;
 		for(GramFrequencyPair pair : weightedGrams.get(key.length())) {
 			if(pair.gram.equals(key)) {
@@ -153,6 +202,9 @@ public class DistributionImpl implements Distribution {
 	 */
 	@Override
 	public String getByRank(int length, int rank) {
+		// go through the sorted list of sequences and return the string of the sequence that matches
+		// the given rank
+		// return null if the rank is not valid
 		int i = 1;
 		for(GramFrequencyPair pair : weightedGrams.get(length)) {
 			if(i == rank) {
