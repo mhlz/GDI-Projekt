@@ -108,14 +108,13 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 
 			@Override
 			public char[] call() throws Exception {
-				char[] reconstructedKey = ca.knownCiphertextAttack(ciphertext, distribution, dictionary, cribs,
+				return ca.knownCiphertextAttack(ciphertext, distribution, dictionary, cribs,
 						new ValidateDecryptionOracle() {
 							@Override
 							public boolean isCorrect(String p) {
 								return plaintext.equals(p);
 							}
 						});
-				return reconstructedKey;
 			}
 		};
 		ExecutorService service = Executors.newSingleThreadExecutor();

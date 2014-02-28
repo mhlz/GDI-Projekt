@@ -7,6 +7,7 @@ import de.tudarmstadt.gdi1.project.test.analysis.TemplateCaesarCryptanalysisTest
 import de.tudarmstadt.gdi1.project.test.analysis.TemplateValidationDecryptionOracle;
 import de.tudarmstadt.gdi1.project.test.analysis.TemplateVigenereCryptanalysisTests;
 import de.tudarmstadt.gdi1.project.test.analysis.monoalphabetic.TemplateIndividualTests;
+import de.tudarmstadt.gdi1.project.test.analysis.monoalphabetic.TemplateMonoalphabeticCpaNpaCryptanalysisTests;
 import de.tudarmstadt.gdi1.project.test.cipher.enigma.TemplateEnigmaTest;
 import de.tudarmstadt.gdi1.project.test.cipher.enigma.TemplatePinBoardTest;
 import de.tudarmstadt.gdi1.project.test.cipher.enigma.TemplateReverseRotorTest;
@@ -41,7 +42,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		TemplateValidationDecryptionOracle.class,
 		TemplateVigenereCryptanalysisTests.class,
 		TemplateIndividualTests.class,
-
+		TemplateMonoalphabeticCpaNpaCryptanalysisTests.class,
 	
 	/* enigma */
 		TemplateEnigmaTest.class,
@@ -54,7 +55,6 @@ import org.junit.runners.Suite.SuiteClasses;
 
     /*our tests*/
 		CaesarCryptanalysisImplTest.class,
-		MonoalphabeticCpaNpaCryptanalysisImplTest.class,
 		VigenereCryptanalysisImplTest.class
 })
 public class Main {

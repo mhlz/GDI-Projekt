@@ -6,8 +6,7 @@ import de.tudarmstadt.gdi1.project.alphabet.DistributionImpl;
 
 /**
  * validates a possible decryption for a ciphertext
- * <p/>
- * Created by Nansu on 26.02.14.
+ *
  */
 public class ValidateDecryptionOracleImpl implements ValidateDecryptionOracle {
 

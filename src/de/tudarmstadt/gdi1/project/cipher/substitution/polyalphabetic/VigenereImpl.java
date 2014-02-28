@@ -7,7 +7,8 @@ import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 import java.util.ArrayList;
 
 /**
- * @author Mischa Holz
+ * vignere cipher
+ *
  */
 public class VigenereImpl extends PolyalphabeticCipherImpl implements Vigenere {
 

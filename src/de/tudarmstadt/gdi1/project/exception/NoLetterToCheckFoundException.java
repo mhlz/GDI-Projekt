@@ -1,9 +1,7 @@
 package de.tudarmstadt.gdi1.project.exception;
 
 /**
- * Created by Hannes on 2/27/14.
- *
- * @author Hannes Güdelhöfer
+ * gets thrown if a Cipher can't find a Letter to check
  */
 public class NoLetterToCheckFoundException extends RuntimeException {
 	/**

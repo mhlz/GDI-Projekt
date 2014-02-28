@@ -2,7 +2,7 @@ package de.tudarmstadt.gdi1.project.cipher.substitution;
 
 
 /**
- * @author Hannes
+ * basic Substituion cipher
  */
 public abstract class SubstitutionCipherImpl implements SubstitutionCipher {
 

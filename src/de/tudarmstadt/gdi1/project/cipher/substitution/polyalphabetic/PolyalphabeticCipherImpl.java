@@ -8,7 +8,6 @@ import de.tudarmstadt.gdi1.project.exception.InvalidCharacterException;
 /**
  * a basic polyalphabetic cipher
  *
- * @author Mischa Holz
  */
 public class PolyalphabeticCipherImpl extends SubstitutionCipherImpl implements PolyalphabeticCipher {
 

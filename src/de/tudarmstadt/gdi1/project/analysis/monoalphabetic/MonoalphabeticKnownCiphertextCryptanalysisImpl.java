@@ -12,7 +12,6 @@ import java.util.Random;
 /**
  * Reconstruct the key of a monoalphabetic cipher using a genetic algorithm
  *
- * @author Mischa Holz
  */
 public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements MonoalphabeticKnownCiphertextCryptanalysis, GeneticAnalysis {
 

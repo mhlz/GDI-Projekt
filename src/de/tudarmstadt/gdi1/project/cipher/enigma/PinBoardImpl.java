@@ -6,7 +6,6 @@ import de.tudarmstadt.gdi1.project.exception.InvalidAlphabetException;
 /**
  * Represents the pinboard of an Enigma machine
  *
- * @author Mischa Holz
  */
 public class PinBoardImpl implements PinBoard {
 

@@ -10,9 +10,7 @@ import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.CaesarImpl
 import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 
 /**
- * Created by Hannes on 2/19/14.
- *
- * @author Hannes Güdelhöfer
+ *  attack on a caesar cipher
  */
 public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCiphertextAnalysis, KnownPlaintextAnalysis {
 
@@ -39,7 +37,7 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
 			//decrypt ciphertext with key
 			String temp = caesar.decrypt(ciphertext);
 			//check if the ciphertext decrypted with key contains the plaintext
-			if(temp.contains(plaintext) == true) {
+			if(temp.contains(plaintext)) {
 				return key;
 			}
 		}

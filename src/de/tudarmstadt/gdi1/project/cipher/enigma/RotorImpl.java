@@ -9,7 +9,6 @@ import java.util.ArrayList;
 /**
  * Implements a configurable rotor of the Enigma machine
  *
- * @author Mischa Holz
  */
 public class RotorImpl implements Rotor {
 

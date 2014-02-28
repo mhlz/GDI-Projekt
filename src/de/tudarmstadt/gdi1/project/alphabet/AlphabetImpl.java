@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * Represents a cryptographic alphabet
  *
- * @author Mischa Holz
  */
 public class AlphabetImpl implements Alphabet {
 

@@ -5,7 +5,6 @@ import java.util.List;
 /**
  * Implements an Enigma machine
  *
- * @author Mischa Holz
  */
 public class EnigmaImpl implements Enigma {
 

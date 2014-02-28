@@ -4,7 +4,7 @@ import de.tudarmstadt.gdi1.project.alphabet.Alphabet;
 import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 
 /**
- * Created by reckter on 2/17/14.
+ *  caesar cipher
  */
 public class CaesarImpl extends MonoalphabeticCipherImpl implements Caesar {
 

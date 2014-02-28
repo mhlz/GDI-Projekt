@@ -7,9 +7,7 @@ import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 import java.util.ArrayList;
 
 /**
- * Created by Hannes on 2/17/14.
- *
- * @author Hannes Güdelhöfer
+ * a keyword monoalphabtic cipher
  */
 public class KeywordMonoalphabeticCipherImpl extends MonoalphabeticCipherImpl implements KeywordMonoalphabeticCipher {
 

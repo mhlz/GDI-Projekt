@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by reckter on 2/17/14.
+ * factory
  */
 public class FactoryImpl implements Factory {
 	/**
@@ -148,7 +148,7 @@ public class FactoryImpl implements Factory {
 	 */
 	@Override
 	public MonoalphabeticCpaNpaCryptanalysis getMonoalphabeticCpaNpaCryptanalysis() {
-		return null;
+		return new MonoalphabeticCpaNpaCryptanalysisImpl();
 	}
 
 	/**

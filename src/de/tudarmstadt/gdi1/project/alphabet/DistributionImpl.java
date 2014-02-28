@@ -8,7 +8,6 @@ import java.util.*;
 /**
  * Calculates the distribution of letters and letter sequences
  *
- * @author Mischa Holz
  */
 public class DistributionImpl implements Distribution {
 

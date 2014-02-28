@@ -8,7 +8,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-		TemplateMonoalphabeticKnownCiphertextCryptanalysisTests.class,
+		TemplateMonoalphabeticKnownCiphertextCryptanalysisTests.class
 })
 public class TestMonoalphabeticKCAnalysis {
 

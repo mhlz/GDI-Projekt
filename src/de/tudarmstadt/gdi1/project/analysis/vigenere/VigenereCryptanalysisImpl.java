@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Noxicon on 25.02.14.
+ * an attack on a Vignere cipher
  */
 public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 	/**

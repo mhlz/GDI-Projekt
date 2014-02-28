@@ -8,7 +8,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-		TemplateCribCryptanalysisTests.class,
+		TemplateCribCryptanalysisTests.class
 })
 public class TestMonoalphabeticCribAnalysis {
 

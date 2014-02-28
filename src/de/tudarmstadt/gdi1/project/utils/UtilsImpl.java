@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Mischa Holz
+ * al kinds of utility functions
  */
 public class UtilsImpl implements Utils {
 	/**

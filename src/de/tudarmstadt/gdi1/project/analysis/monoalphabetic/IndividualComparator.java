@@ -3,7 +3,7 @@ package de.tudarmstadt.gdi1.project.analysis.monoalphabetic;
 import java.util.Comparator;
 
 /**
- * @author Mischa Holz
+ * compares too individuals
  */
 public class IndividualComparator implements Comparator<Individual> {
 

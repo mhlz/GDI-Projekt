@@ -7,7 +7,6 @@ import java.util.TreeSet;
 /**
  * Scans a text for words and saves them for later uses
  *
- * @author Mischa Holz
  */
 public class DictionaryImpl implements Dictionary {
 

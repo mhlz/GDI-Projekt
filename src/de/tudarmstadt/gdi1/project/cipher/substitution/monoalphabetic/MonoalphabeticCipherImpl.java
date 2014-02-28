@@ -5,9 +5,8 @@ import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipherImpl;
 import de.tudarmstadt.gdi1.project.exception.InvalidCharacterException;
 
 /**
- * a basic mono alphabetic cipher
+ * mono alphabetic cipher
  *
- * @author Hannes
  */
 public class MonoalphabeticCipherImpl extends SubstitutionCipherImpl implements MonoalphabeticCipher {
 

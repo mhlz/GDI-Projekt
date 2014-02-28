@@ -9,9 +9,8 @@ import de.tudarmstadt.gdi1.project.exception.NoLetterToCheckFoundException;
 import java.util.*;
 
 /**
- * Created by Hannes on 2/25/14.
+ * a bakctracking attack on a monoalphabtoc cipher
  *
- * @author Hannes Güdelhöfer
  */
 public class MonoalphabeticCribCryptanalysisImpl implements MonoalphabeticCribCryptanalysis, BacktrackingAnalysis {
 

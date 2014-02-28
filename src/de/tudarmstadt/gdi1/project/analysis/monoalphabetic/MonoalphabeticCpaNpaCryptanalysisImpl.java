@@ -7,9 +7,8 @@ import de.tudarmstadt.gdi1.project.analysis.EncryptionOracle;
 import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.MonoalphabeticCipher;
 
 /**
- * Created by Hannes on 2/24/14.
+ * attack on a monoalphabetic cipher
  *
- * @author Hannes Güdelhöfer
  */
 public class MonoalphabeticCpaNpaCryptanalysisImpl implements MonoalphabeticCpaNpaCryptanalysis {
 	@Override

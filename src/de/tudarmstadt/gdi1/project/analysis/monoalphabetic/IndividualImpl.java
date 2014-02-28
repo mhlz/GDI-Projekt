@@ -5,7 +5,6 @@ import de.tudarmstadt.gdi1.project.alphabet.Alphabet;
 /**
  * Represents one individual for the genetic algorithm
  *
- * @author Mischa Holz
  */
 public class IndividualImpl implements Individual {
 
