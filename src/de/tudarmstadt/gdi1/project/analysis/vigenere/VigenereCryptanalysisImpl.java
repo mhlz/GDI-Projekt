@@ -37,7 +37,6 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 		String lastCheckedKey = "";
 		int counter;
 		int lastTryTrue = 0;
-		String key;
 
 		for(int i = 0; i < ciphertext.length(); i++) {
 			int tmp = alphabet.getIndex(ciphertext.charAt(i)) - alphabet.getIndex(plaintext.charAt(i));
@@ -51,8 +50,7 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 		}
 		keyLenghts = getKeyLength(stringKeyPart);
 		if(keyLenghts.size() == 0) {
-			key = stringKeyPart;
-			return key;
+			return stringKeyPart;
 		}
 		for(int i = 0; i < keyLenghts.size(); i++) {
 			for(int n = 0; n < keyLenghts.get(i); n++) {
@@ -77,27 +75,23 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 					lastTryTrue = 1;
 					lastCheckedKey = stringCompare;
 					if(keyLenghts.size() == keyLenghts.get(i)) {
-						key = stringCompare;
-						return key;
+						return stringCompare;
 					}
 
 				} else if(lastTryTrue == 1) {
 					if(stringKeyPartCalc.contains(lastCheckedKey)) {
-						key = stringCompare;
-						return key;
+						return stringCompare;
 					}
 					return lastCheckedKey;
 				} else {
-					key = stringKeyPartCalc;
-					return key;
+					return stringKeyPartCalc;
 				}
 
 			}
 		}
 		if(lastTryTrue == 1) {
 			if(stringKeyPartCalc.contains(lastCheckedKey)) {
-				key = stringCompare;
-				return key;
+				return stringCompare;
 			}
 		}
 		return null;
