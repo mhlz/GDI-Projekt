@@ -197,6 +197,10 @@ public class AlphabetImpl implements Alphabet {
 		return characters.iterator();
 	}
 
+	/**
+	 * Returns a string representing the alphabet. This is used for outputting it to the console
+	 * @return String for outputting the alphabet to a console
+	 */
 	@Override
 	public String toString() {
 		StringBuilder out = new StringBuilder();
