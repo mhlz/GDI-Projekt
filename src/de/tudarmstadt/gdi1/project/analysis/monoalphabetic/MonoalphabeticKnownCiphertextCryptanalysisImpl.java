@@ -421,12 +421,13 @@ public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements Monoalpha
 			this.averageWordLength /= dictionary.size();
 		}
 
+		// decrypt the text
+		String decryptedText = crypto.decrypt(ciphertext);
+
 		// go through every word in the dictionary
 		for(String word : dictionary) {
-			// encrypt the word using the individual's key
-			String encryptedWord = crypto.encrypt(word);
-			// check if the encrypted word appears in the cipher text
-			if(ciphertext.contains(encryptedWord)) {
+			// check if the word appears in the decrypted text
+			if(decryptedText.contains(word)) {
 				// if it does add a weighted value to the fitness.
 				// longer words award more points than shorter ones based on the average length of the words in the
 				// dictionary
