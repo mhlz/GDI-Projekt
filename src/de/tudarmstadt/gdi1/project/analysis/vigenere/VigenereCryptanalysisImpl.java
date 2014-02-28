@@ -39,50 +39,50 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 		int lastTryTrue = 0;
 		String key;
 
-		for (int i = 0; i < ciphertext.length(); i++) {
+		for(int i = 0; i < ciphertext.length(); i++) {
 			int tmp = alphabet.getIndex(ciphertext.charAt(i)) - alphabet.getIndex(plaintext.charAt(i));
-			if (tmp < 0) {
+			if(tmp < 0) {
 				tmp += alphabet.size();
 			}
 			keyPart[i] = alphabet.getChar(tmp);
 		}
-		for (char c : keyPart) {
+		for(char c : keyPart) {
 			stringKeyPart += c;
 		}
 		keyLenghts = getKeyLength(stringKeyPart);
-		if (keyLenghts.size() == 0) {
+		if(keyLenghts.size() == 0) {
 			key = stringKeyPart;
 			return key;
 		}
-		for (int i = 0; i < keyLenghts.size(); i++) {
-			for (int n = 0; n < keyLenghts.get(i); n++) {
+		for(int i = 0; i < keyLenghts.size(); i++) {
+			for(int n = 0; n < keyLenghts.get(i); n++) {
 				stringCompare = "";
 				stringKeyPartCalc = "";
 				counter = -1;
-				for (int m = 0; m < keyLenghts.get(i); m++) {
+				for(int m = 0; m < keyLenghts.get(i); m++) {
 					compare[m] = keyPart[m];
 					counter++;
 				}
-				for (int m = 0; m < keyLenghts.get(i); m++) {
+				for(int m = 0; m < keyLenghts.get(i); m++) {
 					stringCompare += compare[m];
 				}
-				for (int m = 0; m < keyPart.length - counter; m++) {
+				for(int m = 0; m < keyPart.length - counter; m++) {
 					keyPartCalc[m] = keyPart[m + counter];
 				}
-				for (char c : keyPartCalc) {
+				for(char c : keyPartCalc) {
 					stringKeyPartCalc += c;
 				}
 
-				if (stringKeyPartCalc.contains(stringCompare)) {
+				if(stringKeyPartCalc.contains(stringCompare)) {
 					lastTryTrue = 1;
 					lastCheckedKey = stringCompare;
-					if (keyLenghts.size() == keyLenghts.get(i)) {
+					if(keyLenghts.size() == keyLenghts.get(i)) {
 						key = stringCompare;
 						return key;
 					}
 
-				} else if (lastTryTrue == 1) {
-					if (stringKeyPartCalc.contains(lastCheckedKey)) {
+				} else if(lastTryTrue == 1) {
+					if(stringKeyPartCalc.contains(lastCheckedKey)) {
 						key = stringCompare;
 						return key;
 					}
@@ -94,8 +94,8 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 
 			}
 		}
-		if (lastTryTrue == 1) {
-			if (stringKeyPartCalc.contains(lastCheckedKey)) {
+		if(lastTryTrue == 1) {
+			if(stringKeyPartCalc.contains(lastCheckedKey)) {
 				key = stringCompare;
 				return key;
 			}
@@ -146,39 +146,57 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 		String temp = "";
 		String ret = "";
 
-
-		for (int i = 0; i < keys.size(); i++) {   // run through all found keys
+		// run through all found keys
+		for(int i = 0; i < keys.size(); i++) {
 			ret = "";
-			for (int j = 1; j <= keys.get(i); j++) {  // run through the size of the current key
-				temp = extract(ciphertext, keys.get(i), j); // extracted chars dependent on the current size of key
+			// run through the size of the current key
+			for(int j = 1; j <= keys.get(i); j++) {
 
-				DistributionImpl keyDist = new DistributionImpl(distribution.getAlphabet(), temp);  // make distribution for extracted string
-				char mostUsedPlain = distribution.getByRank(1, 1).charAt(0);                       // most used in given alphabet
-				char mostUsedKey = keyDist.getByRank(1, 1).charAt(0);                              // most used in current extracted string
+				// extracted chars dependent on the current size of key
+				temp = extract(ciphertext, keys.get(i), j);
 
-				int plain = distribution.getAlphabet().getIndex(mostUsedPlain);                 // get numbers to determine shift range
+				// make distribution for extracted string
+				DistributionImpl keyDist = new DistributionImpl(distribution.getAlphabet(), temp);
+
+				// most used in given alphabet
+				char mostUsedPlain = distribution.getByRank(1, 1).charAt(0);
+
+				// most used in current extracted string
+				char mostUsedKey = keyDist.getByRank(1, 1).charAt(0);
+
+				// get numbers to determine shift range
+				int plain = distribution.getAlphabet().getIndex(mostUsedPlain);
 				int key = distribution.getAlphabet().getIndex(mostUsedKey);
 
 				int shift = key - plain;
-				char keyChar = distribution.getAlphabet().getChar(shift);                       // get code char
+				// get code char
+				char keyChar = distribution.getAlphabet().getChar(shift);
 
 				ret = ret + keyChar;
 			}
 
 			VigenereImpl keyTest = new VigenereImpl(ret, distribution.getAlphabet());
 
-			temp = keyTest.decrypt(ciphertext);                                              // decrypt with found pass code
+			// decrypt with found pass code
+			temp = keyTest.decrypt(ciphertext);
 			int x = 0;
 
-			for (int j = 0; j < cribs.size(); j++) {    // run through cribs array size
-				if (temp.contains(cribs.get(j)))      // check if string in current cribs is contained in decrypted string
+			// run through cribs array size
+			for(int j = 0; j < cribs.size(); j++) {
+				// check if string in current cribs is contained in decrypted string
+				if(temp.contains(cribs.get(j))) {
 					x = x + 1;
+				}
 			}
 
-			if (x == cribs.size())                     // pass code worked - return the code
+			// pass code worked - return the code
+			if(x == cribs.size()) {
 				return ret;
+			}
 		}
-		return "";                                      // no valid pass code found
+
+		// no valid pass code found
+		return "";
 	}
 
 	/**
@@ -190,18 +208,23 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 	 * @return String of all the nth characters
 	 */
 	public String extract(String input, int m, int n) {
-		int x = 1;                                 // counter of sequence length
+		// counter of sequence length
+		int x = 1;
 		String ret = "";
+		// run to length of string
+		for(int i = 0; i < input.length(); i++) {
 
-		for (int i = 0; i < input.length(); i++) {  // run to length of string
-
-			if (x == n)                            // counter in a sequence on the character to be extracted
+			// counter in a sequence on the character to be extracted
+			if(x == n) {
 				ret += input.charAt(i);
+			}
 
-			if (x == m)                           // reset sequence counter
+			// reset sequence counter
+			if(x == m) {
 				x = 1;
-			else
+			} else {
 				x = x + 1;
+			}
 
 		}
 		return ret;
@@ -216,9 +239,12 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 	 */
 	public List<Integer> getDividends(int number) {
 		List<Integer> ret = new ArrayList<Integer>();
-		for (int i = 1; i <= number; i++) {   // checks all numbers starting from one to the number itself
-			if (number % i == 0)              // if mod 0 the current number is a divident
+		// checks all numbers starting from one to the number itself
+		for(int i = 1; i <= number; i++) {
+			// if mod 0 the current number is a divident
+			if(number % i == 0) {
 				ret.add(i);
+			}
 		}
 		return ret;
 	}
@@ -233,10 +259,14 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 	 */
 	public int ggT(int a, int b) {
 
-		if (a == b)                           //euklid algorithm
+		//euklid algorithm
+		if(a == b) {
 			return (a);
-		else if (a > b) return ggT(a - b, b);
-		else return ggT(b - a, a);
+		} else if(a > b) {
+			return ggT(a - b, b);
+		} else {
+			return ggT(b - a, a);
+		}
 
 	}
 
@@ -247,12 +277,18 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 	 * @return ggT of all the numbers
 	 */
 	public int ggT(List<Integer> inputList) {
-		if (inputList.size() < 2)                       // check if list is smaller 2
-			return inputList.get(0);                // return item, only one in list
-		else {
-			int x = ggT(inputList.get(0), inputList.get(1)); // first pair
-			for (int i = 2; i < inputList.size(); i++) {     // skip first pair, run to rest of the list
-				x = ggT(inputList.get(i), x);              // check ggT of previous pair with new item
+		// check if list is smaller 2
+		if(inputList.size() < 2) {
+			// return item, only one in list
+			return inputList.get(0);
+		} else {
+			// first pair
+			int x = ggT(inputList.get(0), inputList.get(1));
+			// skip first pair, run to rest of the list
+
+			for(int i = 2; i < inputList.size(); i++) {
+				// check ggT of previous pair with new item
+				x = ggT(inputList.get(i), x);
 			}
 
 			return x;
@@ -271,11 +307,16 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 		String temp;
 		String split;
 
-		for (int i = 0; i < input.length() - sequence; i++) {        // run through string length
-			temp = input.substring(i, i + sequence);                    // contains the word to be checked
-			split = input.substring(input.indexOf(temp) + sequence); // contains the rest of the string, cutting the search word
-			if (split.indexOf(temp) != -1)                          // word is contained -> add into result
+		// run through string length
+		for(int i = 0; i < input.length() - sequence; i++) {
+			// contains the word to be checked
+			temp = input.substring(i, i + sequence);
+			// contains the rest of the string, cutting the search word
+			split = input.substring(input.indexOf(temp) + sequence);
+			// word is contained -> add into result
+			if(split.indexOf(temp) != -1) {
 				ret.add(split.indexOf(temp) + sequence);
+			}
 		}
 		return ret;
 	}
@@ -288,12 +329,14 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 	 */
 	public List<Integer> getKeyLength(String chiffre) {
 		List<Integer> ret = new ArrayList<Integer>();
-
-		for (int i = 3; i <= chiffre.length(); i++) {   // run from smallest reasonable keylength to the max wordcount
-			ret.addAll(getDistance(chiffre, i));         // take all distances
+		// run from smallest reasonable keylength to the max wordcount
+		for(int i = 3; i <= chiffre.length(); i++) {
+			// take all distances
+			ret.addAll(getDistance(chiffre, i));
 		}
-		if (!ret.isEmpty()) {
-			ret = (getDividends(ggT(ret)));                  // calculate ggt of all distances and get all dividends of the ggt
+		if(!ret.isEmpty()) {
+			// calculate ggt of all distances and get all dividends of the ggt
+			ret = (getDividends(ggT(ret)));
 		}
 		return ret;
 	}

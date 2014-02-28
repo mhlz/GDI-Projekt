@@ -1,8 +1,6 @@
 package de.tudarmstadt.gdi1.project.test;
 
-import de.tudarmstadt.gdi1.project.analysis.EncryptionOracle;
 import de.tudarmstadt.gdi1.project.alphabet.Alphabet;
-import de.tudarmstadt.gdi1.project.analysis.monoalphabetic.MonoalphabeticCpaNpaCryptanalysis;
 import de.tudarmstadt.gdi1.project.analysis.monoalphabetic.MonoalphabeticCpaNpaCryptanalysisImpl;
 import junit.framework.TestCase;
 import org.junit.Assert;

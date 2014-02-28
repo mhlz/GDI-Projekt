@@ -15,10 +15,10 @@ public class MonoalphabeticCpaNpaCryptanalysisImpl implements MonoalphabeticCpaN
 	@Override
 	public char[] knownPlaintextAttack(String ciphertext, String plaintext, Alphabet alphabet) {
 		char[] key = new char[alphabet.size()];
-		for (int i = 0; i < alphabet.size(); i++) {
+		for(int i = 0; i < alphabet.size(); i++) {
 			key[i] = ' ';
 		}
-		for (int n = 0; n < ciphertext.length(); n++) {
+		for(int n = 0; n < ciphertext.length(); n++) {
 			key[alphabet.getIndex(plaintext.charAt(n))] = ciphertext.charAt(n);
 		}
 

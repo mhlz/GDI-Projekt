@@ -1,10 +1,11 @@
 package de.tudarmstadt.gdi1.project.analysis.caeser;
 
-import de.tudarmstadt.gdi1.project.alphabet.*;
+import de.tudarmstadt.gdi1.project.alphabet.Alphabet;
+import de.tudarmstadt.gdi1.project.alphabet.Dictionary;
+import de.tudarmstadt.gdi1.project.alphabet.Distribution;
+import de.tudarmstadt.gdi1.project.alphabet.DistributionImpl;
 import de.tudarmstadt.gdi1.project.analysis.KnownCiphertextAnalysis;
 import de.tudarmstadt.gdi1.project.analysis.KnownPlaintextAnalysis;
-import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipher;
-import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipherImpl;
 import de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic.CaesarImpl;
 import de.tudarmstadt.gdi1.project.utils.UtilsImpl;
 
@@ -31,16 +32,16 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
 
 		UtilsImpl utils = new UtilsImpl();
 		CaesarImpl caesar;
-		for (int i = 0; i < ciphertext.length(); i++) {
+		for(int i = 0; i < ciphertext.length(); i++) {
 			//calculate new key out of cipher and plaintext
 			key = alphabet.getIndex(ciphertext.charAt(i)) - alphabet.getIndex(plaintext.charAt(0));
 			caesar = new CaesarImpl(key, alphabet);
 			//decrypt ciphertext with key
 			String temp = caesar.decrypt(ciphertext);
 			//check if the ciphertext decrypted with key contains the plaintext
-			if (temp.contains(plaintext) == true){
-                return key;
-            }
+			if(temp.contains(plaintext) == true) {
+				return key;
+			}
 		}
 		return null;
 	}
@@ -90,7 +91,7 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
 		double ret = 0;
 
 		//cycling to as many letters as specified
-		for (int i = 0; i < testCommonLetters; i++) {
+		for(int i = 0; i < testCommonLetters; i++) {
 			char mostUsedCipher = cipherDist.getByRank(1, i + 1).toCharArray()[0]; //this is the most used letter
 			char mostUsedPlain = distribution.getByRank(1, i + 1).toCharArray()[0]; //this is the most used letter
 

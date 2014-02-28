@@ -75,8 +75,9 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 		Collection<Character> assignments = ba.getPotentialAssignments('w', partialKey, source.normalize(TemplateTestUtils.ALICE_PLAIN),
 				source, distribution, dictionary);
 
-		for (char c : assignments)
+		for(char c : assignments) {
 			Assert.assertTrue(source.contains(c));
+		}
 
 		Assert.assertEquals(source.size() - partialKey.size(), assignments.size());
 	}
@@ -122,9 +123,9 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 
 		long t = System.currentTimeMillis();
 		long time2 = System.currentTimeMillis();
-		while (!future.isDone()) {
+		while(!future.isDone()) {
 			//Thread.sleep(1);
-			if (System.currentTimeMillis() - time2 >= 5000) {
+			if(System.currentTimeMillis() - time2 >= 5000) {
 				time2 = System.currentTimeMillis();
 				System.out.println(ca.getState(distribution.getAlphabet(), key));
 			}
@@ -140,8 +141,9 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 		cipher = TemplateTestCore.getFactory().getMonoalphabeticCipherInstance(source, TemplateTestUtils.getAlphabetFrom(reconstructedKey));
 		String plaintextPrime = cipher.decrypt(ciphertext);
 
-		if (!plaintextPrime.equals(plaintext))
+		if(!plaintextPrime.equals(plaintext)) {
 			Assert.assertEquals(0, TemplateTestUtils.countDifferences(key.asCharArray(), reconstructedKey));
+		}
 	}
 
 	@Test
@@ -187,9 +189,9 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 		long t = System.currentTimeMillis();
 		long time2 = System.currentTimeMillis();
 
-		while (!future.isDone()) {
+		while(!future.isDone()) {
 			Thread.sleep(10);
-			if (System.currentTimeMillis() - time2 >= 5000) {
+			if(System.currentTimeMillis() - time2 >= 5000) {
 				time2 = System.currentTimeMillis();
 				System.out.println(ca.getState(distribution.getAlphabet(), key));
 			}
@@ -206,13 +208,14 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 		String plaintextPrime = cipher.decrypt(ciphertext);
 
 		Assert.assertEquals("plaintext doesn't match", plaintext, plaintextPrime);
-		if (!plaintextPrime.equals(plaintext))
+		if(!plaintextPrime.equals(plaintext)) {
 			Assert.assertEquals(0, TemplateTestUtils.countDifferences(key.asCharArray(), reconstructedKey));
+		}
 	}
 
 	@Test
 	public void testEveryLength() throws InterruptedException, ExecutionException {
-		for (int i = 10; i <= 26; i++) {
+		for(int i = 10; i <= 26; i++) {
 			Thread.sleep(1000);
 			System.out.println();
 			System.out.println(" ****************** TESTING LENGTH ********************");
@@ -229,8 +232,8 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 		ArrayList<Character> tmp = new ArrayList<Character>();
 
 		int i = 0;
-		for (char c : sourcetmp.asCharArray()) {
-			if (i >= length) {
+		for(char c : sourcetmp.asCharArray()) {
+			if(i >= length) {
 				break;
 			}
 			tmp.add(c);
@@ -280,9 +283,9 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 		long t = System.currentTimeMillis();
 		long time2 = System.currentTimeMillis();
 
-		while (!future.isDone()) {
+		while(!future.isDone()) {
 			//Thread.sleep(10);
-			if (System.currentTimeMillis() - time2 >= 5000) {
+			if(System.currentTimeMillis() - time2 >= 5000) {
 				time2 = System.currentTimeMillis();
 				System.out.println(ca.getState(distribution.getAlphabet(), key));
 			}
@@ -299,8 +302,9 @@ public class MonoalphabeticCribCryptanalysisImplTest {
 		String plaintextPrime = cipher.decrypt(ciphertext);
 
 		Assert.assertEquals("plaintext doesn't match", plaintext, plaintextPrime);
-		if (!plaintextPrime.equals(plaintext))
+		if(!plaintextPrime.equals(plaintext)) {
 			Assert.assertEquals(0, TemplateTestUtils.countDifferences(key.asCharArray(), reconstructedKey));
+		}
 	}
 
 	private Map<Character, Character> constructPartialKey(Alphabet source) {

@@ -45,7 +45,7 @@ public class MonoalphabeticCipherImpl extends SubstitutionCipherImpl implements 
 	 */
 	@Override
 	public char reverseTranslate(char chr, int i) {
-		if (!destination.contains(chr)) {
+		if(!destination.contains(chr)) {
 			return chr;
 		}
 		return source.getChar(destination.getIndex(chr));
