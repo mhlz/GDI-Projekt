@@ -38,6 +38,7 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 		int counter;
 		int lastTryTrue = 0;
 
+        //calculate the keyPart from known plain- and ciphertext
 		for(int i = 0; i < ciphertext.length(); i++) {
 			int tmp = alphabet.getIndex(ciphertext.charAt(i)) - alphabet.getIndex(plaintext.charAt(i));
 			if(tmp < 0) {
@@ -45,50 +46,70 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 			}
 			keyPart[i] = alphabet.getChar(tmp);
 		}
+
+        //convert calculated keyPart from char Array to String
 		for(char c : keyPart) {
 			stringKeyPart += c;
 		}
+
+        //if getKeyLenghts returns no found repetitions in keyPart, return whole keyPart as key
 		keyLenghts = getKeyLength(stringKeyPart);
 		if(keyLenghts.size() == 0) {
 			return stringKeyPart;
 		}
+
 		for(int i = 0; i < keyLenghts.size(); i++) {
+
+            //test every given keyLength
 			for(int n = 0; n < keyLenghts.get(i); n++) {
-				stringCompare = "";
+
+                //reinitiate Strings to prevent errors
+                stringCompare = "";
 				stringKeyPartCalc = "";
+
+                //set counter to split Strings
 				counter = -1;
+
+                //extract possible key with size i from the keyPart...
 				for(int m = 0; m < keyLenghts.get(i); m++) {
 					compare[m] = keyPart[m];
 					counter++;
 				}
+
+                //...and convert it to String
 				for(int m = 0; m < keyLenghts.get(i); m++) {
 					stringCompare += compare[m];
 				}
+
+                //save the remaining keyPart to use it for comparsion...
 				for(int m = 0; m < keyPart.length - counter; m++) {
 					keyPartCalc[m] = keyPart[m + counter];
 				}
+
+                //...and again convert it to String
 				for(char c : keyPartCalc) {
 					stringKeyPartCalc += c;
 				}
 
+                //if comparsion is true
 				if(stringKeyPartCalc.contains(stringCompare)) {
-					lastTryTrue = 1;
+					//save that the rest of the key contains the checked sequence and save it
+                    lastTryTrue = 1;
 					lastCheckedKey = stringCompare;
-					if(keyLenghts.size() == keyLenghts.get(i)) {
-						return stringCompare;
-					}
 
 				} else if(lastTryTrue == 1) {
+
+                    //check if last key is still in rest of keyPart (possible if key is used multiple times in a row)
 					if(stringKeyPartCalc.contains(lastCheckedKey)) {
 						return stringCompare;
 					}
+                    //else return last checked key
 					return lastCheckedKey;
-				} else {
-					return stringKeyPartCalc;
 				}
 
 			}
 		}
+        //if all keySizes were tested and the last Checked key was correct, it is the right one, so it will be returned
 		if(lastTryTrue == 1) {
 			if(stringKeyPartCalc.contains(lastCheckedKey)) {
 				return stringCompare;
