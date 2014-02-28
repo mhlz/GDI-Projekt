@@ -6,11 +6,20 @@ import de.tudarmstadt.gdi1.project.exception.InvalidAlphabetListException;
 import de.tudarmstadt.gdi1.project.exception.InvalidCharacterException;
 
 /**
+ * a basic polyalphabetic cipher
+ *
  * @author Mischa Holz
  */
 public class PolyalphabeticCipherImpl extends SubstitutionCipherImpl implements PolyalphabeticCipher {
 
+	/**
+	 * the plain text alphabet
+	 */
 	protected Alphabet plaintTextAlphabet;
+
+	/**
+	 * all the cipher text aphabets
+	 */
 	protected Alphabet[] cipherTextAlphabets;
 
 	/**

@@ -5,11 +5,20 @@ import java.util.Scanner;
 import java.util.TreeSet;
 
 /**
+ * Scans a text for words and saves them for later uses
+ *
  * @author Mischa Holz
  */
 public class DictionaryImpl implements Dictionary {
 
+	/**
+	 * source alphabet
+	 */
 	protected Alphabet alphabet;
+
+	/**
+	 * sorted set of words
+	 */
 	protected TreeSet<String> words;
 
 	/**
@@ -22,6 +31,7 @@ public class DictionaryImpl implements Dictionary {
 		this.alphabet = alphabet;
 		words = new TreeSet<String>();
 
+		// finds all words and then saves them if they are allowed in the alphabet
 		Scanner scanner = new Scanner(text).useDelimiter("[ ,!?.]");
 		while(scanner.hasNext()) {
 			String word = scanner.next();

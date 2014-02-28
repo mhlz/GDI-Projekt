@@ -57,7 +57,7 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
 	 */
 	@Override
 	public Integer knownPlaintextAttack(String ciphertext, String plaintext, Distribution distribution) {
-		return null;
+		return knownPlaintextAttack(ciphertext, plaintext, distribution.getAlphabet());
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
 	 */
 	@Override
 	public Integer knownPlaintextAttack(String ciphertext, String plaintext, Distribution distribution, Dictionary dictionary) {
-		return null;
+		return knownPlaintextAttack(ciphertext, plaintext, distribution.getAlphabet());
 	}
 
 
@@ -133,6 +133,6 @@ public class CaesarCryptanalysisImpl implements CaesarCryptanalysis, KnownCipher
 	 */
 	@Override
 	public Integer knownCiphertextAttack(String ciphertext, Distribution distribution, Dictionary dict) {
-		return null;
+		return knownCiphertextAttack(ciphertext, distribution);
 	}
 }

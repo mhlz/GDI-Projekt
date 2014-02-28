@@ -5,7 +5,6 @@ import de.tudarmstadt.gdi1.project.analysis.monoalphabetic.MonoalphabeticCpaNpaC
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -18,11 +17,6 @@ public class MonoalphabeticCpaNpaCryptanalysisImplTest extends TestCase {
 	String key;
 	String testKeyChosenPlaintext;
 	MonoalphabeticCpaNpaCryptanalysisImpl mono = new MonoalphabeticCpaNpaCryptanalysisImpl();
-
-	@BeforeClass
-	public static void initTestCore() {
-		TemplateTestCore.FACTORYPATH = "de.tudarmstadt.gdi1.project.FactoryImpl";
-	}
 
 	@Before
 	public void setUp() {

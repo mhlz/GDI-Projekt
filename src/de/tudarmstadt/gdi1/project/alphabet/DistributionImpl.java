@@ -30,11 +30,22 @@ public class DistributionImpl implements Distribution {
 		public double freq;
 		public String gram;
 
+		/**
+		 * constructs a pair
+		 *
+		 * @param gram the string
+		 * @param freq the frequency
+		 */
 		public GramFrequencyPair(String gram, double freq) {
 			this.freq = freq;
 			this.gram = gram;
 		}
 
+		/**
+		 * gives a readable output
+		 *
+		 * @return gram <=> freq
+		 */
 		public String toString() {
 			return gram + " <=> " + freq;
 		}
@@ -45,6 +56,14 @@ public class DistributionImpl implements Distribution {
 	 * In case the frequency is the same, use the natural order
 	 */
 	protected class FrequencyComparator implements Comparator<GramFrequencyPair> {
+
+		/**
+		 * compares to GramFrequencyPairs
+		 *
+		 * @param o1 the first to compare
+		 * @param o2 the second to compare
+		 * @return -1 if the first is more frequent, 0 if they are equal frequent, 1 if the second is more frequent
+		 */
 		@Override
 		public int compare(GramFrequencyPair o1, GramFrequencyPair o2) {
 			if(o1.freq > o2.freq) {
@@ -60,8 +79,9 @@ public class DistributionImpl implements Distribution {
 	/**
 	 * This constructor calculates frequencies for sequences with the length 1 (single letter).
 	 * This is equivalent of using the other constructor with ngramsize = 1
+	 *
 	 * @param source Source alphabet
-	 * @param text Source text
+	 * @param text   Source text
 	 */
 	public DistributionImpl(Alphabet source, String text) {
 		this(source, text, 1);
@@ -69,8 +89,9 @@ public class DistributionImpl implements Distribution {
 
 	/**
 	 * This constructor calculates frequencies for sequences with a length of up to (and including) ngramsize
-	 * @param source Source alphabet
-	 * @param text Source text
+	 *
+	 * @param source    Source alphabet
+	 * @param text      Source text
 	 * @param ngramsize The size of the sequences for which the frequencies should be calculated
 	 */
 	public DistributionImpl(Alphabet source, String text, int ngramsize) {
@@ -83,8 +104,8 @@ public class DistributionImpl implements Distribution {
 		// create an array containing all the sizes that we need.
 		// this is used to call utils.ngramize in a bit
 		int[] sizes = new int[ngramsize];
-		for(int i = 1; i <= ngramsize; i++) {
-			sizes[i - 1] = i;
+		for(int i = 0; i < ngramsize; i++) {
+			sizes[i] = i + 1;
 		}
 		Utils utils = new UtilsImpl();
 		// split the text into sequences until the given length
@@ -92,11 +113,11 @@ public class DistributionImpl implements Distribution {
 
 		// for every length in the array
 		for(int length : sizes) {
-			// create a hashamp to save absolute frequencies
+			// create a hashmap to save absolute frequencies
 			HashMap<String, Integer> frequencies = new HashMap<String, Integer>();
 			// go through all grams of the current length
 			for(String gram : grams.get(length)) {
-				// in case the sequence isn't in the map yet, put it in with an absoulte frequency of 1
+				// in case the sequence isn't in the map yet, put it in with an absolute frequency of 1
 				// otherwise increment the frequency
 				if(frequencies.get(gram) == null) {
 					frequencies.put(gram, 1);
@@ -164,13 +185,14 @@ public class DistributionImpl implements Distribution {
 
 	/**
 	 * Return the rank of a given key. 1 is the highest possible rank. If the key can't be found, returns 0
+	 *
 	 * @param key Letter sequence that the rank is searched for
 	 * @return Rank of that letter sequence
 	 */
 	public int getRank(String key) {
 		// 1 is the highest possible rank
 		// go through the sorted list of sequences and return the rank of the one that matches the key
-		// return ß0 if
+		// return 0 if
 		int i = 1;
 		for(GramFrequencyPair pair : weightedGrams.get(key.length())) {
 			if(pair.gram.equals(key)) {

@@ -5,11 +5,20 @@ import de.tudarmstadt.gdi1.project.alphabet.Distribution;
 import de.tudarmstadt.gdi1.project.alphabet.DistributionImpl;
 
 /**
+ * validates a possible decryption for a ciphertext
+ * <p/>
  * Created by Nansu on 26.02.14.
  */
 public class ValidateDecryptionOracleImpl implements ValidateDecryptionOracle {
 
+	/**
+	 * the distribution of the plaintext
+	 */
 	protected Distribution distribution;
+
+	/**
+	 * a dictionary of the plaintext
+	 */
 	protected Dictionary dictionary;
 
 
@@ -45,20 +54,19 @@ public class ValidateDecryptionOracleImpl implements ValidateDecryptionOracle {
 		int rankRange = 1;
 		boolean result;
 		// get rid of all spaces and similiar structures
-		String dummy = plaintext.replaceAll("//s+", "");
+		String filterPlaintext = plaintext.replaceAll("//s+", "");
 
 
 		// depending on size of String, find appropiate number of correct words to be found
-		if(dummy.length() > longestWord(dictionary)) {
-			leastWord = (int) dummy.length() / longestWord(dictionary);
-		}
-		// find at least 1 word
-		else {
+		if(filterPlaintext.length() > longestWord(dictionary)) {
+			leastWord = (int) filterPlaintext.length() / longestWord(dictionary);
+		} else {
+			// find at least 1 word
 			leastWord = 1;
 		}
 
 		// check for all aspects
-		result = checkAlphabet(dummy) & checkRank(dummy, rankRange) & (checkContent(dummy) >= leastWord);
+		result = checkAlphabet(filterPlaintext) && checkRank(filterPlaintext, rankRange) && (checkContent(filterPlaintext) >= leastWord);
 
 		return result;
 	}
@@ -92,13 +100,10 @@ public class ValidateDecryptionOracleImpl implements ValidateDecryptionOracle {
 	 */
 	public boolean checkAlphabet(String text) {
 
-		boolean result;
-
 		// check both alphabets of given dictionary and distribution
-		result = dictionary.getAlphabet().allows(text) &
+		return dictionary.getAlphabet().allows(text) &&
 				distribution.getAlphabet().allows(text);
 
-		return result;
 	}
 
 	/**
@@ -112,7 +117,6 @@ public class ValidateDecryptionOracleImpl implements ValidateDecryptionOracle {
 
 		// create distribution of text
 		DistributionImpl stringDist = new DistributionImpl(distribution.getAlphabet(), text);
-		boolean result = true;
 
 		// run to how many ranks should be checked
 		for(int i = 1; i <= range; i++) {
@@ -121,9 +125,11 @@ public class ValidateDecryptionOracleImpl implements ValidateDecryptionOracle {
 			// most used char in String
 			char mostUsedString = stringDist.getByRank(1, i).charAt(0);
 			// compare both most used chars, by rank
-			result = result & (mostUsedDist == mostUsedString);
+			if(mostUsedDist != mostUsedString) {
+				return false;
+			}
 		}
-		return result;
+		return true;
 	}
 
 	/**
@@ -137,9 +143,8 @@ public class ValidateDecryptionOracleImpl implements ValidateDecryptionOracle {
 
 		// run through whole dictionary
 		for(int i = 0; i < dic.size(); i++) {
-			if(dic.get(i).length() > result)
-			// enter the longer word from previous found
-			{
+			if(dic.get(i).length() > result) {
+				// enter the longer word from previous found
 				result = dic.get(i).length();
 			}
 		}

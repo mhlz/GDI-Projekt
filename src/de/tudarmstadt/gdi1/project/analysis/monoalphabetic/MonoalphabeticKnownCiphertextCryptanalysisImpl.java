@@ -151,7 +151,7 @@ public class MonoalphabeticKnownCiphertextCryptanalysisImpl implements Monoalpha
 		Individual lastBest = getBestIndividual();
 		Random rnd = new Random();
 		this.cipherText = ciphertext;
-		this.dictionary = null;
+		this.dictionary = dictionary;
 
 		// start the loop
 		while(stableGenerations < STABLE_GENERATIONS) {

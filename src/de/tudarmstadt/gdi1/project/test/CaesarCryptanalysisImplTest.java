@@ -18,7 +18,6 @@ public class CaesarCryptanalysisImplTest extends TestCase {
 
 	@Before
 	public void setUp() {
-
 		alph = TemplateTestUtils.getDefaultAlphabet();
 		cipher = "doobrxuedvhduhehorqjwrxv"; //"All you base are belong to us" shifted by 3
 		plain = "base";

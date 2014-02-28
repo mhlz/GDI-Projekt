@@ -15,11 +15,11 @@ public abstract class SubstitutionCipherImpl implements SubstitutionCipher {
 	 */
 	@Override
 	public final String encrypt(String text) {
-		// translate every character individually and put them together to a string
+		// translate every character individually and puts them together to a string
 		StringBuilder out = new StringBuilder();
 		char[] textArray = text.toCharArray();
 		for(int i = 0; i < textArray.length; i++) {
-			out.append(translate(textArray[i], i));
+			out.append(this.translate(textArray[i], i));
 		}
 
 		return out.toString();
@@ -33,11 +33,11 @@ public abstract class SubstitutionCipherImpl implements SubstitutionCipher {
 	 */
 	@Override
 	public final String decrypt(String text) {
-		// reverseTranslate every character individually and put them together to a string
+		// reverseTranslate every character individually and puts them together to a string
 		StringBuilder out = new StringBuilder();
 		char[] textArray = text.toCharArray();
 		for(int i = 0; i < textArray.length; i++) {
-			out.append(reverseTranslate(textArray[i], i));
+			out.append(this.reverseTranslate(textArray[i], i));
 		}
 		return out.toString();
 	}

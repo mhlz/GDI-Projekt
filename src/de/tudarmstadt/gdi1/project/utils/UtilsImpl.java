@@ -80,14 +80,15 @@ public class UtilsImpl implements Utils {
 	@Override
 	public Map<Integer, List<String>> ngramize(String text, int... lengths) {
 		HashMap<Integer, List<String>> ret = new HashMap<Integer, List<String>>();
+
+		// for every lengths we search the string and save every substring that is that long
 		for(int length : lengths) {
 			ArrayList<String> grams = new ArrayList<String>();
 			for(int i = 0; i < text.length(); i++) {
-				String gram = "";
-				for(int j = 0; j < length && j + i < text.length(); j++) {
-					gram += text.charAt(i + j);
-				}
-				if(gram.length() == length) {
+
+				// we only save the substring if it still fits in the text
+				if(i + length <= text.length()) {
+					String gram = text.substring(i, i + length);
 					grams.add(gram);
 				}
 			}
@@ -107,7 +108,7 @@ public class UtilsImpl implements Utils {
 	public Alphabet shiftAlphabet(Alphabet alphabet, int shift) {
 
 		// don't shift more than the alphabet is long
-		shift = shift % alphabet.size();
+		shift %= alphabet.size();
 		// in case the result was negative, bring it back to positives again by adding the size
 		if(shift < 0) {
 			shift += alphabet.size();
@@ -117,9 +118,11 @@ public class UtilsImpl implements Utils {
 		char[] tempArray = alphabet.asCharArray();
 		Character[] destArray = new Character[tempArray.length];
 
+		// fills in the destArray from 0 to tempArray.length - shift with the right letters
 		for(int i = shift; i < tempArray.length; i++) {
 			destArray[i - shift] = tempArray[i];
 		}
+		// fills in the missing letters at the end ( from tempArray.length - shift to tempArray.length
 		for(int i = 0; i < shift; i++) {
 			destArray[tempArray.length - shift + i] = tempArray[i];
 		}
@@ -158,7 +161,7 @@ public class UtilsImpl implements Utils {
 		if(alphabet1.size() != alphabet2.size()) {
 			return false; // because the two alphabets aren't the same size
 		}
-		for(Character c : alphabet1.asCharArray()) {
+		for(Character c : alphabet1) {
 			if(!alphabet2.contains(c)) {
 				return false; // one of the characters is missing in alphabet 2
 			}
@@ -192,7 +195,7 @@ public class UtilsImpl implements Utils {
 
 		//randomizing the alphabet using SecureRandom
 		for(int i = 0; i < ret.length; i++) {
-			ret[i] = chars.get((int) (chars.size() * rand.nextDouble()));
+			ret[i] = chars.get(rand.nextInt(chars.size()));
 			chars.remove(ret[i]);
 		}
 

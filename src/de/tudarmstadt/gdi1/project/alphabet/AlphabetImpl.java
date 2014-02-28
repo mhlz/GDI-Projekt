@@ -27,33 +27,6 @@ public class AlphabetImpl implements Alphabet {
 		characters = new ArrayList<Character>();
 	}
 
-
-	/**
-	 * Checks to see if this Alphabet is equal to another
-	 *
-	 * @param obj other alphabet
-	 * @return boolean if both contain the same characters in the same order
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if(obj instanceof Alphabet) {
-			Alphabet other = (Alphabet) obj;
-			if(other.size() != this.size()) {
-				return false;
-			}
-
-			for(int i = 0; i < this.size(); i++) {
-				if(other.getChar(i) != this.getChar(i)) {
-					return false;
-				}
-			}
-
-			return true;
-		} else {
-			return super.equals(obj);
-		}
-	}
-
 	/**
 	 * Create an alphabet by using a collection of characters
 	 *
@@ -86,6 +59,36 @@ public class AlphabetImpl implements Alphabet {
 	public AlphabetImpl(String characters) {
 		this((new UtilsImpl()).toCharacterArray(characters.toCharArray()));
 	}
+
+	/**
+	 * Checks to see if this Alphabet is equal to another
+	 *
+	 * @param obj other alphabet
+	 * @return boolean if both contain the same characters in the same order
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Alphabet) {
+			Alphabet other = (Alphabet) obj;
+			// checks if the sizes are the same
+			if(other.size() != this.size()) {
+				return false;
+			}
+
+			// checks if every letter is on the same spot in the other alphabet
+			for(int i = 0; i < this.size(); i++) {
+				if(other.getChar(i) != this.getChar(i)) {
+					return false;
+				}
+			}
+
+			return true;
+		} else {
+			// so the other isn't an alphabet, so we call super.equals()
+			return super.equals(obj);
+		}
+	}
+
 
 	/**
 	 * Searches for a character in the alphabet
@@ -156,15 +159,15 @@ public class AlphabetImpl implements Alphabet {
 	 */
 	@Override
 	public String normalize(String input) {
-		String ret = "";
+		StringBuilder ret = new StringBuilder();
 		for(int i = 0; i < input.length(); i++) {
 			// only add the character to the return string if it's part of the alphabet
 			if(!contains(input.charAt(i))) {
 				continue;
 			}
-			ret += input.charAt(i);
+			ret.append(input.charAt(i));
 		}
-		return ret;
+		return ret.toString();
 	}
 
 	/**
@@ -176,13 +179,25 @@ public class AlphabetImpl implements Alphabet {
 	@Override
 	public char[] asCharArray() {
 		// convert the characters array list to a Character array and convert that to a char array
-		return ((new UtilsImpl()).toCharArray(characters.toArray(new Character[characters.size()])));
+		return ((new UtilsImpl()).toCharArray(this.asCharacterArray()));
 	}
 
+	/**
+	 * Returns the underlying characters in correct order as a Character array of
+	 * size {@link #size()}
+	 *
+	 * @return a char array representing the alphabet
+	 */
 	public Character[] asCharacterArray() {
 		return characters.toArray(new Character[characters.size()]);
 	}
 
+	/**
+	 * Returns the underlying characters in correct order as a List of
+	 * size {@link #size()}
+	 *
+	 * @return a char array representing the alphabet
+	 */
 	public List<Character> asCharacterList() {
 		return characters;
 	}
@@ -199,6 +214,7 @@ public class AlphabetImpl implements Alphabet {
 
 	/**
 	 * Returns a string representing the alphabet. This is used for outputting it to the console
+	 *
 	 * @return String for outputting the alphabet to a console
 	 */
 	@Override

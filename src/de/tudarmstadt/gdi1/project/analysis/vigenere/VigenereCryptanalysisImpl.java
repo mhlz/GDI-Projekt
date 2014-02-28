@@ -25,6 +25,16 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 		return getKeyLength(ciphertext);
 	}
 
+
+	/**
+	 * Attack to determine the used key based on a given cipher- and
+	 * (corresponding) plaintext.
+	 *
+	 * @param ciphertext the ciphertext
+	 * @param plaintext  the corresponding plaintext
+	 * @param alphabet   the alphabet
+	 * @return the key, a part of the key, or null
+	 */
 	@Override
 	public String knownPlaintextAttack(String ciphertext, String plaintext, Alphabet alphabet) {
 		List<Integer> keyLenghts = new ArrayList<Integer>();
@@ -36,9 +46,9 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 		String stringCompare = "";
 		String lastCheckedKey = "";
 		int counter;
-		int lastTryTrue = 0;
+		boolean lastTryTrue = false;
 
-        //calculate the keyPart from known plain- and ciphertext
+		//calculate the keyPart from known plain- and ciphertext
 		for(int i = 0; i < ciphertext.length(); i++) {
 			int tmp = alphabet.getIndex(ciphertext.charAt(i)) - alphabet.getIndex(plaintext.charAt(i));
 			if(tmp < 0) {
@@ -47,12 +57,12 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 			keyPart[i] = alphabet.getChar(tmp);
 		}
 
-        //convert calculated keyPart from char Array to String
+		//convert calculated keyPart from char Array to String
 		for(char c : keyPart) {
 			stringKeyPart += c;
 		}
 
-        //if getKeyLenghts returns no found repetitions in keyPart, return whole keyPart as key
+		//if getKeyLenghts returns no found repetitions in keyPart, return whole keyPart as key
 		keyLenghts = getKeyLength(stringKeyPart);
 		if(keyLenghts.size() == 0) {
 			return stringKeyPart;
@@ -60,57 +70,57 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 
 		for(int i = 0; i < keyLenghts.size(); i++) {
 
-            //test every given keyLength
+			//test every given keyLength
 			for(int n = 0; n < keyLenghts.get(i); n++) {
 
-                //reinitiate Strings to prevent errors
-                stringCompare = "";
+				//reinitiate Strings to prevent errors
+				stringCompare = "";
 				stringKeyPartCalc = "";
 
-                //set counter to split Strings
+				//set counter to split Strings
 				counter = -1;
 
-                //extract possible key with size i from the keyPart...
+				//extract possible key with size i from the keyPart...
 				for(int m = 0; m < keyLenghts.get(i); m++) {
 					compare[m] = keyPart[m];
 					counter++;
 				}
 
-                //...and convert it to String
+				//...and convert it to String
 				for(int m = 0; m < keyLenghts.get(i); m++) {
 					stringCompare += compare[m];
 				}
 
-                //save the remaining keyPart to use it for comparsion...
+				//save the remaining keyPart to use it for comparsion...
 				for(int m = 0; m < keyPart.length - counter; m++) {
 					keyPartCalc[m] = keyPart[m + counter];
 				}
 
-                //...and again convert it to String
+				//...and again convert it to String
 				for(char c : keyPartCalc) {
 					stringKeyPartCalc += c;
 				}
 
-                //if comparsion is true
+				//if comparsion is true
 				if(stringKeyPartCalc.contains(stringCompare)) {
 					//save that the rest of the key contains the checked sequence and save it
-                    lastTryTrue = 1;
+					lastTryTrue = true;
 					lastCheckedKey = stringCompare;
 
-				} else if(lastTryTrue == 1) {
+				} else if(lastTryTrue) {
 
-                    //check if last key is still in rest of keyPart (possible if key is used multiple times in a row)
+					//check if last key is still in rest of keyPart (possible if key is used multiple times in a row)
 					if(stringKeyPartCalc.contains(lastCheckedKey)) {
 						return stringCompare;
 					}
-                    //else return last checked key
+					//else return last checked key
 					return lastCheckedKey;
 				}
 
 			}
 		}
-        //if all keySizes were tested and the last Checked key was correct, it is the right one, so it will be returned
-		if(lastTryTrue == 1) {
+		//if all keySizes were tested and the last Checked key was correct, it is the right one, so it will be returned
+		if(lastTryTrue) {
 			if(stringKeyPartCalc.contains(lastCheckedKey)) {
 				return stringCompare;
 			}
@@ -158,7 +168,6 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 	@Override
 	public String knownCiphertextAttack(String ciphertext, Distribution distribution, List<String> cribs) {
 		List<Integer> keys = getKeyLength(ciphertext);
-		String temp = "";
 		String ret = "";
 
 		// run through all found keys
@@ -168,10 +177,10 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 			for(int j = 1; j <= keys.get(i); j++) {
 
 				// extracted chars dependent on the current size of key
-				temp = extract(ciphertext, keys.get(i), j);
+				String extractedCharacters = extract(ciphertext, keys.get(i), j);
 
 				// make distribution for extracted string
-				DistributionImpl keyDist = new DistributionImpl(distribution.getAlphabet(), temp);
+				DistributionImpl keyDist = new DistributionImpl(distribution.getAlphabet(), extractedCharacters);
 
 				// most used in given alphabet
 				char mostUsedPlain = distribution.getByRank(1, 1).charAt(0);
@@ -193,13 +202,13 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 			VigenereImpl keyTest = new VigenereImpl(ret, distribution.getAlphabet());
 
 			// decrypt with found pass code
-			temp = keyTest.decrypt(ciphertext);
+			String plaintext = keyTest.decrypt(ciphertext);
 			int x = 0;
 
 			// run through cribs array size
 			for(int j = 0; j < cribs.size(); j++) {
 				// check if string in current cribs is contained in decrypted string
-				if(temp.contains(cribs.get(j))) {
+				if(plaintext.contains(cribs.get(j))) {
 					x = x + 1;
 				}
 			}
@@ -215,14 +224,14 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 	}
 
 	/**
-	 * extracts every nth character in a sequence of m  , of a String
+	 * extracts every nth character in a sequence of sequenceLength  , of a String
 	 *
-	 * @param m     sequence length
-	 * @param n     nth character to be extracted
-	 * @param input String
+	 * @param sequenceLength sequence length
+	 * @param offset         nth character to be extracted
+	 * @param input          String
 	 * @return String of all the nth characters
 	 */
-	public String extract(String input, int m, int n) {
+	public String extract(String input, int sequenceLength, int offset) {
 		// counter of sequence length
 		int x = 1;
 		String ret = "";
@@ -230,12 +239,12 @@ public class VigenereCryptanalysisImpl implements VigenereCryptanalysis {
 		for(int i = 0; i < input.length(); i++) {
 
 			// counter in a sequence on the character to be extracted
-			if(x == n) {
+			if(x == offset) {
 				ret += input.charAt(i);
 			}
 
 			// reset sequence counter
-			if(x == m) {
+			if(x == sequenceLength) {
 				x = 1;
 			} else {
 				x = x + 1;

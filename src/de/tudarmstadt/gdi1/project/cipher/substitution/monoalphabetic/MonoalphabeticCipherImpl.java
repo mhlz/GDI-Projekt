@@ -2,13 +2,23 @@ package de.tudarmstadt.gdi1.project.cipher.substitution.monoalphabetic;
 
 import de.tudarmstadt.gdi1.project.alphabet.Alphabet;
 import de.tudarmstadt.gdi1.project.cipher.substitution.SubstitutionCipherImpl;
+import de.tudarmstadt.gdi1.project.exception.InvalidCharacterException;
 
 /**
+ * a basic mono alphabetic cipher
+ *
  * @author Hannes
  */
 public class MonoalphabeticCipherImpl extends SubstitutionCipherImpl implements MonoalphabeticCipher {
 
+	/**
+	 * the source alphabet
+	 */
 	protected Alphabet source;
+
+	/**
+	 * the cipher alphabet
+	 */
 	protected Alphabet destination;
 
 	/**
@@ -32,6 +42,9 @@ public class MonoalphabeticCipherImpl extends SubstitutionCipherImpl implements 
 	 */
 	@Override
 	public char translate(char chr, int i) {
+		if(!source.contains(chr)) {
+			throw new InvalidCharacterException("can't encrypt the character '" + chr + "', because it isn't in the alphabet provided");
+		}
 		return destination.getChar(source.getIndex(chr));
 	}
 
@@ -46,7 +59,7 @@ public class MonoalphabeticCipherImpl extends SubstitutionCipherImpl implements 
 	@Override
 	public char reverseTranslate(char chr, int i) {
 		if(!destination.contains(chr)) {
-			return chr;
+			throw new InvalidCharacterException("can't decrypt the character '" + chr + "', because it isn't in the alphabet provided");
 		}
 		return source.getChar(destination.getIndex(chr));
 	}
